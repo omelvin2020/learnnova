@@ -72,6 +72,34 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
 @media(max-width:650px){.nova-challenge{align-items:flex-start;flex-direction:column;gap:10px;padding:20px}.challenge-orbit{position:absolute;right:16px;top:15px;font-size:44px}.challenge-copy{padding-right:40px}.challenge-button{width:100%}}
 @media(prefers-reduced-motion:reduce){.challenge-orbit{animation:none}}
 
+
+/* LearnNova Arcade */
+.arcade-section{margin:26px 0 28px;padding:24px;border:1px solid #e2e5fb;border-radius:22px;background:linear-gradient(135deg,#fff 0%,#f2f0ff 55%,#edf5ff 100%);box-shadow:0 14px 35px #4639a512}
+.arcade-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}
+.arcade-heading h2{margin:0;font-size:24px;letter-spacing:-.6px}
+.arcade-heading p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.arcade-stamp{font-size:38px;filter:drop-shadow(0 6px 8px #4639a522);animation:arcadeBob 3s ease-in-out infinite}
+@keyframes arcadeBob{50%{transform:translateY(-7px) rotate(7deg)}}
+.arcade-games{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.arcade-game{padding:17px;border:1px solid #e5e7f5;border-radius:17px;background:#ffffffd9;transition:.2s}
+.arcade-game:hover{transform:translateY(-4px);box-shadow:0 12px 25px #3a3b8117}
+.arcade-game-icon{font-size:30px;width:52px;height:52px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#e8edff,#f5eaff);margin-bottom:10px}
+.arcade-game h3{margin:0 0 4px;font-size:17px}
+.arcade-game p{margin:0 0 13px;color:var(--muted);font-size:12px;min-height:38px}
+.arcade-game button{width:100%;background:linear-gradient(110deg,#315bd5,#783fc4)}
+.arcade-panel{margin-top:16px;padding:20px;border-radius:17px;background:#fff;border:1px solid #dfe4f5}
+.arcade-topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#65718c;font-size:12px;font-weight:800}
+.arcade-question{font-size:19px;font-weight:800;margin:15px 0}
+.arcade-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.arcade-option{background:#f2f5ff;color:#34415f;border:1px solid #e1e7fa;text-align:left;box-shadow:none}
+.arcade-option:disabled{opacity:1}
+.arcade-option.good{background:#e3f8ee;border-color:#91d9b6;color:#08764f}
+.arcade-option.bad{background:#fff0f0;border-color:#f0b4b4;color:#a83232}
+.arcade-feedback{min-height:25px;margin:12px 0;color:#4d5b78;font-weight:700}
+.arcade-controls{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+@media(max-width:700px){.arcade-games{grid-template-columns:1fr}.arcade-game{display:grid;grid-template-columns:55px 1fr;column-gap:12px;align-items:center}.arcade-game-icon{grid-row:span 3;margin:0}.arcade-game p{min-height:0}.arcade-game button{grid-column:2}.arcade-options{grid-template-columns:1fr}.arcade-section{padding:17px}.arcade-heading h2{font-size:21px}}
+@media(prefers-reduced-motion:reduce){.arcade-stamp{animation:none}}
+
 </style>
 </head>
 <body>
@@ -85,6 +113,17 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
   <div class="challenge-copy"><span class="challenge-kicker">⚡ DAILY BRAIN BOOST</span><h2 id="challengeTitle">Your Nova Challenge</h2><p id="challengeQuestion">A quick question to warm up your brain!</p><p id="challengeAnswer" class="challenge-answer" aria-live="polite">Think carefully, then reveal the answer.</p></div>
   <button class="challenge-button" id="challengeButton" onclick="revealChallenge()">Reveal answer ✨</button>
 </section>
+
+<section class="arcade-section" aria-labelledby="arcadeTitle">
+ <div class="arcade-heading"><div><div class="eyebrow" style="color:#6547c8">🎮 LEARN WHILE YOU PLAY</div><h2 id="arcadeTitle">Nova Arcade</h2><p>Three mini-games. Five questions each. How many can you get right?</p></div><div class="arcade-stamp" aria-hidden="true">🕹️</div></div>
+ <div class="arcade-games">
+  <article class="arcade-game"><div class="arcade-game-icon">➗</div><h3>Math Sprint</h3><p>Challenge your Mathematics knowledge.</p><button onclick="startArcade('Math Sprint','Mathematics')">Play game →</button></article>
+  <article class="arcade-game"><div class="arcade-game-icon">🔬</div><h3>Science Quest</h3><p>Explore science with quick questions.</p><button onclick="startArcade('Science Quest','Science')">Play game →</button></article>
+  <article class="arcade-game"><div class="arcade-game-icon">🔤</div><h3>Word Wizard</h3><p>Test your English skills and vocabulary.</p><button onclick="startArcade('Word Wizard','English')">Play game →</button></article>
+ </div>
+ <div id="arcadePanel" class="arcade-panel hidden" aria-live="polite"></div>
+</section>
+
 <div class="stats"><div class="stat"><strong>7</strong><span>School subjects</span></div><div class="stat"><strong>28</strong><span>Practice papers · 4 per subject</span></div><div class="stat"><strong id="completedStat">0</strong><span>Papers completed</span></div></div>
 <div class="sectionhead"><div><h2>Continue learning</h2><p>Choose a subject to begin your next practice paper.</p></div></div>
 <div id="homeSubjects" class="grid"></div>
@@ -255,6 +294,36 @@ function speakExplanations(){
  window.speechSynthesis.speak(utterance);
 }
 function stopVoice(){if("speechSynthesis" in window)window.speechSynthesis.cancel();const status=$("voiceStatus");if(status)status.textContent="Voice stopped.";}
+
+let arcadeName="",arcadeQuestions=[],arcadeIndex=0,arcadeScore=0,arcadeAnswered=false;
+function startArcade(name,subjectName){
+ const subject=subjects.find(s=>s.name===subjectName),panel=$("arcadePanel");
+ if(!subject||!subject.data.length||!panel)return;
+ arcadeName=name;arcadeIndex=0;arcadeScore=0;arcadeAnswered=false;
+ arcadeQuestions=shuffle(subject.data.slice()).slice(0,5).map(row=>({prompt:row[0],answer:row[1],options:shuffle([row[1],row[2],row[3]])}));
+ panel.classList.remove("hidden");renderArcadeQuestion();panel.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function renderArcadeQuestion(){
+ const panel=$("arcadePanel");
+ if(arcadeIndex>=arcadeQuestions.length){
+  const subjectName=arcadeName==="Math Sprint"?"Mathematics":arcadeName==="Science Quest"?"Science":"English";
+  panel.innerHTML='<div class="arcade-topline"><span>🏁 GAME COMPLETE</span><span>'+arcadeScore+' / '+arcadeQuestions.length+' correct</span></div><h3 style="font-size:24px;margin:12px 0 5px">'+(arcadeScore===5?'Amazing work! 🌟':arcadeScore>=3?'Great effort! 🎉':'Keep practising! 💪')+'</h3><p>You finished '+arcadeName+'. Every game helps your brain grow.</p><div class="arcade-controls"><button onclick="startArcade(\''+arcadeName+'\',\''+subjectName+'\')">Play again ↻</button><button class="secondary" onclick="closeArcade()">Close game</button></div>';
+  return;
+ }
+ const q=arcadeQuestions[arcadeIndex];
+ panel.innerHTML='<div class="arcade-topline"><span>🎮 '+arcadeName+'</span><span>QUESTION '+(arcadeIndex+1)+' / '+arcadeQuestions.length+' · SCORE '+arcadeScore+'</span></div><div class="arcade-question">'+q.prompt+'</div><div class="arcade-options">'+q.options.map((o,i)=>'<button class="arcade-option" onclick="chooseArcadeAnswer('+i+')" data-option="'+i+'">'+String.fromCharCode(65+i)+'. '+escapeAttr(o)+'</button>').join('')+'</div><div id="arcadeFeedback" class="arcade-feedback">Choose the best answer!</div><div class="arcade-controls"><span class="notice">Take your time and think carefully.</span><button id="arcadeNext" disabled onclick="nextArcadeQuestion()">Next question →</button></div>';
+}
+function chooseArcadeAnswer(index){
+ if(arcadeAnswered)return;arcadeAnswered=true;
+ const q=arcadeQuestions[arcadeIndex],chosen=q.options[index],correct=chosen===q.answer;
+ if(correct)arcadeScore++;
+ document.querySelectorAll(".arcade-option").forEach((b,i)=>{b.disabled=true;if(q.options[i]===q.answer)b.classList.add("good");else if(i===index)b.classList.add("bad")});
+ $("arcadeFeedback").textContent=correct?"✓ Correct! Brilliant answer!":"Not quite. The correct answer is: "+q.answer;
+ $("arcadeNext").disabled=false;$("arcadeNext").textContent=arcadeIndex===arcadeQuestions.length-1?"See my score →":"Next question →";
+}
+function nextArcadeQuestion(){if(!arcadeAnswered)return;arcadeIndex++;arcadeAnswered=false;renderArcadeQuestion()}
+function closeArcade(){$("arcadePanel").classList.add("hidden");$("arcadePanel").innerHTML=""}
+
 renderHome();
 </script>
 </body>
