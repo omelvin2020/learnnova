@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 1 Buddhist Studies | LearnNova</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#fff8ed;color:#30251d}
+header{background:linear-gradient(120deg,#7c3f00,#d97706);color:#fff;padding:24px 18px;text-align:center}
+header h1{margin:0 0 8px;font-size:clamp(23px,5vw,34px)}header p{margin:0;color:#ffedd5}
+main{max-width:900px;margin:24px auto;padding:0 15px}.card{background:white;border:1px solid #f2d8b7;border-radius:17px;padding:20px;margin:15px 0;box-shadow:0 5px 18px #7c3f0010}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.info div{background:#fff4e5;padding:12px;border-radius:10px}
+h2{color:#854d0e}.section{margin:25px 0 12px;padding-bottom:8px;border-bottom:2px solid #f5d5a8;color:#92400e}
+.question{padding:15px;border:1px solid #eadfce;border-radius:12px;margin:12px 0}.question.good{border:2px solid #86c99b;background:#f0fff4}.question.bad{border:2px solid #f3a3a3;background:#fff4f4}
+.qtitle{font-weight:bold;margin-bottom:12px;line-height:1.5}.choices{display:grid;gap:8px}.choices label{padding:9px;border:1px solid #eadfce;border-radius:9px;display:flex;gap:8px;align-items:center;cursor:pointer}
+input[type=text],select{width:100%;padding:11px;border:1px solid #cdbda9;border-radius:9px;font-size:16px;background:white}
+button{background:#a45108;color:white;border:0;border-radius:10px;padding:12px 17px;font-size:15px;font-weight:bold;cursor:pointer}button:hover{background:#85400a}button:disabled{opacity:.5;cursor:not-allowed}.secondary{background:#f1e5d5;color:#4b3522}
+.small{font-size:13px;color:#766453;line-height:1.5}.feedback{font-size:14px;font-weight:bold;margin-top:10px}.good .feedback{color:#166534}.bad .feedback{color:#b91c1c}
+.progress{height:9px;background:#f1e5d5;border-radius:10px;overflow:hidden;margin:15px 0}.progress span{height:100%;width:0;display:block;background:#d97706}
+.picture{font-size:62px;text-align:center;background:#fff7e8;border-radius:12px;padding:12px;margin:10px 0}
+.result{background:#fff7e8;border:2px solid #f0c98d;border-radius:15px;padding:20px;text-align:center;margin-top:20px}
+.score{font-size:38px;font-weight:800;color:#a45108}.certificate{border:5px double #d49a35;background:#fffdf5;padding:22px;margin-top:15px;border-radius:10px}
+footer{text-align:center;color:#806f5c;padding:25px;font-size:13px}
+@media print{header,button,.progress{display:none!important}body{background:white}.card{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><h1>🪷 Grade 1 Buddhist Studies</h1><p>LearnNova · Online Practice Paper</p></header>
+<main>
+<div class="card">
+<h2>Welcome, little learner!</h2>
+<p>Read each question carefully. Choose or write your answer. Ask a teacher or a grown-up to help you read if needed.</p>
+<div class="info"><div><b>Grade</b><br>1</div><div><b>Subject</b><br>Buddhist Studies</div><div><b>Questions</b><br>20</div><div><b>Total</b><br>100 marks</div></div>
+<p class="small">This is a learning practice paper. The questions use simple, age-appropriate ideas about the Buddha, kindness, respect and good habits.</p>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b id="progressText">0 of 20 answered</b><b>20 questions · 100 marks</b></div>
+<div class="progress"><span id="progressBar"></span></div>
+<div id="paper"></div>
+<button id="submit" onclick="markPaper()">Submit paper</button>
+<div id="result"></div>
+</div>
+</main>
+<footer>LearnNova · Keep learning and practise kindness every day. 🪷</footer>
+<script>
+const questions=[
+{section:"A. Choose the correct answer",type:"choice",marks:5,q:"1. Who taught the Dhamma?",opts:["The Buddha","A king","A farmer"],a:0,why:"The Buddha taught the Dhamma."},
+{section:"A. Choose the correct answer",type:"choice",marks:5,q:"2. What do Buddhists offer at the temple?",opts:["Flowers","Toys","Shoes"],a:0,why:"Flowers are commonly offered as a mark of respect."},
+{section:"A. Choose the correct answer",type:"choice",marks:5,q:"3. Which action shows kindness?",opts:["Helping a friend","Pushing a friend","Taking things"],a:0,why:"Helping others is a kind action."},
+{section:"A. Choose the correct answer",type:"choice",marks:5,q:"4. Where do Buddhists go to worship?",opts:["Temple","Playground","Market"],a:0,why:"Buddhists may visit a temple to worship and learn."},
+{section:"B. True or False",type:"choice",marks:5,q:"5. We should speak kindly to others.",opts:["True","False"],a:0,why:"Kind words help others feel respected."},
+{section:"B. True or False",type:"choice",marks:5,q:"6. We should hurt animals for fun.",opts:["True","False"],a:1,why:"We should care for living beings and avoid harming them."},
+{section:"B. True or False",type:"choice",marks:5,q:"7. We should respect our parents and teachers.",opts:["True","False"],a:0,why:"Respect is a good quality."},
+{section:"B. True or False",type:"choice",marks:5,q:"8. It is good to tell lies.",opts:["True","False"],a:1,why:"We should try to speak truthfully."},
+{section:"C. Fill in the blanks",type:"text",marks:5,q:"9. The Buddha taught us to be _____ to all.",a:["kind","kindness"],why:"Kindness is a good quality."},
+{section:"C. Fill in the blanks",type:"text",marks:5,q:"10. We offer _____ at the temple.",a:["flowers","a flower"],why:"Flowers are a common respectful offering."},
+{section:"C. Fill in the blanks",type:"text",marks:5,q:"11. We should speak the _____.",a:["truth","truthfully"],why:"Speaking the truth is a good habit."},
+{section:"C. Fill in the blanks",type:"text",marks:5,q:"12. We should show _____ to our parents and teachers.",a:["respect"],why:"We should respect our parents and teachers."},
+{section:"D. Match the pairs",type:"select",marks:5,q:"13. Match the item with the correct meaning.",opts:["A place for worship","A symbol of respect","A teacher who taught the Dhamma"],a:"Temple",why:"A temple is a place where Buddhists worship and learn."},
+{section:"D. Match the pairs",type:"select",marks:5,q:"14. Match the item with the correct meaning.",opts:["A place for worship","A symbol of respect","A teacher who taught the Dhamma"],a:"Flowers",why:"Flowers can be offered as a sign of respect."},
+{section:"D. Match the pairs",type:"select",marks:5,q:"15. Match the item with the correct meaning.",opts:["A place for worship","A symbol of respect","A teacher who taught the Dhamma"],a:"The Buddha",why:"The Buddha taught the Dhamma."},
+{section:"E. Short answers",type:"text",marks:5,q:"16. Write one kind thing you can do for a friend.",a:["help my friend","share my things","share","help","be kind","helping a friend"],why:"Helping or sharing with a friend is kind."},
+{section:"E. Short answers",type:"text",marks:5,q:"17. Name one place where Buddhists learn about the Dhamma.",a:["temple","dhamma school"],why:"Children can learn about the Dhamma at a temple or Dhamma school."},
+{section:"F. Special picture question",type:"choice",marks:5,q:"18. Look at the picture. What good action is shown?",picture:"👧🏻 🤝 👦🏻",opts:["Sharing and helping","Fighting","Making a mess"],a:0,why:"The picture shows two children helping or cooperating."},
+{section:"F. Special picture question",type:"choice",marks:5,q:"19. Which action shows care for living beings?",picture:"🐦 🌳 💧",opts:["Giving a bird clean water","Throwing stones at a bird","Breaking a bird's nest"],a:0,why:"Giving a bird clean water shows care."},
+{section:"G. Special kindness challenge",type:"text",marks:5,q:"20. Write one kind action you will try to do today.",a:["help","share","care","respect","speak kindly","help my parents","help a friend","feed animals","give water"],why:"Many answers are possible. Choose a safe, kind action such as helping, sharing or speaking politely."}
+];
+let submitted=false;
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ let root=document.getElementById("paper"),last="",html="";
+ questions.forEach((q,i)=>{
+ if(q.section!==last){last=q.section;html+='<h3 class="section">'+last+'</h3>'}
+ html+='<div class="question" id="box'+i+'"><div class="qtitle">'+q.q+' <span class="small">('+q.marks+' marks)</span></div>';
+ if(q.picture)html+='<div class="picture" role="img" aria-label="Illustration">'+q.picture+'</div>';
+ if(q.type==="choice")html+='<div class="choices">'+q.opts.map((o,j)=>'<label><input type="radio" name="q'+i+'" value="'+j+'" onchange="updateProgress()"> '+escapeHTML(o)+'</label>').join("")+'</div>';
+ else if(q.type==="select")html+='<select id="q'+i+'" onchange="updateProgress()"><option value="">Choose an answer</option>'+q.opts.map(o=>'<option>'+escapeHTML(o)+'</option>').join("")+'</select>';
+ else html+='<input id="q'+i+'" type="text" placeholder="Write your answer" oninput="updateProgress()">';
+ html+='<div class="feedback" id="fb'+i+'"></div></div>';
+ });
+ root.innerHTML=html;
+}
+function answer(i,q){if(q.type==="choice"){let x=document.querySelector('input[name="q'+i+'"]:checked');return x?x.value:""}return document.getElementById("q"+i).value.trim()}
+function updateProgress(){let n=questions.filter((q,i)=>answer(i,q)!=="").length;document.getElementById("progressText").textContent=n+" of 20 answered";document.getElementById("progressBar").style.width=(n/20*100)+"%"}
+function markPaper(){
+ if(submitted)return;submitted=true;let score=0,done=0;
+ questions.forEach((q,i)=>{
+ let v=answer(i,q),ok=false;
+ if(v!=="")done++;
+ if(q.type==="choice")ok=v!==""&&Number(v)===q.a;
+ else if(q.type==="select")ok=v===q.a;
+ else ok=v!==""&&q.a.some(a=>v.toLowerCase().trim().replace(/[.!?]/g,"")===a.toLowerCase());
+ if(ok)score+=q.marks;
+ let box=document.getElementById("box"+i);box.classList.add(ok?"good":"bad");
+ document.getElementById("fb"+i).textContent=(ok?"Correct! ":"Good try! ")+q.why;
+ });
+ document.getElementById("submit").disabled=true;
+ let message=score>=80?"Wonderful effort! Keep practising good values.":score>=50?"Good try! Read the feedback and keep learning.":"Thank you for trying. Practise again with your teacher or family.";
+ document.getElementById("result").innerHTML='<div class="result"><h2>Your result</h2><div class="score">'+score+' / 100</div><p>'+done+' of 20 questions answered.</p><p>'+message+'</p><div class="certificate"><h2>🪷 Learning Star Certificate 🪷</h2><p>This certificate is for completing the</p><h3>Grade 1 Buddhist Studies Practice Paper</h3><p>Score: <b>'+score+'/100</b></p><p>Keep being kind, truthful and helpful!</p></div><p><button onclick="window.print()">Print result / certificate</button> <button class="secondary" onclick="location.reload()">Try again</button></p></div>';
+ document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+render();updateProgress();
+</script>
+</body>
+</html>
