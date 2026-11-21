@@ -56,6 +56,22 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
 @media(max-width:760px){.hero{border-radius:20px}.quickfeatures{gap:7px}.quickfeatures span{font-size:11px;padding:7px 10px}.hero p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
 
+
+/* Daily interactive Nova Challenge */
+.nova-challenge{position:relative;display:flex;align-items:center;justify-content:space-between;gap:22px;overflow:hidden;margin:0 0 24px;padding:22px 25px;border-radius:20px;color:#fff;background:linear-gradient(112deg,#142f76,#315bd5 48%,#783fc4);box-shadow:0 16px 36px #315bd52a}
+.nova-challenge:before{content:"";position:absolute;width:210px;height:210px;right:18%;top:-145px;border:1px solid #ffffff35;border-radius:50%;box-shadow:0 0 0 22px #ffffff09,0 0 0 48px #ffffff07}
+.challenge-copy{position:relative;z-index:1;max-width:720px}
+.challenge-kicker{font-size:10px;letter-spacing:1.7px;font-weight:900;color:#c8d8ff}
+.challenge-copy h2{font-size:22px;margin:5px 0 4px;letter-spacing:-.5px}
+.challenge-copy p{margin:4px 0;color:#e8edff}
+.challenge-answer{font-size:13px!important;color:#d9e0ff!important;min-height:20px}
+.challenge-orbit{font-size:64px;color:#ffffff38;animation:orbitPulse 3s ease-in-out infinite}
+@keyframes orbitPulse{0%,100%{transform:scale(.92) rotate(-8deg);opacity:.6}50%{transform:scale(1.08) rotate(8deg);opacity:1}}
+.challenge-button{position:relative;z-index:1;flex-shrink:0;background:#fff;color:#354fc0;box-shadow:0 8px 20px #101b5638}
+.challenge-button:hover{background:#f0efff;filter:none}
+@media(max-width:650px){.nova-challenge{align-items:flex-start;flex-direction:column;gap:10px;padding:20px}.challenge-orbit{position:absolute;right:16px;top:15px;font-size:44px}.challenge-copy{padding-right:40px}.challenge-button{width:100%}}
+@media(prefers-reduced-motion:reduce){.challenge-orbit{animation:none}}
+
 </style>
 </head>
 <body>
@@ -64,6 +80,11 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
 <section id="homeView">
 <div class="hero"><div><div class="eyebrow">Your learning space</div><h1>Learn something new.<br>Every single day.</h1><p>Welcome to LearnNova, your Grade 7 practice hub. Explore subjects, take online papers and track your progress as you learn.</p><button onclick="goSubjects()">Explore subjects&nbsp; →</button></div><div class="heroart">📚</div></div>
 <div class="quickfeatures" aria-label="LearnNova features"><span><b>✦</b> 7 Grade 7 subjects</span><span><b>✓</b> Instant marking</span><span><b>★</b> 6 question styles</span><span><b>↗</b> Track your progress</span></div>
+<section class="nova-challenge" aria-labelledby="challengeTitle">
+  <div class="challenge-orbit" aria-hidden="true">✦</div>
+  <div class="challenge-copy"><span class="challenge-kicker">⚡ DAILY BRAIN BOOST</span><h2 id="challengeTitle">Your Nova Challenge</h2><p id="challengeQuestion">A quick question to warm up your brain!</p><p id="challengeAnswer" class="challenge-answer" aria-live="polite">Think carefully, then reveal the answer.</p></div>
+  <button class="challenge-button" id="challengeButton" onclick="revealChallenge()">Reveal answer ✨</button>
+</section>
 <div class="stats"><div class="stat"><strong>7</strong><span>School subjects</span></div><div class="stat"><strong>28</strong><span>Practice papers · 4 per subject</span></div><div class="stat"><strong id="completedStat">0</strong><span>Papers completed</span></div></div>
 <div class="sectionhead"><div><h2>Continue learning</h2><p>Choose a subject to begin your next practice paper.</p></div></div>
 <div id="homeSubjects" class="grid"></div>
@@ -193,7 +214,9 @@ function showView(id){["homeView","subjectsView","papersView","examView"].forEac
 function goHome(){if(timer){clearInterval(timer);timer=null}showView("homeView");renderHome()}
 function goSubjects(){try{if(timer){clearInterval(timer);timer=null}showView("subjectsView");renderSubjects()}catch(error){console.error("LearnNova navigation error:",error);const panel=$("subjectsView");panel.classList.remove("hidden");panel.innerHTML='<div class="card"><h2>Subjects could not load</h2><p>Please refresh this page. If the problem continues, send the error shown below.</p><p>'+String(error.message||error)+'</p><button onclick="goHome()">Back to Home</button></div>'}}
 window.goHome=goHome;window.goSubjects=goSubjects;
-function renderHome(){updateStats();$("homeSubjects").innerHTML=subjects.map(s=>subjectCard(s)).join("")}
+function renderHome(){updateStats();renderDailyChallenge();$("homeSubjects").innerHTML=subjects.map(s=>subjectCard(s)).join("")}
+function renderDailyChallenge(){const pool=subjects.flatMap(s=>s.data.map(row=>({subject:s.name,question:row[0],answer:row[1]})));if(!pool.length)return;const day=Math.floor(Date.now()/86400000);const item=pool[day%pool.length];$("challengeQuestion").textContent=item.subject+" challenge: "+item.question;$("challengeAnswer").textContent="Think carefully, then reveal the answer.";$("challengeButton").textContent="Reveal answer ✨";$("challengeButton").dataset.answer=item.answer}
+function revealChallenge(){const answer=$("challengeButton").dataset.answer;if(!answer)return;$("challengeAnswer").textContent="Answer: "+answer;$("challengeButton").textContent="Great thinking! ✓";}
 function subjectCard(s){const p=getProgress(),done=Array.from({length:PAPER_COUNT},(_,i)=>i+1).filter(n=>p[s.name+"-"+n]).length;return '<article class="subject"><div class="subjecticon">'+s.icon+'</div><h3>'+s.name+'</h3><p>'+PAPER_COUNT+' practice papers · '+done+'/'+PAPER_COUNT+' completed</p><div class="progress"><span style="width:'+(done/PAPER_COUNT*100)+'%"></span></div><button onclick="openSubject(\''+s.name.replace(/'/g,"\\'")+'\')">View papers →</button></article>'}
 function renderSubjects(){const q=($("subjectSearch").value||"").toLowerCase();const list=subjects.filter(s=>s.name.toLowerCase().includes(q));$("subjectGrid").innerHTML=list.length?list.map(subjectCard).join(""):'<div class="empty">No subjects found.</div>'}
 function openSubject(name){activeSubject=subjects.find(s=>s.name===name);if(!activeSubject)return;showView("papersView");$("crumbSubject").textContent=name;$("papersTitle").textContent=activeSubject.icon+" "+name;$("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">✨</div><div><strong>Fresh practice, every day!</strong><span>Today’s new Paper 4 is ready. Every paper includes all six question styles.</span></div></div>'+Array.from({length:PAPER_COUNT},(_,i)=>i+1).map(n=>{const old=getProgress()[name+"-"+n];const fresh=n===PAPER_COUNT;return '<article class="examcard '+(fresh?'newtoday':'')+'">'+(fresh?'<span class="newtag">✦ New today</span>':'<div class="eyebrow" style="color:#315bd5">PRACTICE PAPER</div>')+'<div class="paper-number">0'+n+'</div><h3>'+name+' · Paper '+n+'</h3><div class="paper-meta"><span>35 questions</span><span>6 styles</span><span>2 hours</span><span>100 marks</span></div>'+(old?'<p class="correct">Last score: '+old.score+'/100</p>':'<p>Ready when you are — give it your best!</p>')+'<button class="paper-card-button" onclick="startExam('+n+')">'+(old?'Try again':'Start paper')+' →</button></article>'}).join("")}
