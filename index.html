@@ -21,63 +21,112 @@
 <div id="homeSubjects" class="grid"></div>
 </section>
 <section id="subjectsView" class="hidden"><div class="crumb">Home / Subjects</div><div class="sectionhead"><div><h2>Explore subjects</h2><p>Pick a subject and choose one of its practice papers.</p></div><input id="subjectSearch" class="search" placeholder="Search subjects..." oninput="renderSubjects()"></div><div id="subjectGrid" class="grid"></div></section>
-<section id="papersView" class="hidden"><div class="crumb"><a href="#" onclick="goSubjects();return false">Subjects</a> / <span id="crumbSubject"></span></div><div class="card"><div class="eyebrow" style="color:#315bd5">Subject practice</div><h2 id="papersTitle"></h2><p class="notice">English-medium practice paper · 35 questions · 2-hour countdown · 100 marks.</p><div id="paperGrid" class="papergrid"></div></div></section>
+<section id="papersView" class="hidden"><div class="crumb"><a href="#" onclick="goSubjects();return false">Subjects</a> / <span id="crumbSubject"></span></div><div class="card"><div class="eyebrow" style="color:#315bd5">Subject practice</div><h2 id="papersTitle"></h2><p class="notice">Original syllabus-based practice · English medium · 35 questions · 2 hours · 100 marks.</p><div id="paperGrid" class="papergrid"></div></div></section>
 <section id="examView" class="hidden"><div class="card"><div class="examhead"><div><div class="crumb" id="examCrumb"></div><h2 id="examTitle" style="margin:0"></h2></div><div class="timer">◷ <span id="timerText">02:00:00</span></div></div><div class="examlayout"><div><div id="questionArea"></div><div class="examactions"><button class="secondary" id="prevBtn" onclick="moveQuestion(-1)">← Previous</button><button id="nextBtn" onclick="moveQuestion(1)">Next →</button><button class="danger" onclick="submitExam(false)">Submit paper</button></div></div><aside class="qnav"><h3>Questions</h3><div id="questionNumbers" class="qnums"></div><small>Green = answered · Blue = current</small><p class="notice">The countdown stays visible while you scroll. Your answers stay on this page until you submit or leave the paper.</p></aside></div><div id="examResult"></div></div></section>
 </main>
 <footer>LearnNova · Grade 7 Learning Hub<br>Keep practising. Keep progressing.</footer>
 <script>
 const subjects=[
 {name:"English",icon:"📖",data:[
-["A noun is a naming word.","noun","verb","adjective","A noun names a person, place, animal or thing."],
-["The opposite of hot is _____.","cold","warm","boiling","The opposite of hot is cold."],
-["A verb shows an _____.","action","colour","place","A verb can show an action."],
-["The plural of child is _____.","children","childs","childes","The plural form of child is children."],
-["A question ends with a _____.","question mark","full stop","comma","A question usually ends with a question mark."],
-["The past tense of go is _____.","went","goed","going","The past tense of go is went."]]},
+["Which word is a noun in this sentence: The bird sings.","bird","sings","the","A noun names a person, place, animal or thing.","The bird is a noun." ,"Complete: A word that names a person, place or thing is a _____. "],
+["Choose the correct pronoun: Nimal is my friend. _____ is kind.","He","They","We","He is the correct pronoun for Nimal.","He is kind.","Complete: Nimal is my friend. _____ is kind."],
+["Choose the past tense of write.","wrote","written","writing","The simple past tense of write is wrote.","Yesterday, I wrote a letter.","Complete: Yesterday, I _____ a letter."],
+["Which word is an adjective in 'a tall tree'?","tall","tree","a","Tall describes the tree, so it is an adjective.","The adjective tall describes the tree.","Complete: A _____ tree stood near the road."],
+["Choose the correct article: I saw _____ elephant.","an","a","the","Use an before a vowel sound, as in elephant.","We say an elephant.","Complete: I saw _____ elephant."],
+["Which punctuation mark ends a question?","?","! ",",","A question usually ends with a question mark.","A question mark is used at the end of a question.","Complete: Put a question mark at the end of a _____."],
+["Choose the correct plural of leaf.","leaves","leafs","leafes","The plural of leaf is leaves.","One leaf; two leaves.","Complete: One leaf; many _____."],
+["Choose the correct preposition: The book is _____ the table.","on","under to","between of","On tells us the position of the book.","The book is on the table.","Complete: The cup is _____ the table."],
+["Which word is a conjunction in 'I like tea and milk'?","and","like","milk","And joins words or ideas.","And joins tea and milk.","Complete: I like tea _____ milk."],
+["Choose the correct verb: She _____ to school every day.","goes","go","going","She is singular, so the verb is goes.","She goes to school every day.","Complete: She _____ to school every day."],
+["Which word is an adverb in 'He ran quickly'?","quickly","ran","he","Quickly tells how he ran.","Quickly describes the action ran.","Complete: He walked _____."],
+["Choose the correct opposite of ancient.","modern","old","historic","Modern means present-day; it is an opposite of ancient.","Ancient and modern have opposite meanings.","Complete: The opposite of ancient is _____. "]
+]},
 {name:"Science",icon:"🔬",data:[
-["Which organ pumps blood?","heart","lungs","brain","The heart pumps blood around the body."],
-["Plants make food mainly in their _____.","leaves","roots","flowers","Plants make food mainly in their leaves."],
-["Which is a natural source of light?","Sun","Moon","Earth","The Sun is a natural source of light."],
-["Water freezes into _____.","ice","steam","air","Water freezes to form ice."],
-["Humans need ____ to breathe.","oxygen","carbon dioxide","helium","Humans need oxygen for respiration."],
-["The planet we live on is _____.","Earth","Mars","Venus","Earth is the planet on which we live."]]},
+["Which part of a plant absorbs water from the soil?","Roots","Leaves","Flower","Roots take in water and minerals from the soil.","Roots absorb water from the soil.","Complete: The _____ absorb water from the soil."],
+["What is the change of liquid water into water vapour called?","Evaporation","Freezing","Melting","Evaporation changes liquid water into water vapour.","Wet clothes dry as water evaporates.","Complete: Liquid water changes into vapour by _____. "],
+["Which material is attracted by a magnet?","Iron","Wood","Plastic","Iron is a magnetic material.","A magnet attracts iron.","Complete: A magnet can attract _____. "],
+["Which organ helps humans breathe?","Lungs","Stomach","Kidneys","The lungs take in oxygen and remove carbon dioxide.","We breathe using our lungs.","Complete: Humans breathe using their _____. "],
+["Which form of energy helps us see?","Light energy","Sound energy","Chemical energy","Light allows us to see objects.","Light from a lamp helps us see.","Complete: We see objects when light enters our _____. "],
+["What is needed for a bulb to light in a simple circuit?","A complete circuit","A broken wire","An open switch","Electric current flows when the circuit is complete.","A complete circuit lets current flow.","Complete: A bulb lights when the circuit is _____. "],
+["Which state of matter has a fixed shape?","Solid","Liquid","Gas","A solid keeps its own shape.","A stone is a solid and keeps its shape.","Complete: A solid has a fixed _____. "],
+["Which force pulls objects towards Earth?","Gravity","Friction","Magnetism","Gravity pulls objects towards Earth.","A dropped ball falls because of gravity.","Complete: Objects fall towards Earth because of _____. "],
+["Which instrument measures temperature?","Thermometer","Ruler","Balance","A thermometer measures temperature.","A thermometer tells us how hot or cold something is.","Complete: Temperature is measured with a _____. "],
+["Which gas do green plants take in for photosynthesis?","Carbon dioxide","Oxygen","Nitrogen","Plants use carbon dioxide, water and light to make food.","Plants take in carbon dioxide during photosynthesis.","Complete: Plants use _____ dioxide to make food."],
+["Which is a good conductor of electricity?","Copper","Rubber","Dry wood","Copper allows electric current to pass through it easily.","Copper wire is used in electrical circuits.","Complete: _____ is commonly used in electrical wires."],
+["What happens to most materials when they are heated?","They expand","They disappear","They turn into soil","Many materials expand when heated.","Heating usually makes materials expand.","Complete: Many materials _____ when heated."]
+]},
 {name:"Mathematics",icon:"➗",data:[
-["What is 25 + 15?","40","35","45","25 plus 15 equals 40."],
-["What is 9 × 6?","54","45","63","Nine multiplied by six equals 54."],
-["What is half of 80?","40","20","60","Half of 80 is 40."],
-["What is 100 − 37?","63","67","73","100 minus 37 equals 63."],
-["A triangle has how many sides?","3","4","5","A triangle has three sides."],
-["What is 1/2 + 1/2?","1","1/2","2","One half plus one half equals one whole."]]},
+["What is 3/4 of 20?","15","12","18","One quarter of 20 is 5; three quarters is 15.","20 divided by 4 and multiplied by 3 is 15.","Complete: 3/4 of 20 = _____."],
+["What is 2.5 + 1.75?","4.25","3.25","4.75","Align the decimal points: 2.50 + 1.75 = 4.25.","The sum is 4.25.","Complete: 2.5 + 1.75 = _____."],
+["Which number is a factor of 24?","6","5","7","24 divided by 6 gives 4 with no remainder.","Six is a factor of 24.","Complete: 6 is a factor of _____."],
+["What is the perimeter of a rectangle with length 8 cm and width 3 cm?","22 cm","11 cm","24 cm","Perimeter = 2 × (8 + 3) = 22 cm.","Add all four sides to get 22 cm.","Complete: Perimeter = 2 × (8 + 3) = _____ cm."],
+["What is the area of a rectangle 6 cm long and 4 cm wide?","24 cm²","20 cm²","10 cm²","Area = length × width = 6 × 4 = 24 cm².","Multiply 6 by 4 to get 24 square centimetres.","Complete: Area = 6 × 4 = _____ cm²."],
+["What is the value of 7 × 8?","56","54","64","Seven multiplied by eight is 56.","7 groups of 8 make 56.","Complete: 7 × 8 = _____."],
+["Which angle is exactly 90 degrees?","Right angle","Acute angle","Obtuse angle","A right angle measures 90 degrees.","The corner of a square is a right angle.","Complete: An angle of 90° is a _____ angle."],
+["What is 15% of 100?","15","10","25","15 percent means 15 out of every 100.","15% of 100 is 15.","Complete: 15% of 100 = _____."],
+["What is the next multiple of 9 after 27?","36","35","45","The multiples of 9 are 9, 18, 27, 36.","Add 9 to 27 to get 36.","Complete: The next multiple of 9 after 27 is _____."],
+["What is -3 + 8?","5","-5","11","Starting at -3 and moving 8 steps right gives 5.","The answer is positive 5.","Complete: -3 + 8 = _____."],
+["A bus leaves at 8:30 and arrives at 10:00. How long is the journey?","1 hour 30 minutes","1 hour","2 hours","From 8:30 to 10:00 is 90 minutes.","The journey takes one and a half hours.","Complete: From 8:30 to 10:00 is _____ minutes."],
+["Simplify the ratio 4:8.","1:2","2:1","4:4","Divide both parts by 4 to get 1:2.","Four to eight simplifies to one to two.","Complete: 4:8 in simplest form is _____. "]
+]},
 {name:"Civic Education",icon:"🤝",data:[
-["What is a responsibility?","A duty","A game","A holiday","A responsibility is a duty."],
-["How should we treat public property?","Use it carefully","Damage it","Write on it","We should use public property carefully."],
-["What helps people live peacefully?","Respect","Fighting","Discrimination","Respect helps people live peacefully."],
-["What is a community?","People living together","One building","A vehicle","A community is a group of people living together."],
-["Which is a public service?","Education","A private toy","A personal game","Education is an important public service."],
-["Why do we follow rules?","For safety and order","To create trouble","To stop learning","Rules help maintain safety and order."]]},
+["Which is an example of public property?","A public library","A child's pencil","A family toy","A public library is provided for community use.","We should care for public libraries.","Complete: A public _____ is shared by the community."],
+["What should you do when you see someone being treated unfairly?","Seek help and support fairness","Join in the unfair treatment","Ignore every problem","We should support fairness and tell a trusted adult when needed.","Fairness means treating people justly.","Complete: We should support _____ treatment."],
+["Which action shows respect for cultural differences?","Learning about different traditions","Making fun of traditions","Refusing to listen","Learning about others' traditions builds respect.","Respect means valuing different cultures.","Complete: We show respect by learning about other people's _____. "],
+["Why are community rules important?","They help people live safely together","They make everyone fight","They stop all activities","Rules support safety, order and cooperation.","Rules help a community work well.","Complete: Community rules help maintain safety and _____. "],
+["Which is a responsibility of a student?","Attend school and learn","Damage school property","Stop others learning","Students have a responsibility to learn and respect school rules.","Learning is an important student responsibility.","Complete: A student's responsibility is to attend school and _____. "],
+["What is cooperation?","Working together","Working against everyone","Refusing to help","Cooperation means people work together towards a shared goal.","A group project needs cooperation.","Complete: Cooperation means working _____. "],
+["Which institution makes laws for Sri Lanka?","Parliament","A sports club","A shop","Parliament is the national law-making body.","Parliament makes laws for the country.","Complete: The _____ makes laws for Sri Lanka."],
+["What is a right?","A freedom or protection people are entitled to","A punishment","A school subject only","Rights are freedoms and protections people are entitled to.","Education is a right of children.","Complete: A _____ is a freedom or protection people are entitled to."],
+["Which action protects public property?","Keeping a park clean","Breaking a bench","Writing on a wall","Careful use keeps shared places useful for everyone.","We protect parks by keeping them clean.","Complete: Keep public places _____."],
+["Why should citizens obey traffic rules?","To reduce danger on roads","To make roads unsafe","To delay every journey","Traffic rules help protect road users.","Following road rules helps prevent accidents.","Complete: Traffic rules help keep road users _____. "],
+["Which is a peaceful way to solve a disagreement?","Discuss the problem calmly","Shout and threaten","Damage another person's things","Calm discussion helps people understand each other.","People can solve disagreements by talking respectfully.","Complete: Solve disagreements through calm _____. "],
+["What does national identity help people understand?","Their shared country and heritage","Only their favourite games","Only the weather","National identity connects people with their country and heritage.","National identity includes shared symbols and heritage.","Complete: National identity connects people with their country and _____. "]
+]},
 {name:"Geography",icon:"🌍",data:[
-["Which is the largest ocean?","Pacific Ocean","Indian Ocean","Arctic Ocean","The Pacific Ocean is the largest ocean."],
-["What is the legislative capital of Sri Lanka?","Sri Jayawardenepura Kotte","Kandy","Galle","Sri Jayawardenepura Kotte is Sri Lanka's legislative capital."],
-["A map represents _____.","places","only animals","only food","A map represents places on the Earth."],
-["Which direction is opposite to north?","South","East","West","South is opposite to north."],
-["A river may flow into a _____.","sea or lake","mountain top","desert only","A river may flow into a sea or lake."],
-["The Earth is approximately shaped like a _____.","sphere","cube","flat square","The Earth is approximately spherical."]]},
+["Which ocean is south of Sri Lanka?","Indian Ocean","Atlantic Ocean","Arctic Ocean","Sri Lanka is an island in the Indian Ocean.","The Indian Ocean surrounds Sri Lanka.","Complete: Sri Lanka is in the _____ Ocean."],
+["What does a map key explain?","The meaning of map symbols","The age of the map reader","The weather tomorrow","A map key explains the symbols used on a map.","The key helps us understand map symbols.","Complete: A map key explains map _____. "],
+["Which direction is opposite to east?","West","North","South","West is opposite to east.","East and west are opposite directions.","Complete: The opposite direction of east is _____. "],
+["What is the main source of energy for Earth's weather?","The Sun","The Moon","The stars","The Sun heats Earth's surface and drives many weather processes.","Sunlight warms the land and sea.","Complete: The main energy source for weather is the _____. "],
+["Which landform is usually higher than the surrounding land and has a peak?","Mountain","Plain","Valley","A mountain is a high landform, often with a peak.","Mountains rise above nearby land.","Complete: A high landform with a peak is a _____. "],
+["What is the process by which water falls from clouds?","Precipitation","Evaporation","Condensation","Rain is precipitation that falls from clouds.","Rainfall is a type of precipitation.","Complete: Rain falling from clouds is called _____. "],
+["Which is a renewable natural resource?","Sunlight","Coal","Petroleum","Sunlight is naturally replenished and does not run out through use.","Solar energy comes from sunlight.","Complete: _____ is a renewable source of energy."],
+["What is the name of the imaginary line at 0° latitude?","Equator","Prime Meridian","Tropic of Cancer","The Equator divides Earth into the Northern and Southern Hemispheres.","The Equator is at zero degrees latitude.","Complete: The 0° latitude line is the _____. "],
+["Which activity is common in fertile lowland areas?","Growing crops","Building glaciers","Mining icebergs","Fertile lowlands are often used for agriculture.","Farmers grow crops in fertile areas.","Complete: Farmers grow crops in fertile _____."],
+["What is a river basin?","The area drained by a river and its tributaries","A single hilltop","A type of cloud","A river basin is the land area drained by a river system.","Rainwater in a basin flows towards its river system.","Complete: A river basin is an area drained by a _____. "],
+["Which tool helps find direction?","Compass","Thermometer","Measuring cup","A compass shows directions such as north, south, east and west.","A compass helps with direction.","Complete: Use a _____ to find direction."],
+["What can cause soil erosion?","Water flowing over bare soil","Plant roots holding soil","Careful planting","Moving water can carry soil away, especially where there is little plant cover.","Heavy rain can wash soil away.","Complete: Soil can be carried away by flowing _____. "]
+]},
 {name:"Health",icon:"🌱",data:[
-["Which habit helps prevent illness?","Handwashing","Eating dirty food","Avoiding sleep","Handwashing helps prevent the spread of germs."],
-["Which food group helps build the body?","Protein foods","Sweets only","Soft drinks","Protein foods help the body grow and repair."],
-["Why is regular exercise important?","It supports good health","It causes illness","It stops growth","Regular exercise supports good health."],
-["Which is a healthy drink?","Clean water","Dirty water","Paint","Clean water is a healthy drink."],
-["What supports good health?","Enough sleep","No sleep","Skipping rest","Enough sleep supports health and learning."],
-["What should we do before eating?","Wash hands","Touch dirt","Play in mud","We should wash our hands before eating."]]},
+["Which meal habit supports good health?","Eating a variety of nutritious foods","Eating only sweets","Skipping every meal","A varied diet provides different nutrients.","Choose a variety of foods for a balanced diet.","Complete: A healthy diet includes a _____ of nutritious foods."],
+["Why should we wash our hands with soap?","To remove germs","To make hands sticky","To change our fingerprints","Soap and water help remove germs from our hands.","Wash hands before eating and after using the toilet.","Complete: Soap and water help remove _____. "],
+["Which activity supports heart and lung fitness?","Brisk walking","Watching television all day","Sitting without breaks","Regular active movement supports fitness.","Walking is a simple physical activity.","Complete: Brisk _____ is a form of exercise."],
+["What should you do if you feel unwell at school?","Tell a teacher or trusted adult","Hide it from everyone","Take unknown medicine","A trusted adult can help you get appropriate care.","Tell a teacher when you feel unwell.","Complete: Tell a trusted _____ if you feel unwell."],
+["Which is a safe way to cross a road?","Use a safe crossing and look both ways","Run between parked vehicles","Look only at a phone","Use a pedestrian crossing where available and check traffic carefully.","Look both ways before crossing.","Complete: Look both _____ before crossing."],
+["Why is sleep important for students?","It helps the body rest and the brain learn","It replaces all food","It stops the body growing","Sleep supports rest, memory and learning.","Enough sleep helps students learn.","Complete: Sleep helps the body _____."],
+["Which drink is best for everyday hydration?","Clean water","Sugary energy drink","Soft drink","Clean water helps replace the water the body loses.","Drink clean water during the day.","Complete: Drink clean _____ to stay hydrated."],
+["What is a good way to care for teeth?","Brush twice a day","Never brush","Eat sweets before bed and do not clean teeth","Regular brushing helps remove plaque and protect teeth.","Brush teeth in the morning and before bed.","Complete: Brush your teeth _____ a day."],
+["Which nutrient helps build and repair body tissues?","Protein","Water only","Salt","Protein is needed for growth and tissue repair.","Eggs, fish, beans and lentils contain protein.","Complete: _____ helps build and repair body tissues."],
+["What should you do before playing a sport?","Warm up","Start at full speed immediately","Avoid moving","A warm-up prepares the body for activity.","Gentle warm-up movements prepare muscles.","Complete: Before exercise, do a _____. "],
+["Which action supports mental well-being?","Talk to a trusted person when worried","Keep every worry secret","Never take a break","Sharing worries with a trusted person can help.","It is okay to ask for support.","Complete: Talk to a trusted _____ when worried."],
+["Why should food be covered?","To keep away flies and dust","To make it spoil faster","To attract insects","Covering food helps protect it from dirt and insects.","Keep food covered and store it safely.","Complete: Keep food _____ to protect it."]
+]},
 {name:"ICT",icon:"💻",data:[
-["What does CPU stand for?","Central Processing Unit","Computer Personal Unit","Control Power User","CPU stands for Central Processing Unit."],
-["Which device is used to type?","Keyboard","Monitor","Speaker","A keyboard is used to type."],
-["Which device displays information?","Monitor","Mouse","Microphone","A monitor displays information."],
-["What is the internet?","A global network","A keyboard","A printer","The internet is a global network of connected devices."],
-["Which is an input device?","Mouse","Monitor","Speaker","A mouse is an input device."],
-["What helps protect an online account?","A strong password","Your name only","No password","A strong password helps protect an online account."]]}
+["Which device is used to enter letters into a computer?","Keyboard","Monitor","Speaker","A keyboard is an input device used for typing.","Use a keyboard to type words.","Complete: A _____ is used to type letters."],
+["Which device displays text and pictures from a computer?","Monitor","Mouse","Microphone","A monitor is an output device that displays information.","The monitor shows the computer's work.","Complete: A _____ displays computer information."],
+["Which part is often called the brain of the computer?","CPU","Keyboard","Printer","The CPU processes instructions and data.","The CPU carries out processing.","Complete: CPU means Central Processing _____. "],
+["Which of these is an example of software?","A word processor program","A keyboard","A monitor","A word processor is a program, so it is software.","Software is a set of programs.","Complete: A computer program is called _____. "],
+["What is a folder used for?","Organising files","Cleaning the screen","Increasing speaker volume","Folders help organise files on a computer.","Put related files in one folder.","Complete: Use a folder to organise _____. "],
+["Which key usually starts a new line while typing?","Enter","Shift","Caps Lock","The Enter key moves the cursor to a new line in many programs.","Press Enter to start a new line.","Complete: Press _____ to start a new line."],
+["Which is a safe online action?","Keep passwords private","Share your password with strangers","Post your home address publicly","Keeping passwords private helps protect accounts.","Never share passwords with strangers.","Complete: Keep your password _____. "],
+["What is the internet?","A worldwide network of connected computers and devices","A type of keyboard","A computer screen","The internet connects devices around the world.","Websites are accessed through the internet.","Complete: The internet is a worldwide _____. "],
+["Which device is used to point and click on screen items?","Mouse","Printer","Projector","A mouse controls the pointer on the screen.","Move the mouse to move the pointer.","Complete: Use a _____ to point and click."],
+["What should you do before switching off a computer?","Save your work and shut down properly","Pull out the power cable every time","Remove the keyboard","Saving prevents loss of your work; proper shutdown protects the system.","Save files before shutting down.","Complete: _____ your work before shutting down."],
+["Which one is an output device?","Printer","Keyboard","Scanner","A printer produces a paper copy of digital information.","A printer gives output on paper.","Complete: A _____ prints information on paper."],
+["What is an algorithm?","A step-by-step set of instructions","A computer screen","A type of battery","An algorithm is an ordered set of steps to solve a problem.","A recipe is an everyday example of step-by-step instructions.","Complete: An algorithm is a set of ordered _____. "]
+]}
 ];
-const types=["Multiple choice","True or false","Fill in the blank","Short answer","Matching","Select the answer"];
+const types=["Multiple choice","True or false","Fill in the blank"];
 let activeSubject=null,activePaper=1,questions=[],answers={},currentQ=0,timer=null,secondsLeft=7200,submitted=false;
 const $=id=>document.getElementById(id);
 function getProgress(){try{return JSON.parse(localStorage.getItem("learnnovaProgress")||"{}")}catch(e){return {}}}
@@ -89,15 +138,12 @@ function goSubjects(){if(timer){clearInterval(timer);timer=null}showView("subjec
 function renderHome(){updateStats();$("homeSubjects").innerHTML=subjects.map(s=>subjectCard(s)).join("")}
 function subjectCard(s){const p=getProgress(),done=[1,2,3].filter(n=>p[s.name+"-"+n]).length;return '<article class="subject"><div class="subjecticon">'+s.icon+'</div><h3>'+s.name+'</h3><p>3 practice papers · '+done+'/3 completed</p><div class="progress"><span style="width:'+(done/3*100)+'%"></span></div><button onclick="openSubject(\''+s.name.replace(/'/g,"\\'")+'\')">View papers →</button></article>'}
 function renderSubjects(){const q=($("subjectSearch").value||"").toLowerCase();const list=subjects.filter(s=>s.name.toLowerCase().includes(q));$("subjectGrid").innerHTML=list.length?list.map(subjectCard).join(""):'<div class="empty">No subjects found.</div>'}
-function openSubject(name){activeSubject=subjects.find(s=>s.name===name);if(!activeSubject)return;showView("papersView");$("crumbSubject").textContent=name;$("papersTitle").textContent=activeSubject.icon+" "+name;$("paperGrid").innerHTML=[1,2,3].map(n=>{const old=getProgress()[name+"-"+n];return '<article class="examcard"><div class="eyebrow" style="color:#315bd5">PRACTICE PAPER '+n+'</div><h3>'+name+' · Paper '+n+'</h3><p>35 short questions · English medium · 2 hours · 100 marks</p>'+(old?'<p class="correct">Last score: '+old.score+'/100</p>':'<p>Not attempted yet</p>')+'<button onclick="startExam('+n+')">'+(old?'Try again':'Start paper')+' →</button></article>'}).join("")}
+function openSubject(name){activeSubject=subjects.find(s=>s.name===name);if(!activeSubject)return;showView("papersView");$("crumbSubject").textContent=name;$("papersTitle").textContent=activeSubject.icon+" "+name;$("paperGrid").innerHTML=[1,2,3].map(n=>{const old=getProgress()[name+"-"+n];return '<article class="examcard"><div class="eyebrow" style="color:#315bd5">PRACTICE PAPER '+n+'</div><h3>'+name+' · Paper '+n+'</h3><p>35 questions · English medium · 2 hours · 100 marks</p>'+(old?'<p class="correct">Last score: '+old.score+'/100</p>':'<p>Not attempted yet</p>')+'<button onclick="startExam('+n+')">'+(old?'Try again':'Start paper')+' →</button></article>'}).join("")}
 function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
-function startExam(n){activePaper=n;submitted=false;answers={};currentQ=0;secondsLeft=7200;const bank=activeSubject.data;const selected=bank.map((_,i)=>bank[(i+n-1)%bank.length]);questions=selected.flatMap(row=>{const [prompt,correct,wrong1,wrong2,explain]=row;const options=shuffle([correct,wrong1,wrong2]);const falseClaim=Math.random()<.5;return [
+function startExam(n){activePaper=n;submitted=false;answers={};currentQ=0;secondsLeft=7200;const bank=activeSubject.data;const offset=(n-1)*4;const selected=bank.map((_,i)=>bank[(i+offset)%bank.length]);questions=selected.flatMap(row=>{const [prompt,correct,wrong1,wrong2,explain,statement,fill]=row;const options=shuffle([correct,wrong1,wrong2]);const claimCorrect=Math.random()<.5;return [
 {type:"Multiple choice",prompt,answer:correct,options,explain},
-{type:"True or false",prompt:'True or false: "'+prompt+'" has the answer "'+(falseClaim?wrong1:correct)+'".',answer:String(!falseClaim),explain},
-{type:"Fill in the blank",prompt,answer:correct,explain},
-{type:"Short answer",prompt:"Answer briefly: "+prompt,answer:correct,explain},
-{type:"Matching",prompt:"Choose the term that matches this description: "+prompt,answer:correct,options,explain},
-{type:"Select the answer",prompt:"Select the correct answer: "+prompt,answer:correct,options,explain}
+{type:"True or false",prompt:"True or false: "+(claimCorrect?statement:statement.replace(correct,wrong1)),answer:String(claimCorrect),explain},
+{type:"Fill in the blank",prompt:fill,answer:correct,explain}
 ]}).slice(0,35);showView("examView");$("examCrumb").textContent=activeSubject.name+" / Paper "+n;$("examTitle").textContent="Practice Paper "+n;$("examResult").innerHTML="";$("prevBtn").classList.remove("hidden");$("nextBtn").classList.remove("hidden");renderQuestion();startTimer()}
 function startTimer(){if(timer)clearInterval(timer);timer=setInterval(()=>{secondsLeft--;const h=String(Math.floor(secondsLeft/3600)).padStart(2,"0"),m=String(Math.floor((secondsLeft%3600)/60)).padStart(2,"0"),s=String(secondsLeft%60).padStart(2,"0");$("timerText").textContent=h+":"+m+":"+s;if(secondsLeft<=0){clearInterval(timer);timer=null;submitExam(true)}},1000)}
 function pictureClue(){const clues={"English":"📚 🔤 ✏️","Science":"☀️ 🌱 💧","Mathematics":"🍎 ➕ 🍎","Civic Education":"🧒 🤝 🏫","Geography":"🌍 🏞️ 🧭","Health":"🍎 💧 🏃","ICT":"💻 🖱️ ⌨️"};return clues[activeSubject.name]||"⭐ 📘 ✏️"}
