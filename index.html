@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LearnNova - Grade 7 Learning Hub</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4ff;color:#26334d}header{background:linear-gradient(120deg,#2457d6,#713bd1);color:#fff;text-align:center;padding:32px 15px}header h1{margin:0;font-size:34px}nav{background:#fff;padding:12px;text-align:center;box-shadow:0 2px 8px #0001;position:sticky;top:0}button{border:0;border-radius:8px;padding:11px 16px;background:#315bd5;color:#fff;cursor:pointer;margin:4px;font-weight:bold}button:hover{background:#193fa8}.secondary{background:#64748b}.container{max-width:1000px;margin:24px auto;padding:15px}.panel{background:#fff;padding:22px;border-radius:14px;box-shadow:0 4px 15px #0000000c;margin-bottom:20px}.subjects{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px}.subject{background:#f2f5ff;border:1px solid #dce5ff;border-radius:12px;padding:18px;text-align:center}.paper-list{display:flex;flex-wrap:wrap;gap:10px}.question{border:1px solid #e1e6f0;border-radius:12px;padding:16px;margin:15px 0}.question h3{font-size:17px}.option{display:block;padding:9px;margin:6px 0;background:#f5f7fc;border-radius:7px;cursor:pointer}input[type=text],select{padding:11px;border:1px solid #cbd5e1;border-radius:7px;width:100%;max-width:450px;margin-top:8px}.result{padding:20px;border-radius:12px;background:#e8f7ed;margin-top:20px}.hidden{display:none}.small{color:#64748b;font-size:13px}footer{text-align:center;padding:25px;color:#64748b}.score{font-size:38px;font-weight:bold;color:#2457d6}
+</style>
+</head>
+<body>
+<header><h1>📚 LearnNova</h1><p>Grade 7 Learning Hub | Learn • Practise • Improve</p></header>
+<nav><button onclick="showHome()">Home</button><button onclick="showSubjects()">All Subjects</button></nav>
+<main class="container">
+<section id="home" class="panel"><h2>Welcome to Grade 7 Learning Hub!</h2><p>Choose a subject and practise with online examination papers.</p><ul><li>7 school subjects</li><li>3 practice papers for each subject</li><li>6 question types</li><li>Automatic marking</li><li>Results out of 100</li></ul><button onclick="showSubjects()">Start Learning</button></section>
+<section id="subjectsPage" class="panel hidden"><h2>Choose Your Subject</h2><div id="subjects" class="subjects"></div></section>
+<section id="papersPage" class="panel hidden"><button class="secondary" onclick="showSubjects()">← Back to Subjects</button><h2 id="subjectTitle"></h2><p>Select a practice paper.</p><div id="papers" class="paper-list"></div></section>
+<section id="examPage" class="panel hidden"><button class="secondary" onclick="showPapers()">← Back to Papers</button><h2 id="examTitle"></h2><p class="small">Answer all 12 questions. Each question is worth equal marks.</p><div id="questions"></div><button onclick="submitExam()">Submit Answers</button><div id="result"></div></section>
+</main><footer>LearnNova | Grade 7 Learning Hub</footer>
+<script>
+const subjects=["English","Science","Mathematics","Civic Education","Geography","Health","ICT"];
+// Each row: question, correct answer, distractor 1, distractor 2, true statement.
+const banks={
+"English":[
+["A noun is a naming word.","noun","verb","adjective","A noun names a person, place, animal or thing."],
+["The opposite of hot is _____.","cold","warm","boiling","The opposite of hot is cold."],
+["A verb shows an _____.","action","colour","place","A verb can show an action."],
+["The plural of child is _____.","children","childs","childes","The plural form of child is children."],
+["A question ends with a _____.","question mark","full stop","comma","A question usually ends with a question mark."],
+["The past tense of go is _____.","went","goed","going","The past tense of go is went."]
+],
+"Science":[
+["Which organ pumps blood?","heart","lungs","brain","The heart pumps blood around the body."],
+["Plants make food mainly in their _____.","leaves","roots","flowers","Plants make food mainly in their leaves."],
+["Which is a natural source of light?","Sun","Moon","Earth","The Sun is a natural source of light."],
+["Water freezes into _____.","ice","steam","air","Water freezes to form ice."],
+["Humans need ____ to breathe.","oxygen","carbon dioxide","helium","Humans need oxygen for respiration."],
+["The planet we live on is _____.","Earth","Mars","Venus","Earth is the planet on which we live."]
+],
+"Mathematics":[
+["What is 25 + 15?","40","35","45","25 plus 15 equals 40."],
+["What is 9 × 6?","54","45","63","Nine multiplied by six equals 54."],
+["What is half of 80?","40","20","60","Half of 80 is 40."],
+["What is 100 − 37?","63","67","73","100 minus 37 equals 63."],
+["A triangle has how many sides?","3","4","5","A triangle has three sides."],
+["What is 1/2 + 1/2?","1","1/2","2","One half plus one half equals one whole."]
+],
+"Civic Education":[
+["What is a responsibility?","A duty","A game","A holiday","A responsibility is a duty."],
+["How should we treat public property?","Use it carefully","Damage it","Write on it","We should use public property carefully."],
+["What helps people live peacefully?","Respect","Fighting","Discrimination","Respect helps people live peacefully."],
+["What is a community?","People living together","One building","A vehicle","A community is a group of people living together."],
+["Which is a public service?","Education","A private toy","A personal game","Education is an important public service."],
+["Why do we follow rules?","For safety and order","To create trouble","To stop learning","Rules help maintain safety and order."]
+],
+"Geography":[
+["Which is the largest ocean?","Pacific Ocean","Indian Ocean","Arctic Ocean","The Pacific Ocean is the largest ocean."],
+["What is the legislative capital of Sri Lanka?","Sri Jayawardenepura Kotte","Kandy","Galle","Sri Jayawardenepura Kotte is Sri Lanka's legislative capital."],
+["A map represents _____.","places","only animals","only food","A map represents places on the Earth."],
+["Which direction is opposite to north?","South","East","West","South is opposite to north."],
+["A river may flow into a _____.","sea or lake","mountain top","desert only","A river may flow into a sea or lake."],
+["The Earth is approximately shaped like a _____.","sphere","cube","flat square","The Earth is approximately spherical."]
+],
+"Health":[
+["Which habit helps prevent illness?","Handwashing","Eating dirty food","Avoiding sleep","Handwashing helps prevent the spread of germs."],
+["Which food group helps build the body?","Protein foods","Sweets only","Soft drinks","Protein foods help the body grow and repair."],
+["Why is regular exercise important?","It supports good health","It causes illness","It stops growth","Regular exercise supports good health."],
+["Which is a healthy drink?","Clean water","Dirty water","Paint","Clean water is a healthy drink."],
+["What supports good health?","Enough sleep","No sleep","Skipping rest","Enough sleep supports health and learning."],
+["What should we do before eating?","Wash hands","Touch dirt","Play in mud","We should wash our hands before eating."]
+],
+"ICT":[
+["What does CPU stand for?","Central Processing Unit","Computer Personal Unit","Control Power User","CPU stands for Central Processing Unit."],
+["Which device is used to type?","Keyboard","Monitor","Speaker","A keyboard is used to type."],
+["Which device displays information?","Monitor","Mouse","Microphone","A monitor displays information."],
+["What is the internet?","A global network","A keyboard","A printer","The internet is a global network of connected devices."],
+["Which is an input device?","Mouse","Monitor","Speaker","A mouse is an input device."],
+["What helps protect an online account?","A strong password","Your name only","No password","A strong password helps protect an online account."]
+]
+};
+let currentSubject="",currentPaper=1,examQuestions=[];
+const $=id=>document.getElementById(id);
+function hideAll(){["home","subjectsPage","papersPage","examPage"].forEach(id=>$(id).classList.add("hidden"))}
+function showHome(){hideAll();$("home").classList.remove("hidden")}
+function showSubjects(){hideAll();$("subjectsPage").classList.remove("hidden");$("subjects").innerHTML="";
+subjects.forEach(s=>{const card=document.createElement("div");card.className="subject";card.innerHTML="<h3>"+s+"</h3><p>3 Practice Papers</p>";const b=document.createElement("button");b.textContent="Open Subject";b.onclick=()=>openSubject(s);card.appendChild(b);$("subjects").appendChild(card)})}
+function openSubject(s){currentSubject=s;hideAll();$("papersPage").classList.remove("hidden");$("subjectTitle").textContent=s;$("papers").innerHTML="";
+for(let n=1;n<=3;n++){const b=document.createElement("button");b.textContent="Practice Paper "+n;b.onclick=()=>startExam(n);$("papers").appendChild(b)}}
+function showPapers(){openSubject(currentSubject)}
+function startExam(paper){currentPaper=paper;hideAll();$("examPage").classList.remove("hidden");$("examTitle").textContent=currentSubject+" — Practice Paper "+paper;$("result").innerHTML="";
+const pair=banks[currentSubject].slice((paper-1)*2,(paper-1)*2+2);examQuestions=[];
+pair.forEach((item,index)=>{
+const [prompt,answer,w1,w2,fact]=item,opts=[answer,w1,w2].sort(()=>Math.random()-.5);
+examQuestions.push({type:"Multiple choice",prompt,options:opts,answers:[answer]});
+examQuestions.push({type:"True / False",prompt:fact,answers:["true"]});
+examQuestions.push({type:"Fill in the blank",prompt,answers:[answer]});
+examQuestions.push({type:"Short answer",prompt:"Answer briefly: "+prompt,answers:[answer]});
+examQuestions.push({type:"Matching",prompt:"Match the correct answer: "+prompt,options:opts,answers:[answer]});
+examQuestions.push({type:"Multiple selection",prompt:"Select the correct answer: "+prompt,options:opts,answers:[answer]});
+});
+renderQuestions()}
+function renderQuestions(){$("questions").innerHTML="";
+examQuestions.forEach((q,i)=>{const card=document.createElement("div");card.className="question";let html="<h3>Question "+(i+1)+" — "+q.type+"</h3><p>"+q.prompt+"</p>";
+if(q.type==="Multiple choice"){html+=q.options.map(o=>'<label class="option"><input type="radio" name="q'+i+'" value="'+o+'"> '+o+"</label>").join("")}
+else if(q.type==="True / False"){html+='<label class="option"><input type="radio" name="q'+i+'" value="true"> True</label><label class="option"><input type="radio" name="q'+i+'" value="false"> False</label>'}
+else if(q.type==="Matching"){html+='<select id="q'+i+'"><option value="">Choose an answer</option>'+q.options.map(o=>'<option value="'+o+'">'+o+"</option>").join("")+"</select>"}
+else if(q.type==="Multiple selection"){html+=q.options.map(o=>'<label class="option"><input type="checkbox" name="q'+i+'" value="'+o+'"> '+o+"</label>").join("")}
+else{html+='<input type="text" id="q'+i+'" placeholder="Type your answer">'}
+card.innerHTML=html;$("questions").appendChild(card)})}
+function norm(s){return String(s||"").trim().toLowerCase().replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," ")}
+function readAnswer(i,q){if(["Multiple choice","True / False"].includes(q.type)){const e=document.querySelector('input[name="q'+i+'"]:checked');return e?[e.value]:[]}if(q.type==="Multiple selection"){return [...document.querySelectorAll('input[name="q'+i+'"]:checked')].map(e=>e.value)}return [ $("q"+i).value ]}
+function submitExam(){let correct=0;examQuestions.forEach((q,i)=>{const got=readAnswer(i,q).map(norm).sort(),want=q.answers.map(norm).sort();if(got.length===want.length&&got.every((v,j)=>v===want[j]))correct++});
+const score=Math.round(correct/examQuestions.length*100);$("result").innerHTML='<div class="result"><h2>Your Results</h2><div class="score">'+score+' / 100</div><p>Correct answers: '+correct+' out of '+examQuestions.length+'</p><p>'+(score>=75?"Excellent work! Keep learning!":score>=50?"Good effort! Practise more!":"Keep practising. You can improve!")+'</p><button onclick="startExam(currentPaper)">Try Again</button><button class="secondary" onclick="showPapers()">Choose Another Paper</button></div>'}
+showHome();
+</script>
+</body>
+</html>
