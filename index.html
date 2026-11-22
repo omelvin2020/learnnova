@@ -1239,13 +1239,13 @@ function submitAIStudyQuestion(){
  }).sort((x,y)=>y.score-x.score);
  const best=ranked[0];
  if(best&&best.coverage>=.34&&best.score>=.18){
-  status.textContent=(si?"ප්‍රශ්න බැංකුවෙන් සොයාගත් අදාළ පිළිතුර":"Relevant answer from the local question bank")+"\\n\\n"+(si?"ගැළපුණු ප්‍රශ්නය: ":"Matched question: ")+best.question+"\\n\\n"+(si?"පිළිතුර: ":"Answer: ")+best.answer+(best.explanation&&best.explanation!==best.answer?"\\n\\n"+(si?"පැහැදිලි කිරීම: ":"Explanation: ")+best.explanation:"")+"\\n\\n"+(si?grade+" ශ්‍රේණිය · "+subject+" · මෙය දැනට ඇති ප්‍රශ්න බැංකුවෙන් ලබාගත් පිළිතුරකි; සජීවී AI පිළිතුරක් නොවේ.":grade+" · "+subject+" · This answer was retrieved from the available question bank; it is not a live AI-generated answer.");
+  status.textContent=(si?"ප්‍රශ්න බැංකුවෙන් සොයාගත් අදාළ පිළිතුර":"Relevant answer from the local question bank")+"\n\n"+(si?"ගැළපුණු ප්‍රශ්නය: ":"Matched question: ")+best.question+"\n\n"+(si?"පිළිතුර: ":"Answer: ")+best.answer+(best.explanation&&best.explanation!==best.answer?"\n\n"+(si?"පැහැදිලි කිරීම: ":"Explanation: ")+best.explanation:"")+"\n\n"+(si?grade+" ශ්‍රේණිය · "+subject+" · මෙය දැනට ඇති ප්‍රශ්න බැංකුවෙන් ලබාගත් පිළිතුරකි; සජීවී AI පිළිතුරක් නොවේ.":grade+" · "+subject+" · This answer was retrieved from the available question bank; it is not a live AI-generated answer.");
   status.className="ai-message success";
  }else{
   const suggestions=ranked.slice(0,3).filter(x=>x.score>.04);
   status.textContent=si
-   ? "ඔබේ ප්‍රශ්නයට ප්‍රමාණවත් ලෙස ගැළපෙන පිළිතුරක් "+grade+" ශ්‍රේණියේ "+subject+" ප්‍රශ්න බැංකුවෙන් හමු නොවීය."+(suggestions.length?"\\n\\nළඟින්ම ගැළපුණු පාඩම් ප්‍රශ්න:\\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\\n"):"")+"\\n\\nතවත් ප්‍රශ්න සහ පිළිතුරු එක් කළ විට මෙම සෙවුමෙන් ඒවා සොයාගත හැක. සියලුම නව ප්‍රශ්න ස්වයංක්‍රීයව විසඳන සජීවී AI සේවාවක් තවම සම්බන්ධ කර නැත. ඔබේ ප්‍රශ්නය පිටතට යවා නැත."
-   : "I couldn't find a sufficiently close answer in the Grade "+grade+" "+subject+" question bank."+(suggestions.length?"\\n\\nClosest questions in the bank:\\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\\n"):"")+"\\n\\nThe search can answer more topics as the local question bank is expanded. A live AI service that can independently solve every new question is not connected. Your question was not sent anywhere.";
+   ? "ඔබේ ප්‍රශ්නයට ප්‍රමාණවත් ලෙස ගැළපෙන පිළිතුරක් "+grade+" ශ්‍රේණියේ "+subject+" ප්‍රශ්න බැංකුවෙන් හමු නොවීය."+(suggestions.length?"\n\nළඟින්ම ගැළපුණු පාඩම් ප්‍රශ්න:\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\n"):"")+"\n\nතවත් ප්‍රශ්න සහ පිළිතුරු එක් කළ විට මෙම සෙවුමෙන් ඒවා සොයාගත හැක. සියලුම නව ප්‍රශ්න ස්වයංක්‍රීයව විසඳන සජීවී AI සේවාවක් තවම සම්බන්ධ කර නැත. ඔබේ ප්‍රශ්නය පිටතට යවා නැත."
+   : "I couldn't find a sufficiently close answer in the Grade "+grade+" "+subject+" question bank."+(suggestions.length?"\n\nClosest questions in the bank:\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\n"):"")+"\n\nThe search can answer more topics as the local question bank is expanded. A live AI service that can independently solve every new question is not connected. Your question was not sent anywhere.";
   status.className="ai-message warning";
  }
  status.style.whiteSpace="pre-wrap";
