@@ -323,7 +323,7 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="feature-card"><div class="feature-icon">🥇</div><h3>Local leaderboard</h3><div id="leaderboardList"></div><p class="feature-note">This is a leaderboard on this device only, not a worldwide ranking.</p></article>
  </div>
  
- <section class="feature-section"><div class="sectionhead"><div><h2>🎮 More challenges</h2><p>Try another five-question game.</p></div></div><div class="more-games"><button onclick="startArcade('Geography Explorer','Geography')">🌍 Geography Explorer</button><button onclick="startArcade('Daily Quiz','Civic Education')">⚡ Daily Quiz</button></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>🎮 More challenges</h2><p>Try another five-question game.</p></div></div><div class="more-games"><button type="button" id="btnGeographyExplorer">🌍 Geography Explorer</button><button type="button" id="btnDailyQuiz">⚡ Daily Quiz</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🎓 My certificate</h2><p>Print a personal achievement certificate after completing at least one paper.</p></div></div><div class="certificate-panel"><div><h3>Certificate of Learning</h3><p>Celebrate your effort and progress at Novalearnix.</p></div><button onclick="printCertificate()">Create printable certificate</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🧑‍🏫 Teacher corner</h2><p>Create and save a simple custom practice question on this device.</p></div></div><div class="teacher-panel"><label for="customPaperTitle">Paper or topic title</label><input id="customPaperTitle" maxlength="70" placeholder="e.g. Science revision"><label for="customQuestion">Question</label><textarea id="customQuestion" rows="3" maxlength="500" placeholder="Write your question here..."></textarea><label for="customAnswer">Correct answer</label><input id="customAnswer" maxlength="250" placeholder="Enter the correct answer"><button onclick="saveCustomQuestion()">Save question</button><div id="customQuestionList" class="custom-list"></div><p class="feature-note">Custom questions are saved locally. This tool does not publish papers to other students.</p></div></section>
 
@@ -1331,6 +1331,16 @@ function chooseArcadeAnswer(index){
 }
 function nextArcadeQuestion(){if(!arcadeAnswered)return;arcadeIndex++;arcadeAnswered=false;renderArcadeQuestion()}
 function closeArcade(){$("arcadePanel").classList.add("hidden");$("arcadePanel").innerHTML=""}
+
+// Bind the two extra games directly, rather than relying on inline HTML handlers.
+document.getElementById("btnGeographyExplorer")?.addEventListener("click",()=>startArcade("Geography Explorer","Geography"));
+document.getElementById("btnDailyQuiz")?.addEventListener("click",()=>startArcade("Daily Quiz","Civic Education"));
+
+// Keep the game controls callable from the question panel's generated buttons.
+window.startArcade=startArcade;
+window.chooseArcadeAnswer=chooseArcadeAnswer;
+window.nextArcadeQuestion=nextArcadeQuestion;
+window.closeArcade=closeArcade;
 
 renderHome();
 
