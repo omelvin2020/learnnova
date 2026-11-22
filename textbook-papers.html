@@ -89,18 +89,33 @@ const packs={
 ]}
 };
 let current=null,mode='practice',answers=[],index=0,score=0;
+const gradeSubjects={
+6:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Health & Physical Education','Practical & Technical Skills','Aesthetic Studies','Religion'],
+7:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Health & Physical Education','Practical & Technical Skills','Aesthetic Studies','Religion'],
+8:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Health & Physical Education','Practical & Technical Skills','Aesthetic Studies','Religion'],
+9:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Health & Physical Education','Practical & Technical Skills','Aesthetic Studies','Religion'],
+10:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Business & Accounting Studies','Entrepreneurship Studies','ICT','Health & Physical Education','Aesthetic Studies','Religion'],
+11:['Mathematics','Science','English','Sinhala','Tamil','History','Geography','Civic Education','Business & Accounting Studies','Entrepreneurship Studies','ICT','Health & Physical Education','Aesthetic Studies','Religion'],
+12:['Combined Mathematics','Biology','Physics','Chemistry','Agricultural Science','Information & Communication Technology','Economics','Business Studies','Accounting','Geography','Political Science','Logic & Scientific Method','Communication & Media Studies','Engineering Technology','Bio Systems Technology','Science for Technology','General English'],
+13:['Combined Mathematics','Biology','Physics','Chemistry','Agricultural Science','Information & Communication Technology','Economics','Business Studies','Accounting','Geography','Political Science','Logic & Scientific Method','Communication & Media Studies','Engineering Technology','Bio Systems Technology','Science for Technology','General English']
+};
 function refresh(){
  const g=+grade.value,t=+term.value;
  document.getElementById('gradeTitle').textContent='Grade '+g+' · '+['','First','Second','Third'][t]+' Term';
  paper.classList.add('hidden');
  if(g===1&&t===1){
- document.getElementById('gradeStatus').textContent='2026 Grade 1 First Term resource collection is listed by e-Thaksalawa. These original questions follow the listed activity areas; page-by-page textbook alignment has not yet been verified.';
- document.getElementById('availability').textContent='OFFICIAL RESOURCE FOUND';
+ document.getElementById('gradeStatus').textContent='2026 Grade 1 First Term resource collection is listed by e-Thaksalawa. These original questions are starter practice; page-by-page textbook alignment is not yet verified.';
+ document.getElementById('availability').textContent='RESOURCE FOUND';
  subjects.innerHTML=Object.entries(packs).map(([name,p])=>'<article class="subject"><h3>'+p.icon+' '+name+'</h3><p class="muted">'+p.topic+'</p><span class="tag">Practice + 5-question test</span><p><button onclick="openPack('+JSON.stringify(name).replace(/"/g,'&quot;')+')">Open paper</button></p></article>').join('');
+ }else if(g>=6){
+ const isAL=g>=12;
+ document.getElementById('gradeStatus').textContent=(isAL?'A/L':'Grades 6–11')+' subject catalogue added. Select a subject to open the official resource portal. Textbook lesson and term coverage must be checked against the exact current textbook before original questions are released.';
+ document.getElementById('availability').textContent='SUBJECTS LISTED · PAPERS PENDING SOURCE CHECK';
+ subjects.innerHTML=gradeSubjects[g].map((name)=>'<article class="subject"><h3>📘 '+name+'</h3><p class="muted">'+(isAL?'A/L subject · confirm your stream and textbook edition.':'School subject · confirm medium and current textbook edition.')+'</p><span class="tag">'+(isAL?'A/L':'Grade '+g)+' · '+['','First','Second','Third'][t]+' Term</span><p><a href="https://e-thaksalawa.moe.gov.lk/lcms/?lang=en" target="_blank" rel="noopener">Find official textbook / learning resources ↗</a></p><p class="muted">Paper publication awaits verified lesson content; no guessed questions are shown.</p></article>').join('');
  }else{
- document.getElementById('gradeStatus').textContent='No lesson-level textbook source has been checked for this grade and term in this release. We will add papers after the relevant official textbook or module is verified.';
+ document.getElementById('gradeStatus').textContent='No lesson-level textbook source has been checked for this grade and term in this release.';
  document.getElementById('availability').textContent='SOURCE NEEDED';
- subjects.innerHTML='<article class="subject"><h3>📘 Textbook verification pending</h3><p class="muted">This grade and term are listed in the library, but no questions are published yet. This prevents guessed questions from being labelled as textbook-based.</p><a href="https://e-thaksalawa.moe.gov.lk/lcms/" target="_blank" rel="noopener">Open official e-Thaksalawa resources ↗</a><br><br><a href="https://nie.lk/" target="_blank" rel="noopener">Open National Institute of Education ↗</a></article>';
+ subjects.innerHTML='<article class="subject"><h3>📘 Textbook verification pending</h3><p class="muted">This grade and term are listed, but no paper is published until the official textbook or module is checked.</p><a href="https://e-thaksalawa.moe.gov.lk/lcms/" target="_blank" rel="noopener">Open official e-Thaksalawa resources ↗</a><br><br><a href="https://nie.lk/" target="_blank" rel="noopener">Open National Institute of Education ↗</a></article>';
  }
 }
 function openPack(name){current=name;mode='practice';answers=[];index=0;score=0;renderQuestion()}
