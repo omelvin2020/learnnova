@@ -1276,12 +1276,39 @@ function speakExplanations(){
 }
 function stopVoice(){if("speechSynthesis" in window)window.speechSynthesis.cancel();const status=$("voiceStatus");if(status)status.textContent="Voice stopped.";}
 
+const arcadeSpecialBanks={
+ "Geography Explorer":[
+ ["Which is the largest ocean on Earth?","Pacific Ocean","Atlantic Ocean","Indian Ocean"],
+ ["What is the capital city of Sri Lanka?","Sri Jayawardenepura Kotte","Colombo","Kandy"],
+ ["Which imaginary line divides Earth into the Northern and Southern Hemispheres?","Equator","Prime Meridian","Tropic of Cancer"],
+ ["Which instrument is used to measure rainfall?","Rain gauge","Barometer","Thermometer"],
+ ["What do contour lines on a map show?","Height and shape of land","Population size","Road distances"],
+ ["Which is the highest mountain in the world above sea level?","Mount Everest","Kilimanjaro","Mount Fuji"],
+ ["Which direction is opposite to east?","West","North","South"],
+ ["What is a group of islands called?","Archipelago","Peninsula","Plateau"],
+ ["Which layer of Earth is the outermost solid layer?","Crust","Core","Outer core"],
+ ["What does a map scale help us calculate?","Real distances","Air temperature","Rainfall amounts"]
+ ],
+ "Daily Quiz":[
+ ["Which organ pumps blood around the human body?","Heart","Lungs","Stomach"],
+ ["How many sides does a hexagon have?","Six","Five","Eight"],
+ ["Which gas do green plants absorb during photosynthesis?","Carbon dioxide","Oxygen","Nitrogen"],
+ ["Who is responsible for making laws in a democracy?","The legislature","The weather service","The post office"],
+ ["What is 9 multiplied by 7?","63","56","72"],
+ ["Which word is a noun?","Mountain","Quickly","Beautiful"],
+ ["Which planet is known as the Red Planet?","Mars","Venus","Jupiter"],
+ ["What should you do before crossing a road?","Look both ways and check traffic","Run quickly","Look only at the sky"],
+ ["Which is a renewable source of energy?","Solar power","Coal","Petroleum"],
+ ["How many days are there in a leap year?","366","365","364"]
+ ]
+};
 let arcadeName="",arcadeQuestions=[],arcadeIndex=0,arcadeScore=0,arcadeAnswered=false;
 function startArcade(name,subjectName){
  const subject=subjects.find(s=>s.name===subjectName),panel=$("arcadePanel");
- if(!subject||!subject.data.length||!panel)return;
+ const bank=arcadeSpecialBanks[name]||(subject&&subject.data);
+ if(!bank||!bank.length||!panel){if(panel){panel.classList.remove("hidden");panel.textContent="This quiz is not available yet. Please try again soon."}return}
  arcadeName=name;arcadeIndex=0;arcadeScore=0;arcadeAnswered=false;
- arcadeQuestions=shuffle(subject.data.slice()).slice(0,5).map(row=>({prompt:row[0],answer:row[1],options:shuffle([row[1],row[2],row[3]])}));
+ arcadeQuestions=shuffle(bank.slice()).slice(0,5).map(row=>({prompt:row[0],answer:row[1],options:shuffle([row[1],row[2],row[3]])}));
  panel.classList.remove("hidden");renderArcadeQuestion();panel.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 function renderArcadeQuestion(){
