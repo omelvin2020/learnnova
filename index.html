@@ -895,6 +895,7 @@ function makeCatalogSubjects(grade){
  return rows.filter(row=>{const k=row[0].toLowerCase();if(seen.has(k))return false;seen.add(k);return true;}).map(row=>{const si=!catalogEnglishOnly.test(row[0]);return {name:row[0],displayName:si?(catalogSinhalaNames[row[0]]||row[0]):row[0],icon:row[1],description:si?(grade>=12?"උසස් පෙළ විෂය · "+(row[2]||"සියලු විෂය ධාරා"):grade>=10?"සාමාන්‍ය පෙළ විෂය විකල්පය":"කනිෂ්ඨ ද්විතීයික විෂය"):(grade>=12?"A/L subject · "+(row[2]||"All streams"):grade>=10?"O/L subject option":"Junior secondary subject"),medium:si?"Sinhala":"English",data:si?catalogSinhalaBank(row[0]):catalogQuestionBank(row[0],grade),ready:true,catalogGenerated:true,stream:row[2]||""};});
 }
 function subjectsForGrade(grade){
+ if(grade<=5)return makePrimarySubjects(grade);
  if(grade===7)return grade7SubjectsAll.concat(makeCatalogSubjects(grade).filter(x=>!grade7SubjectsAll.some(y=>y.name.toLowerCase()===x.name.toLowerCase())));
  return makeCatalogSubjects(grade);
 }
@@ -924,8 +925,37 @@ function primaryRows(g,n){
  return (E[n]||[]).map(z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]]);
 }
 function makePrimarySubjects(g){
- const rows=[["Sinhala Language","සිංහල භාෂාව","📝","මව්බසින් කියවීම සහ ලිවීම","Sinhala"],["English Language","English Language","🔤","Simple words and early English","English"],["Mathematics","ගණිතය","➕","සංඛ්‍යා, රටා සහ ගණනය කිරීම්","Sinhala"],["Environmental Studies","පරිසරය ආශ්‍රිත ක්‍රියාකාරකම්","🌱","මිනිසුන්, ශාක, සතුන් සහ පරිසරය","Sinhala"],["Religion & Values","ආගම හා සාරධර්ම","🪷","කරුණාව, ගෞරවය සහ යහපත් පුරුදු","Sinhala"],["Tamil (Second Language)","දෙමළ (දෙවන බස)","🌺","මූලික දෙමළ වචන සහ ආචාර","Tamil"],["Aesthetic Activities","සෞන්දර්ය ක්‍රියාකාරකම්","🎨","චිත්‍ර, සංගීතය, චලන සහ නිර්මාණශීලීත්වය","Sinhala"],["Health & Physical Education","සෞඛ්‍ය හා ශාරීරික අධ්‍යාපනය","⚽","සෞඛ්‍ය පුරුදු, ආරක්ෂාව සහ චලනය","Sinhala"],["Co-Curricular Activities","විෂය සමගාමී ක්‍රියාකාරකම්","🤝","කණ්ඩායම් වැඩ සහ ප්‍රජා සහයෝගය","Sinhala"]];
- return rows.map(x=>({name:x[0],displayName:x[1],icon:x[2],description:x[3],medium:x[4],data:primaryRows(g,x[0]),newPaperStart:0}));
+ const rows=[
+ ["Sinhala Language","සිංහල භාෂාව","📝","මව්බසින් කියවීම සහ ලිවීම","Sinhala"],
+ ["English Language","English Language","🔤","Simple words and early English","English"],
+ ["Mathematics","ගණිතය","➕","Numbers, patterns and calculations","Both"],
+ ["Environmental Studies","පරිසරය ආශ්‍රිත ක්‍රියාකාරකම්","🌱","People, plants, animals and the environment","Both"],
+ ["Religion & Values","ආගම හා සාරධර්ම","🪷","Kindness, respect and good habits","Both"],
+ ["Tamil (Second Language)","දෙමළ (දෙවන බස)","🌺","Basic Tamil words and greetings","Both"],
+ ["Aesthetic Activities","සෞන්දර්ය ක්‍රියාකාරකම්","🎨","Art, music, movement and creativity","Both"],
+ ["Health & Physical Education","සෞඛ්‍ය හා ශාරීරික අධ්‍යාපනය","⚽","Healthy habits, safety and movement","Both"],
+ ["Co-Curricular Activities","විෂය සමගාමී ක්‍රියාකාරකම්","🤝","Teamwork and community participation","Both"]
+ ];
+ const english={
+ "Mathematics":[["What is 2 + 3?","5","4","6","Add 2 and 3 to get 5."],["Which number comes after 9?","10","8","11","10 comes after 9."],["How many sides does a triangle have?","3","4","2","A triangle has three sides."],["Which is the bigger number?","8","3","5","8 is greater than 3 and 5."],["What is 5 - 2?","3","2","4","Take 2 away from 5 to get 3."]],
+ "Environmental Studies":[["Which part of a plant takes in water?","Roots","Flowers","Leaves","Roots absorb water from the soil."],["Which animal gives us milk?","Cow","Lion","Eagle","A cow can provide milk."],["Which sense organ helps us see?","Eyes","Ears","Nose","We use our eyes to see."],["What should we do before eating?","Wash our hands","Touch rubbish","Play in mud","Handwashing helps keep us healthy."],["What gives us daylight?","The Sun","The Moon","Stars","The Sun provides daylight."]],
+ "Religion & Values":[["What should we show to others?","Kindness","Rudeness","Anger","Kindness helps us live peacefully."],["What should we do when someone is speaking?","Listen carefully","Shout","Walk away","Listening shows respect."],["Which is a good habit?","Helping others","Bullying","Wasting food","Helping others is a good habit."],["How should we treat public property?","Keep it safe","Damage it","Hide it","Public property is for everyone."],["What should we say when someone helps us?","Thank you","Go away","Nothing","Saying thank you shows gratitude."]],
+ "Tamil (Second Language)":[["What does வணக்கம் mean?","Hello","Good night","Thank you","வணக்கம் is a greeting."],["What does நன்றி mean?","Thank you","Hello","Water","நன்றி means thank you."],["Which Tamil word means water?","தண்ணீர்","மரம்","பூ","தண்ணீர் means water."],["Which Tamil word means mother?","அம்மா","அப்பா","நண்பன்","அம்மா means mother."],["What does பூ mean?","Flower","Book","House","பூ means flower."]],
+ "Aesthetic Activities":[["Which colour do we get by mixing red and yellow?","Orange","Green","Purple","Red and yellow make orange."],["Which tool is used for drawing?","Pencil","Spoon","Plate","A pencil can be used for drawing."],["Which activity uses musical sounds?","Singing","Sweeping","Reading a map","Singing uses musical sounds."],["Which shape has three sides?","Triangle","Circle","Square","A triangle has three sides."],["What can we use to make a collage?","Pictures and paper","Only water","A ruler only","A collage can be made with pictures and paper."]],
+ "Health & Physical Education":[["When should we wash our hands?","Before eating","Never","Only once a month","Wash hands before meals."],["Which food helps us stay healthy?","Fruits","Only sweets","Soft drinks","Fruits are part of a balanced diet."],["What should we do when crossing a road?","Look both ways","Run without looking","Close our eyes","Check both directions before crossing."],["Which activity helps our body move?","Walking","Sleeping","Sitting still","Walking is physical activity."],["Why should we drink clean water?","To stay healthy","To make us dirty","To damage teeth","Clean water supports good health."]],
+ "Co-Curricular Activities":[["What helps a team work well?","Cooperation","Fighting","Ignoring others","Cooperation helps a team."],["What should we do during a group task?","Share the work","Do nothing","Hide materials","Sharing tasks helps everyone contribute."],["How can we keep our classroom clean?","Use the rubbish bin","Drop litter","Draw on desks","Use bins and keep the room tidy."],["What should we do with library books?","Handle them carefully","Tear pages","Write on them","Careful handling protects books."],["How can we help a friend?","Offer support","Laugh at them","Ignore them","Supporting friends builds kindness."]]
+ };
+ const makeEnglish=name=>{
+  if(name==="English Language")return primaryRows(g,name);
+  const base=english[name]||english["Environmental Studies"];
+  return base.map(z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]]);
+ };
+ return rows.flatMap(x=>{
+  const common={icon:x[2],newPaperStart:0},out=[];
+  if(x[4]==="Sinhala"||x[4]==="Both")out.push({name:x[0],displayName:x[1],description:x[3],medium:"Sinhala",...common,data:primaryRows(g,x[0])});
+  if(x[4]==="English"||x[4]==="Both")out.push({name:x[0]+" (English Medium)",displayName:x[0],description:x[3],medium:"English",...common,data:makeEnglish(x[0])});
+  return out;
+ });
 }
 let activeGrade=7;
 let subjects=grade7SubjectsAll.concat(makeCatalogSubjects(7).filter(x=>!grade7SubjectsAll.some(y=>y.name.toLowerCase()===x.name.toLowerCase())));
@@ -935,7 +965,7 @@ const types=["Multiple choice","True or false","Fill in the blank","Short answer
 let activeSubject=null,activePaper=1,questions=[],answers={},currentQ=0,timer=null,secondsLeft=7200,submitted=false;
 const $=id=>document.getElementById(id);
 function getProgress(){try{return JSON.parse(localStorage.getItem("learnnovaProgress")||"{}")}catch(e){return {}}}
-function progressId(subject,paper){return (activeGrade===7?"":"Grade "+activeGrade+"-")+subject+"-"+paper}
+function progressId(subject,paper){return (activeGrade<=5?"Grade "+activeGrade+"-":activeGrade===7?"":"Grade "+activeGrade+"-")+subject+"-"+paper}
 function saveProgress(subject,paper,score){let p=getProgress();p[progressId(subject,paper)]={score:score,date:new Date().toISOString()};localStorage.setItem("learnnovaProgress",JSON.stringify(p));updateStats()}
 function updateStats(){const p=getProgress(),done=Object.keys(p).filter(k=>activeGrade===7?!k.startsWith("Grade 1-")&&!k.startsWith("Grade 2-")&&!k.startsWith("Grade 3-")&&!k.startsWith("Grade 4-")&&!k.startsWith("Grade 5-"):k.startsWith("Grade "+activeGrade+"-")).length;$("completedStat").textContent=done;const st=$("subjectTotal"),pt=$("paperTotal");if(st)st.textContent=subjects.length+" Grade "+activeGrade+" subjects";if(pt)pt.textContent=(subjects.length*PAPER_COUNT)+" practice papers";if($("homeSubjectCount"))$("homeSubjectCount").textContent=subjects.length;if($("homePaperCount"))$("homePaperCount").textContent=subjects.length*PAPER_COUNT}
 function changeGrade(value){const g=Number(value);if(!Number.isInteger(g)||g<1||g>13)return;activeGrade=g;subjects=g<=5?makePrimarySubjects(g):subjectsForGrade(g);$("welcomeText").textContent="Welcome to Novalearnix Grade "+g+". Choose a subject and enjoy learning.";$("paperInfoText").textContent=g===7?"Grade 7 practice · 35 questions · 6 question styles · 2 hours · 100 marks.":g>=12?"A/L Grades 12–13 · Subjects from all streams are listed.":"Grade "+g+" subject catalogue · New subject question banks are being prepared.";renderHome();if(!$("subjectsView").classList.contains("hidden"))renderSubjects()}
