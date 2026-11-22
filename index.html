@@ -1379,7 +1379,7 @@ function openSubject(name){
  const bank=Array.isArray(activeSubject.data)?activeSubject.data.filter(row=>normaliseQuestionRow(row)): [];
  if(!bank.length){
   $("paperInfoText").textContent=paperText("There are no question-bank items available for this subject yet.","මෙම විෂය සඳහා තවමත් ප්‍රශ්න බැංකුවක් සකස් කර නොමැත.");
-  $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📘</div><div><strong>'+paperText("More questions coming soon","ප්‍රශ්න ඉක්මනින් එක් කෙරේ")+'</strong><span>'+paperText("Choose another subject with available questions.","ප්‍රශ්න ඇති වෙනත් විෂයක් තෝරන්න.")+'</span></div></div>';
+  $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📘</div><div><strong>'+paperText("More questions coming soon","ප්‍රශ්න ඉක්මනින් එක් කෙරේ")+'</strong><span>'+paperText("Choose another subject with available questions.","ප්‍රශ්න ඇති වෙනත් විෂයක් තෝරන්න.")+'</span></div></div>'+officialPastPaperCards();
   return;
  }
  $("paperInfoText").textContent=paperText("Choose a term and start an interactive paper. Your answers are marked automatically and explanations are available after submission. These are syllabus-based Novalearnix practice papers, not exact copies of official past papers.","වාරය තෝරා මාර්ගගත ප්‍රශ්න පත්‍රයක් ආරම්භ කරන්න. පිළිතුරු ස්වයංක්‍රීයව ලකුණු කර ඉදිරිපත් කිරීමෙන් පසු පැහැදිලි කිරීම් ලබා දේ. මේවා විෂය නිර්දේශයට අදාළ Novalearnix පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල සම්පූර්ණ පිටපත් නොවේ.");
