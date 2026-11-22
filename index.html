@@ -299,7 +299,7 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="arcade-game"><div class="arcade-game-icon">🔬</div><h3>Science Quest</h3><p>Explore science with quick questions.</p><button onclick="startArcade('Science Quest','Science')">Play game →</button></article>
   <article class="arcade-game"><div class="arcade-game-icon">🔤</div><h3>Word Wizard</h3><p>Test your English skills and vocabulary.</p><button onclick="startArcade('Word Wizard',activeGrade===7?'English':'English Language')">Play game →</button></article>
  </div>
- <div id="arcadePanel" class="arcade-panel hidden" aria-live="polite"></div>
+ <div id="arcadePanelHomeAnchor"></div><div id="arcadePanel" class="arcade-panel hidden" aria-live="polite"></div>
 </section>
 
 <div class="stats"><div class="stat"><strong id="homeSubjectCount">14</strong><span>School subjects</span></div><div class="stat"><strong id="homePaperCount">98</strong><span>Practice papers · 7 per subject</span></div><div class="stat"><strong id="completedStat">0</strong><span>Papers completed</span></div></div>
@@ -323,7 +323,7 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="feature-card"><div class="feature-icon">🥇</div><h3>Local leaderboard</h3><div id="leaderboardList"></div><p class="feature-note">This is a leaderboard on this device only, not a worldwide ranking.</p></article>
  </div>
  
- <section class="feature-section"><div class="sectionhead"><div><h2>🎮 More challenges</h2><p>Try another five-question game.</p></div></div><div class="more-games"><button type="button" id="btnGeographyExplorer">🌍 Geography Explorer</button><button type="button" id="btnDailyQuiz">⚡ Daily Quiz</button></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>🎮 More challenges</h2><p>Try another five-question game.</p></div></div><div class="more-games"><button type="button" id="btnGeographyExplorer">🌍 Geography Explorer</button><button type="button" id="btnDailyQuiz">⚡ Daily Quiz</button></div><div id="arcadePanelMoreAnchor"></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🎓 My certificate</h2><p>Print a personal achievement certificate after completing at least one paper.</p></div></div><div class="certificate-panel"><div><h3>Certificate of Learning</h3><p>Celebrate your effort and progress at Novalearnix.</p></div><button onclick="printCertificate()">Create printable certificate</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🧑‍🏫 Teacher corner</h2><p>Create and save a simple custom practice question on this device.</p></div></div><div class="teacher-panel"><label for="customPaperTitle">Paper or topic title</label><input id="customPaperTitle" maxlength="70" placeholder="e.g. Science revision"><label for="customQuestion">Question</label><textarea id="customQuestion" rows="3" maxlength="500" placeholder="Write your question here..."></textarea><label for="customAnswer">Correct answer</label><input id="customAnswer" maxlength="250" placeholder="Enter the correct answer"><button onclick="saveCustomQuestion()">Save question</button><div id="customQuestionList" class="custom-list"></div><p class="feature-note">Custom questions are saved locally. This tool does not publish papers to other students.</p></div></section>
 
@@ -1305,6 +1305,14 @@ const arcadeSpecialBanks={
 let arcadeName="",arcadeQuestions=[],arcadeIndex=0,arcadeScore=0,arcadeAnswered=false;
 function startArcade(name,subjectName){
  const subject=subjects.find(s=>s.name===subjectName),panel=$("arcadePanel");
+ const specialGame=Object.prototype.hasOwnProperty.call(arcadeSpecialBanks,name);
+ const targetAnchor=$(specialGame?"arcadePanelMoreAnchor":"arcadePanelHomeAnchor");
+ if(targetAnchor&&panel&&panel.parentElement!==targetAnchor.parentElement){
+  targetAnchor.insertAdjacentElement("afterend",panel);
+ }
+ if(specialGame&&!$("moreView").classList.contains("hidden")){} 
+ else if(specialGame){showView("moreView");}
+ else if($("homeView").classList.contains("hidden")){showView("homeView");}
  const bank=arcadeSpecialBanks[name]||(subject&&subject.data);
  if(!bank||!bank.length||!panel){if(panel){panel.classList.remove("hidden");panel.textContent="This quiz is not available yet. Please try again soon."}return}
  arcadeName=name;arcadeIndex=0;arcadeScore=0;arcadeAnswered=false;
