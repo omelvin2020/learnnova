@@ -1214,11 +1214,11 @@ function submitAIStudyQuestion(){
  const q=$("aiQuestion").value.trim(),si=$("aiLanguage").value==="Sinhala",subject=$("aiSubject").value,grade=$("aiGrade").value,status=$("aiStudyStatus");
  if(!q){status.textContent=si?"කරුණාකර පළමුව පාසල් ප්‍රශ්නයක් ලියන්න.":"Please write a school question first.";status.className="ai-message warning";return}
  const stop=new Set(["what","is","are","the","a","an","of","to","in","on","for","with","and","or","how","why","explain","tell","me","about","please","give","can","you","does","do","define","describe","මොකක්ද","කුමක්ද","කෙසේද","ඇයි","පැහැදිලි","කරන්න","මට","යනු","හා","සහ","වන්නේ","ද","කියන්නේ","ලෙස"]);
- const tokens=value=>String(value).toLocaleLowerCase().normalize("NFKC").match(/[\\p{L}\\p{N}]+/gu)?.filter(w=>w.length>1&&!stop.has(w))||[];
+ const tokens=value=>String(value).toLocaleLowerCase().normalize("NFKC").match(/[\p{L}\p{N}]+/gu)?.filter(w=>w.length>1&&!stop.has(w))||[];
  const wanted=tokens(q);
  if(!wanted.length){status.textContent=si?"කරුණාකර පාඩමට අදාළ ප්‍රධාන වචන ඇතුළත් කරන්න.":"Please include a few meaningful lesson keywords.";status.className="ai-message warning";return}
  // Use the selected grade's available local question bank, not only the currently open grade.
- const gradeNumber=Number(String(grade).replace(/\\D/g,""))||7;
+ const gradeNumber=Number(String(grade).replace(/\D/g,""))||7;
  let gradeSubjects=[];
  try{gradeSubjects=typeof subjectsForGrade==="function"?subjectsForGrade(gradeNumber):(subjects||[])}catch(e){gradeSubjects=subjects||[]}
  const chosen=gradeSubjects.filter(x=>x.name===subject&&Array.isArray(x.data));
