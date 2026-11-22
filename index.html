@@ -426,11 +426,51 @@ function renderFlashcard(){const card=novaFlashcards[flashcardIndex];$("flashcar
 function flipFlashcard(){flashcardFlipped=!flashcardFlipped;renderFlashcard()}
 function nextFlashcard(){flashcardIndex=(flashcardIndex+1)%novaFlashcards.length;flashcardFlipped=false;renderFlashcard()}
 function previousFlashcard(){flashcardIndex=(flashcardIndex-1+novaFlashcards.length)%novaFlashcards.length;flashcardFlipped=false;renderFlashcard()}
-function setFocusMode(mode){if(focusInterval)pauseFocusTimer();focusMode=mode;focusSeconds=mode==="study"?1500:300;$("focusStudyMode").classList.toggle("secondary",mode!=="study");$("focusBreakMode").classList.toggle("secondary",mode!=="break");$("focusStatus").textContent=mode==="study"?"Study time. Choose Start when you are ready.":"Break time. Relax and take a short pause.";renderFocusClock()}
-function renderFocusClock(){$("focusClock").textContent=String(Math.floor(focusSeconds/60)).padStart(2,"0")+":"+String(focusSeconds%60).padStart(2,"0")}
-function startFocusTimer(){if(focusInterval)return;$("focusStatus").textContent=focusMode==="study"?"Focus session in progress.":"Break in progress.";focusInterval=setInterval(()=>{focusSeconds=Math.max(0,focusSeconds-1);renderFocusClock();if(focusSeconds===0){pauseFocusTimer();$("focusStatus").textContent=focusMode==="study"?"Study session complete! Take a short break.":"Break complete! Ready for another study session?";}},1000)}
-function pauseFocusTimer(){if(focusInterval){clearInterval(focusInterval);focusInterval=null}$("focusStatus").textContent="Timer paused. Press Start to continue."}
-function resetFocusTimer(){if(focusInterval){clearInterval(focusInterval);focusInterval=null}focusSeconds=focusMode==="study"?1500:300;renderFocusClock();$("focusStatus").textContent="Timer reset. Press Start when ready."}
+let focusEndTime=null;
+function setFocusMode(mode){
+ if(focusInterval) pauseFocusTimer();
+ focusMode=mode;
+ focusSeconds=mode==="study"?1500:300;
+ $("focusStudyMode").classList.toggle("secondary",mode!=="study");
+ $("focusBreakMode").classList.toggle("secondary",mode!=="break");
+ $("focusStatus").textContent=mode==="study"?"Study time. Press Start when ready.":"Break time. Press Start when ready.";
+ renderFocusClock();
+}
+function renderFocusClock(){
+ const minutes=Math.floor(focusSeconds/60),seconds=focusSeconds%60;
+ $("focusClock").textContent=String(minutes).padStart(2,"0")+":"+String(seconds).padStart(2,"0");
+}
+function startFocusTimer(){
+ if(focusInterval||focusSeconds<=0) return;
+ focusEndTime=Date.now()+focusSeconds*1000;
+ $("focusStatus").textContent=focusMode==="study"?"Focus session in progress.":"Break in progress.";
+ const tick=()=>{
+  focusSeconds=Math.max(0,Math.ceil((focusEndTime-Date.now())/1000));
+  renderFocusClock();
+  if(focusSeconds<=0){
+   clearInterval(focusInterval);focusInterval=null;focusEndTime=null;
+   $("focusStatus").textContent=focusMode==="study"?"Study session complete! Take a short break.":"Break complete! Ready for another study session?";
+   if("Notification" in window && Notification.permission==="granted") new Notification("Novalearnix timer",{body:"Your "+(focusMode==="study"?"study session":"break")+" is complete."});
+  }
+ };
+ tick();
+ focusInterval=setInterval(tick,250);
+}
+function pauseFocusTimer(){
+ if(focusInterval){focusSeconds=Math.max(0,Math.ceil((focusEndTime-Date.now())/1000));clearInterval(focusInterval);focusInterval=null;focusEndTime=null;renderFocusClock();}
+ $("focusStatus").textContent="Timer paused. Press Start to continue.";
+}
+function resetFocusTimer(){
+ if(focusInterval) clearInterval(focusInterval);
+ focusInterval=null;focusEndTime=null;
+ focusSeconds=focusMode==="study"?1500:300;
+ renderFocusClock();
+ $("focusStatus").textContent="Timer reset. Press Start when ready.";
+}
+window.setFocusMode=setFocusMode;
+window.startFocusTimer=startFocusTimer;
+window.pauseFocusTimer=pauseFocusTimer;
+window.resetFocusTimer=resetFocusTimer;
 function toggleNovaTheme(){const dark=document.body.classList.toggle("nova-dark");localStorage.setItem("novaTheme",dark?"dark":"light");$("themeToggle").textContent=dark?"Use light mode":"Use dark mode"}
 function toggleReadingSize(){const large=document.body.classList.toggle("nova-large-text");localStorage.setItem("novaLargeText",large?"yes":"no");$("readingToggle").textContent=large?"Use normal text":"Increase text size"}
 function exportNovaProgress(){const data={product:"Novalearnix",exportedAt:new Date().toISOString(),profile:localRead("novaStudentProfile",{}),paperResults:getProgress(),customQuestions:localRead("novaCustomQuestions",[])};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const link=document.createElement("a");link.href=url;link.download="novalearnix-progress-backup.json";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)}
