@@ -1216,6 +1216,16 @@ function submitAIStudyQuestion(){
  const stop=new Set(["what","is","are","the","a","an","of","to","in","on","for","with","and","or","how","why","explain","tell","me","about","please","give","මොකක්ද","කුමක්ද","කෙසේද","ඇයි","පැහැදිලි","කරන්න","මට","යනු","හා","සහ","වන්නේ","ද"]);
  const tokens=text=>String(text).toLocaleLowerCase().normalize("NFKC").match(/[\\p{L}\\p{N}]+/gu)?.filter(w=>w.length>1&&!stop.has(w))||[];
  const wanted=tokens(q);
+ // Built-in, reviewed Grade 7 Mathematics explanations for common concepts.
+ // These work offline and do not claim to be live AI answers.
+ if(subject==="Mathematics" && /\\b(?:fraction|fractions)\\b|භාග/i.test(q)){
+  status.textContent=si
+   ? ["භාග යනු සම්පූර්ණයක සමාන කොටස්වලින් කොටසක් නිරූපණය කරන සංඛ්‍යාවකි.","සරල උදාහරණයක්: පීසා එකක් සමාන කොටස් 4කට කපා, ඉන් 1 කොටසක් ගත්තොත් එය 1/4 (හතරෙන් එක) වේ.","1/4 හි ඉහළ සංඛ්‍යාව 1 යි. එය ගත් කොටස් ගණනයි (ලවය). පහළ සංඛ්‍යාව 4 යි. එය මුළු සමාන කොටස් ගණනයි (හරය).","තවත් උදාහරණයක්: 3/4 යනු සමාන කොටස් 4කින් කොටස් 3ක් යන්නයි.","මතක තබාගන්න: හරය = මුළු සමාන කොටස් ගණන; ලවය = තෝරාගත් කොටස් ගණන.","මෙය Novalearnix තුළ ඇතුළත් කළ නොමිලේ පාඩම් පැහැදිලි කිරීමකි; සජීවී AI පිළිතුරක් නොවේ."].join("\\n\\n")
+   : ["Fractions represent parts of a whole that has been divided into equal parts.","Simple example: Imagine a pizza cut into 4 equal slices. If you take 1 slice, you have 1/4 (one quarter) of the pizza.","In 1/4, the top number 1 is the numerator. It tells how many parts are selected. The bottom number 4 is the denominator. It tells how many equal parts make the whole.","Another example: 3/4 means 3 out of 4 equal parts.","Remember: denominator = total equal parts; numerator = selected parts.","This is a free built-in Novalearnix lesson explanation, not a live AI-generated answer."].join("\\n\\n");
+  status.className="ai-message success";
+  status.style.whiteSpace="pre-wrap";
+  return;
+ }
  const pool=(subjects||[]).filter(x=>x.name===subject&&Array.isArray(x.data)).flatMap(x=>x.data.map(row=>{const n=normaliseQuestionRow(row);return n?{question:n[0],answer:n[1],explanation:n[5]||n[4]||""}:null}).filter(Boolean));
  let best=null,bestScore=0;
  for(const item of pool){const candidate=tokens(item.question+" "+item.answer),unique=new Set(candidate),hits=wanted.filter(w=>unique.has(w)).length,score=hits/Math.max(1,wanted.length);if(score>bestScore){bestScore=score;best=item}}
