@@ -116,6 +116,23 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
 .feature-section{margin:28px 0}.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.note-card p{line-height:1.6}.more-games{display:flex;gap:10px;flex-wrap:wrap}.certificate-panel{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;background:linear-gradient(110deg,#fff,#f4f0ff)}.certificate-panel h3{margin:0;color:var(--blue)}.certificate-panel p{margin:5px 0;color:var(--muted)}
 .teacher-panel{max-width:760px}.custom-item{padding:11px;border-bottom:1px solid var(--line);font-size:13px}.custom-item strong{display:block}.toplinks button{white-space:nowrap}
 @media(max-width:650px){.feature-grid{grid-template-columns:1fr}.certificate-panel{align-items:flex-start}.toplinks{width:100%}.toplinks button{padding:8px 10px;font-size:12px}}
+
+.flashcard-panel,.focus-panel,.settings-panel,.backup-panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);max-width:760px}
+.flashcard-top{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;font-weight:800}
+.flashcard{display:grid;place-items:center;width:100%;min-height:165px;margin:16px 0;background:linear-gradient(135deg,#315bd5,#713bd1);font-size:clamp(19px,3vw,26px);white-space:normal;padding:25px;text-align:center}
+.flashcard-actions,.focus-actions,.focus-mode{display:flex;gap:9px;flex-wrap:wrap}
+.focus-panel{text-align:center}.focus-clock{font-size:clamp(48px,9vw,76px);font-weight:900;letter-spacing:2px;color:var(--blue);margin:15px 0}.focus-mode,.focus-actions{justify-content:center}.focus-panel p{color:var(--muted)}
+.settings-panel{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center}.settings-panel p{margin:3px 0}
+.backup-panel p{color:var(--muted);margin-top:0}
+body.nova-dark{--ink:#edf1ff;--muted:#b1bad0;--bg:#111827;--line:#34415a;--white:#1e293b;--shadow:0 12px 35px #0004;background:var(--bg);color:var(--ink)}
+body.nova-dark .topbar,body.nova-dark .stat,body.nova-dark .card,body.nova-dark .subject,body.nova-dark .examcard,body.nova-dark .question,body.nova-dark .resultbox,body.nova-dark .feature-card,body.nova-dark .note-card,body.nova-dark .teacher-panel,body.nova-dark .certificate-panel,body.nova-dark .flashcard-panel,body.nova-dark .focus-panel,body.nova-dark .settings-panel,body.nova-dark .backup-panel{background:#1e293b;color:var(--ink);border-color:#394760}
+body.nova-dark .search,body.nova-dark input,body.nova-dark textarea,body.nova-dark select{background:#172033;color:#edf1ff;border-color:#46536c}
+body.nova-dark .secondary{background:#35425b;color:#edf1ff}
+body.nova-dark .examhead{background:#1e293b}
+body.nova-dark .toplinks button{color:#d3dcf2}
+body.nova-dark .note-card p,body.nova-dark .feature-card p{color:#bac5dc}
+body.nova-large-text{font-size:18px}
+@media(max-width:600px){.settings-panel{grid-template-columns:1fr}.flashcard-panel,.focus-panel,.settings-panel,.backup-panel{padding:17px}}
 </style>
 </head>
 <body>
@@ -170,6 +187,11 @@ footer:before{content:"✦  ✧  ✦";display:block;color:#8b83d8;font-size:18px
  <section class="feature-section"><div class="sectionhead"><div><h2>🎮 More challenges</h2><p>Try another five-question game.</p></div></div><div class="more-games"><button onclick="startArcade('Geography Explorer','Geography')">🌍 Geography Explorer</button><button onclick="startArcade('Daily Quiz','Civic Education')">⚡ Daily Quiz</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🎓 My certificate</h2><p>Print a personal achievement certificate after completing at least one paper.</p></div></div><div class="certificate-panel"><div><h3>Certificate of Learning</h3><p>Celebrate your effort and progress at Novalearnix.</p></div><button onclick="printCertificate()">Create printable certificate</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🧑‍🏫 Teacher corner</h2><p>Create and save a simple custom practice question on this device.</p></div></div><div class="teacher-panel"><label for="customPaperTitle">Paper or topic title</label><input id="customPaperTitle" maxlength="70" placeholder="e.g. Science revision"><label for="customQuestion">Question</label><textarea id="customQuestion" rows="3" maxlength="500" placeholder="Write your question here..."></textarea><label for="customAnswer">Correct answer</label><input id="customAnswer" maxlength="250" placeholder="Enter the correct answer"><button onclick="saveCustomQuestion()">Save question</button><div id="customQuestionList" class="custom-list"></div><p class="feature-note">Custom questions are saved locally. This tool does not publish papers to other students.</p></div></section>
+
+ <section class="feature-section"><div class="sectionhead"><div><h2>🧠 Flashcard studio</h2><p>Flip cards to revise key ideas. Use Next to practise another card.</p></div></div><div class="flashcard-panel"><div class="flashcard-top"><span id="flashcardSubject">Grade 7 revision</span><span id="flashcardCount">Card 1</span></div><button id="flashcard" class="flashcard" onclick="flipFlashcard()" aria-label="Flip flashcard"><span id="flashcardFace">Tap to reveal the answer</span></button><div class="flashcard-actions"><button class="secondary" onclick="previousFlashcard()">← Previous</button><button onclick="nextFlashcard()">Next card →</button></div><p class="feature-note">Try to answer before flipping the card.</p></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>⏱️ Focus timer</h2><p>Try a quiet study session, then take a short break.</p></div></div><div class="focus-panel"><div class="focus-mode"><button id="focusStudyMode" onclick="setFocusMode('study')">Study · 25 min</button><button id="focusBreakMode" class="secondary" onclick="setFocusMode('break')">Break · 5 min</button></div><div id="focusClock" class="focus-clock">25:00</div><p id="focusStatus">Ready when you are. Choose a mode and press Start.</p><div class="focus-actions"><button id="focusStart" onclick="startFocusTimer()">Start</button><button class="secondary" onclick="pauseFocusTimer()">Pause</button><button class="secondary" onclick="resetFocusTimer()">Reset</button></div></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>⚙️ Personalise your learning</h2><p>Choose a display style that feels comfortable.</p></div></div><div class="settings-panel"><div><strong>🌙 Display theme</strong><p class="feature-note">Switch between light and dark appearance.</p></div><button class="secondary" id="themeToggle" onclick="toggleNovaTheme()">Use dark mode</button><div><strong>🔎 Reading size</strong><p class="feature-note">Make website text a little larger.</p></div><button class="secondary" id="readingToggle" onclick="toggleReadingSize()">Increase text size</button></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>💾 Back up your progress</h2><p>Download a copy of your locally saved paper results.</p></div></div><div class="backup-panel"><p>Your results are stored in this browser. Export a JSON backup so you can keep a copy. This does not upload your information.</p><button onclick="exportNovaProgress()">Download progress backup</button></div></section>
 </section>
 <section id="feedbackView" class="hidden">
  <div class="feedback-wrap">
@@ -386,10 +408,37 @@ function closeArcade(){$("arcadePanel").classList.add("hidden");$("arcadePanel")
 renderHome();
 
 
+
+const novaFlashcards=[
+{subject:"English",front:"What is a noun?",back:"A word that names a person, place, animal or thing."},
+{subject:"English",front:"What is an adjective?",back:"A word that describes a noun."},
+{subject:"Science",front:"What is an observation?",back:"Information gathered by using our senses or suitable instruments."},
+{subject:"Science",front:"What is a fair test?",back:"An investigation where only one factor is changed at a time."},
+{subject:"Mathematics",front:"What is the perimeter of a shape?",back:"The total distance around the outside of the shape."},
+{subject:"Mathematics",front:"What is a fraction?",back:"A number that represents part of a whole or a group."},
+{subject:"Geography",front:"What does a map key show?",back:"The meaning of symbols used on a map."},
+{subject:"Civic Education",front:"What is a responsibility?",back:"A duty or task that a person is expected to carry out."},
+{subject:"Health",front:"Why is sleep important?",back:"It supports rest, learning, growth and general wellbeing."},
+{subject:"ICT",front:"What is a strong password?",back:"A long, unique password that is difficult for others to guess. Keep it private."}
+];
+let flashcardIndex=0,flashcardFlipped=false,focusMode="study",focusSeconds=1500,focusInterval=null;
+function renderFlashcard(){const card=novaFlashcards[flashcardIndex];$("flashcardSubject").textContent=card.subject;$("flashcardCount").textContent="Card "+(flashcardIndex+1)+" of "+novaFlashcards.length;$("flashcardFace").textContent=flashcardFlipped?card.back:card.front;$("flashcard").setAttribute("aria-label",flashcardFlipped?"Show question":"Reveal answer")}
+function flipFlashcard(){flashcardFlipped=!flashcardFlipped;renderFlashcard()}
+function nextFlashcard(){flashcardIndex=(flashcardIndex+1)%novaFlashcards.length;flashcardFlipped=false;renderFlashcard()}
+function previousFlashcard(){flashcardIndex=(flashcardIndex-1+novaFlashcards.length)%novaFlashcards.length;flashcardFlipped=false;renderFlashcard()}
+function setFocusMode(mode){if(focusInterval)pauseFocusTimer();focusMode=mode;focusSeconds=mode==="study"?1500:300;$("focusStudyMode").classList.toggle("secondary",mode!=="study");$("focusBreakMode").classList.toggle("secondary",mode!=="break");$("focusStatus").textContent=mode==="study"?"Study time. Choose Start when you are ready.":"Break time. Relax and take a short pause.";renderFocusClock()}
+function renderFocusClock(){$("focusClock").textContent=String(Math.floor(focusSeconds/60)).padStart(2,"0")+":"+String(focusSeconds%60).padStart(2,"0")}
+function startFocusTimer(){if(focusInterval)return;$("focusStatus").textContent=focusMode==="study"?"Focus session in progress.":"Break in progress.";focusInterval=setInterval(()=>{focusSeconds=Math.max(0,focusSeconds-1);renderFocusClock();if(focusSeconds===0){pauseFocusTimer();$("focusStatus").textContent=focusMode==="study"?"Study session complete! Take a short break.":"Break complete! Ready for another study session?";}},1000)}
+function pauseFocusTimer(){if(focusInterval){clearInterval(focusInterval);focusInterval=null}$("focusStatus").textContent="Timer paused. Press Start to continue."}
+function resetFocusTimer(){if(focusInterval){clearInterval(focusInterval);focusInterval=null}focusSeconds=focusMode==="study"?1500:300;renderFocusClock();$("focusStatus").textContent="Timer reset. Press Start when ready."}
+function toggleNovaTheme(){const dark=document.body.classList.toggle("nova-dark");localStorage.setItem("novaTheme",dark?"dark":"light");$("themeToggle").textContent=dark?"Use light mode":"Use dark mode"}
+function toggleReadingSize(){const large=document.body.classList.toggle("nova-large-text");localStorage.setItem("novaLargeText",large?"yes":"no");$("readingToggle").textContent=large?"Use normal text":"Increase text size"}
+function exportNovaProgress(){const data={product:"Novalearnix",exportedAt:new Date().toISOString(),profile:localRead("novaStudentProfile",{}),paperResults:getProgress(),customQuestions:localRead("novaCustomQuestions",[])};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const link=document.createElement("a");link.href=url;link.download="novalearnix-progress-backup.json";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)}
 function goMore(){if(timer){clearInterval(timer);timer=null}showView("moreView");renderMoreFeatures()}
 function localRead(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(e){return fallback}}
 function saveStudentProfile(){const name=$("studentName").value.trim().slice(0,30);if(!name){$("profileMessage").textContent="Please enter a display name.";return}localStorage.setItem("novaStudentProfile",JSON.stringify({name}));$("profileMessage").textContent="Profile saved for "+name+" ✓";renderMoreFeatures()}
 function renderMoreFeatures(){
+ renderFlashcard();const dark=localStorage.getItem("novaTheme")==="dark";document.body.classList.toggle("nova-dark",dark);$("themeToggle").textContent=dark?"Use light mode":"Use dark mode";const large=localStorage.getItem("novaLargeText")==="yes";document.body.classList.toggle("nova-large-text",large);$("readingToggle").textContent=large?"Use normal text":"Increase text size";renderFocusClock();
  const profile=localRead("novaStudentProfile",{});if($("studentName"))$("studentName").value=profile.name||"";
  const p=getProgress(),rows=Object.entries(p),scores=rows.map(x=>Number(x[1].score)||0),avg=scores.length?Math.round(scores.reduce((a,b)=>a+b,0)/scores.length):0,best=scores.length?Math.max(...scores):0;
  $("dashboardStats").innerHTML='<div class="mini-stat"><strong>'+rows.length+'</strong><span>Papers completed</span></div><div class="mini-stat"><strong>'+avg+'%</strong><span>Average score</span></div><div class="mini-stat"><strong>'+best+'%</strong><span>Best score</span></div><div class="mini-stat"><strong>'+scores.filter(s=>s>=80).length+'</strong><span>80%+ results</span></div>';
