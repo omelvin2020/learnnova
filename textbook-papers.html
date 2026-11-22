@@ -103,7 +103,7 @@ const verifiedPapers={
 ["Write 0.6 as a fraction in simplest form.",["3/5","6/5","1/6"],0,"0.6 = 6/10 = 3/5."]
 ]},
 "Grade 8 Mathematics":{lang:"en",source:"https://e-thaksalawa.moe.gov.lk/lcms/course/view.php?id=531&lang=en",sourceLabel:"e-Thaksalawa · Grade 8 Mathematics textbook lessons",topics:"Number patterns, perimeter, angles, directed numbers, algebraic expressions, square roots, fractions, ratios and equations",practice:[
-["Find the next term: 4, 7, 10, 13, ...",["14","15","16"],1,"The pattern increases by 3; the next term is 16."],
+["Find the next term: 4, 7, 10, 13, ...",["14","15","16"],2,"The pattern increases by 3; the next term is 16."],
 ["Evaluate −6 + 9.",["−15","−3","3"],2,"Starting at −6 and adding 9 gives 3."],
 ["Simplify 3x + 5x.",["8","8x","15x"],1,"Like terms add: 3x + 5x = 8x."],
 ["Find the square root of 144.",["11","12","14"],1,"12 × 12 = 144."],
@@ -124,7 +124,7 @@ const verifiedPapers={
 ],test:[
 ["Convert 111₂ to base ten.",["5","6","7"],2,"4 + 2 + 1 = 7."],
 ["Simplify 5x − 2x + x.",["2x","4x","8x"],1,"5x − 2x + x = 4x."],
-["A value increases from 80 to 100. What is the percentage increase?",["20%","25%","то"],1,"Increase = 20; 20/80 × 100% = 25%."],
+["A value increases from 80 to 100. What is the percentage increase?",["20%","25%","30%"],1,"Increase = 20; 20/80 × 100% = 25%."],
 ["Solve 3x = 27.",["8","9","10"],1,"Divide both sides by 3: x = 9."],
 ["If y is directly proportional to x and y=12 when x=3, find y when x=5.",["15","20","25"],1,"y/x = 4, so y = 4×5 = 20."]
 ]},
@@ -152,7 +152,7 @@ const verifiedPapers={
 ["Rationalise 1/√5.",["√5","√5/5","5√5"],1,"Multiply numerator and denominator by √5."],
 ["Find the surface area of a cube of side 3 cm.",["9 cm²","27 cm²","54 cm²"],2,"Surface area = 6a² = 6×9 = 54 cm²."],
 ["Factorise x² − 5x + 6.",["(x−2)(x−3)","(x+2)(x+3)","(x−1)(x−6)"],0,"−2 and −3 multiply to 6 and add to −5."],
-["In a GP with first term 2 and common ratio 3, find the 4th term.",["18","36","54"],1,"a₄ = 2×3³ = 54." ]
+["In a GP with first term 2 and common ratio 3, find the 4th term.",["18","36","54"],2,"a₄ = 2×3³ = 54." ]
 ]},
 "Grade 9 Science":{lang:"en",source:"https://e-thaksalawa.moe.gov.lk/lcms/course/view.php?id=819&lang=en",sourceLabel:"e-Thaksalawa · Grade 9 Science textbook lessons",topics:"Micro-organisms, eye and ear, properties of matter, forces, pressure, circulatory system, plant growth, electrolysis and density",practice:[
 ["Which microorganism is used in bread making?",["Yeast","Amoeba","Plasmodium"],0,"Yeast ferments sugars and releases carbon dioxide, helping dough rise."],
@@ -182,7 +182,7 @@ const verifiedPapers={
 ]},
 "Grade 12 Combined Mathematics":{lang:"en",source:"https://e-thaksalawa.moe.gov.lk/lcms/pluginfile.php/65688/mod_resource/content/1/Eg12_CMa_TP3_12_NWP_2023.pdf",sourceLabel:"e-Thaksalawa · Grade 12 Combined Mathematics term paper (2023)",topics:"Quadratic equations, roots, polynomial remainder theorem, functions and limits (topics evidenced in the official Grade 12 paper)",practice:[
 ["For ax²+bx+c=0, what is the sum of the roots?",["b/a","−b/a","c/a"],1,"By Vieta's formulas, the sum of roots is −b/a."],
-["Find the remainder when f(x)=x²+3x+1 is divided by x−2.",["7","9","11"],1,"By the remainder theorem, f(2)=4+6+1=11."],
+["Find the remainder when f(x)=x²+3x+1 is divided by x−2.",["7","9","11"],2,"By the remainder theorem, f(2)=4+6+1=11."],
 ["Solve x²−5x+6=0.",["x=1,6","x=2,3","x=−2,−3"],1,"Factorise as (x−2)(x−3)=0."],
 ["If f(x)=x², find (f(3)−f(2))/(3−2).",["5","6","9"],0,"(9−4)/1 = 5."],
 ["Evaluate lim(x→2) (x²−4)/(x−2).",["2","4","0"],1,"Factorise x²−4=(x−2)(x+2); the limit is 4."]
@@ -200,7 +200,7 @@ const verifiedPapers={
 ["What is the discriminant of ax²+bx+c=0?",["b²−4ac","b²+4ac","4ac−b"],0,"The discriminant is b²−4ac."],
 ["In mathematical induction, what is checked first?",["The statement for the first integer","The final integer","Only the middle case"],0,"First verify the base case, then prove the inductive step."]
 ],test:[
-["Find the 6th term of the GP 2, 6, 18, ...",["162","486","54"],0,"a₆=2×3⁵=486."],
+["Find the 6th term of the GP 2, 6, 18, ...",["162","486","54"],1,"a₆=2×3⁵=486."],
 ["Find the sum of the first 5 natural numbers.",["10","15","20"],1,"1+2+3+4+5 = 15."],
 ["Differentiate 5x³.",["5x²","15x²","15x"],1,"d(5x³)/dx = 15x²."],
 ["If the discriminant is zero, the quadratic equation has:",["Two distinct real roots","Equal real roots","No real roots"],1,"A zero discriminant gives equal real roots."],
@@ -231,7 +231,7 @@ function refresh(){
  const available=Object.entries(verifiedPapers).filter(([key])=>key.startsWith('Grade '+g+' '));
  document.getElementById('gradeStatus').textContent=available.length?'Original English-medium practice papers are available below. Questions were written from topics listed in the linked official e-Thaksalawa course or paper. Term-by-term textbook coverage has not been verified, so these are labelled unit-based practice, not term-complete papers.':'No completed paper for this grade is published in this release. See the official e-Thaksalawa portal for available textbooks and modules.';
  document.getElementById('availability').textContent=available.length?'TEXTBOOK TOPICS VERIFIED':'SOURCE / PAPER NEEDED';
- const cards=available.map(([name,p])=>'<article class="subject"><h3>📘 '+name+'</h3><p class="muted">'+p.topics+'</p><span class="tag">English medium · Unit-based</span><p><button onclick="openPack('+JSON.stringify(name).replace(/"/g,'&quot;')+')">Open practice paper + test</button></p><a href="'+p.source+'" target="_blank" rel="noopener">'+p.sourceLabel+' ↗</a></article>').join('');
+ const cards=available.map(([name,p])=>'<article class="subject"><h3>📘 '+name+'</h3><p class="muted">'+p.topics+'</p><span class="tag">English medium · Unit-based</span><p><button onclick="openPack('+JSON.stringify(name).replace(/"/g,'&quot;')+')">Open practice paper + test</button></p><a href="'+(p.source||source)+'" target="_blank" rel="noopener">'+p.sourceLabel+' ↗</a></article>').join('');
  const gaps=gradeSubjects[g]||[];
  const pending=gaps.filter(n=>!available.some(([k])=>k.endsWith(n)));
  const pendingCard=pending.length?'<article class="subject"><h3>📚 More subjects being prepared</h3><p class="muted">'+pending.join(' · ')+'</p><a href="https://e-thaksalawa.moe.gov.lk/lcms/?lang=en" target="_blank" rel="noopener">Browse official e-Thaksalawa textbooks and lessons ↗</a></article>':'';
@@ -248,10 +248,10 @@ function renderQuestion(){
  paper.classList.remove('hidden');
  paper.innerHTML='<span class="tag">'+(mode==='practice'?(en?'PRACTICE':'පුහුණුව'):(en?'AFTER-PRACTICE TEST':'පුහුණුවෙන් පසු පරීක්ෂණය'))+'</span><h2>'+current+' · '+(mode==='practice'?(en?'Practice':'පුහුණුව'):(en?'Test':'පරීක්ෂණය'))+'</h2><p class="muted">'+(en?'Question ':'ප්‍රශ්නය ')+(index+1)+' / '+list.length+' · '+(en?'20 marks each':'එක් ප්‍රශ්නයකට ලකුණු 20')+'</p><article class="question"><h3>'+q[0]+'</h3>'+q[1].map((v,i)=>'<button class="option '+(answers[index]===i?'selected':'')+'" onclick="choose('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'<div id="feedback"></div></article><div class="row"><button class="secondary" onclick="backSubjects()">'+(en?'Back to subjects':'විෂය වෙත ආපසු')+'</button><button onclick="nextQuestion()" '+(answers[index]===undefined?'disabled':'')+'>'+(index===list.length-1?(mode==='practice'?(en?'Start test':'පරීක්ෂණයට යන්න'):(en?'View result':'ප්‍රතිඵල බලන්න')):(en?'Next question':'ඊළඟ ප්‍රශ්නය'))+' →</button></div>';
 }
-function choose(i){answers[index]=i;const q=packs[current][mode][index],ok=i===q[2];document.getElementById('feedback').innerHTML='<div class="feedback">'+(ok?'✓ නිවැරදියි!':'තව උත්සාහ කරමු.')+' '+q[3]+'</div>';renderButtonOnly()}
+function choose(i){answers[index]=i;const p=verifiedPapers[current]||packs[current],q=p[mode][index],ok=i===q[2],en=p.lang==='en';document.getElementById('feedback').innerHTML='<div class="feedback">'+(ok?(en?'✓ Correct!':'✓ නිවැරදියි!'):(en?'Not quite.':'තව උත්සාහ කරමු.'))+' '+q[3]+'</div>';renderButtonOnly()}
 function renderButtonOnly(){const b=paper.querySelector('.row button:last-child');if(b)b.disabled=answers[index]===undefined}
 function nextQuestion(){
- const list=packs[current][mode];
+ const p=verifiedPapers[current]||packs[current],list=p[mode];
  if(index<list.length-1){index++;renderQuestion();return}
  if(mode==='practice'){mode='test';answers=[];index=0;renderQuestion();return}
  score=answers.reduce((s,a,i)=>s+(a===list[i][2]?20:0),0);
