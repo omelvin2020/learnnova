@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="si">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Novalearnix | Textbook Practice Papers</title>
+<style>
+:root{--ink:#20254a;--muted:#68708b;--purple:#6657d9;--pink:#ff78a8;--paper:#fff;--bg:#f5f6ff;--line:#e5e7f4}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#f5f6ff,#fff2f7);font-family:Arial,"Noto Sans Sinhala",sans-serif;color:var(--ink)}
+header{padding:24px max(18px,calc((100% - 1000px)/2));background:#fff;border-bottom:1px solid var(--line)}
+a{color:var(--purple)}main{max-width:1000px;margin:24px auto;padding:0 16px}.hero,.panel,.question{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 8px 28px #363b6810;margin-bottom:16px}
+h1{margin:4px 0 8px;font-size:clamp(25px,5vw,38px)}h2{margin:0 0 10px}.muted{color:var(--muted);line-height:1.6}.controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
+label{display:block;font-weight:700;margin-bottom:6px}select,button{font:inherit;border-radius:12px;padding:12px;border:1px solid var(--line);background:white;color:var(--ink);width:100%}
+button{cursor:pointer;background:var(--purple);color:#fff;border:0;font-weight:700}button.secondary{background:#eeeefe;color:var(--purple)}button:disabled{opacity:.5;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.subject{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff}.subject h3{margin:0 0 8px}.tag{display:inline-block;border-radius:99px;padding:5px 10px;background:#f0edff;color:#5746bf;font-size:12px;font-weight:700}
+.option{display:block;text-align:left;margin:8px 0;background:#f7f7ff;color:var(--ink);border:1px solid var(--line);font-weight:500}.option.selected{border:2px solid var(--purple);background:#f0edff}.feedback{padding:12px;border-radius:12px;background:#f1f8f3;margin-top:10px;line-height:1.5}.hidden{display:none}.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1}.score{font-size:28px;font-weight:800;color:var(--purple)}
+@media(max-width:520px){.hero,.panel,.question{padding:15px}}
+</style>
+</head>
+<body>
+<header><a href="index.html">← Back to Novalearnix</a><div class="muted">TEXTBOOK-RELATED PRACTICE LIBRARY</div><h1>📚 Novalearnix Papers</h1></header>
+<main>
+<section class="hero">
+<h1>Learn from your textbooks. Practise. Then test!</h1>
+<p class="muted">Choose a grade, term and subject. Papers are original practice questions, not copied textbook pages. A source is shown for every released set. Unverified grades are clearly marked instead of being filled with guessed textbook content.</p>
+<div class="controls">
+<div><label for="grade">Grade</label><select id="grade"></select></div>
+<div><label for="term">Term</label><select id="term"><option value="1">First Term</option><option value="2">Second Term</option><option value="3">Third Term</option></select></div>
+</div>
+</section>
+<section class="panel"><div class="row"><div><h2 id="gradeTitle">Grade 1 · First Term</h2><p id="gradeStatus" class="muted"></p></div><div style="max-width:180px"><span class="tag" id="availability">SOURCE CHECKED</span></div></div><div id="subjects" class="grid"></div></section>
+<section id="paper" class="panel hidden" aria-live="polite"></section>
+</main>
+<script>
+const grade=document.getElementById('grade'),term=document.getElementById('term'),subjects=document.getElementById('subjects'),paper=document.getElementById('paper');
+for(let g=1;g<=13;g++){let o=document.createElement('option');o.value=g;o.textContent='Grade '+g+(g===10||g===11?' · O/L':g>=12?' · A/L':'');grade.append(o)}
+const source='https://e-thaksalawa.moe.gov.lk/content/sinhala/sg01_newref_1st_t/index.html';
+const packs={
+'ගණිතය':{icon:'🔢',topic:'අපි සෙල්ලම් කරමින් ගණන් හදමු',practice:[
+['1, 2, 3, __. ඊළඟ සංඛ්‍යාව කුමක්ද?',['4','5','6'],0,'1ට පසු 2, 2ට පසු 3, එබැවින් ඊළඟට 4.'],
+['තාරකා 2ක් සහ තවත් 1ක් එකතු කළ විට කීයක්ද?',['2','3','4'],1,'2 + 1 = 3.'],
+['5ට පෙර ඇති සංඛ්‍යාව කුමක්ද?',['3','4','6'],1,'5ට පෙර 4 ඇත.'],
+['වස්තු 3ක් ගණන් කළ විට අවසාන සංඛ්‍යාව කුමක්ද?',['2','3','4'],1,'එක, දෙක, තුන ලෙස ගණන් කරයි.'],
+['කුඩාම සංඛ්‍යාව තෝරන්න.',['2','5','4'],0,'2 යනු 4 සහ 5 ට වඩා කුඩාය.']
+],test:[
+['2, 3, 4, __. ඊළඟ සංඛ්‍යාව?',['5','6','7'],0,'4ට පසු 5.'],
+['1ක් සහ 1ක් එකතු කළ විට?',['1','2','3'],1,'1 + 1 = 2.'],
+['3ට පසු ඇති සංඛ්‍යාව?',['2','4','5'],1,'3ට පසු 4.'],
+['4 සහ 2 අතරින් විශාල සංඛ්‍යාව?',['2','4','1'],1,'4 යනු 2ට වඩා විශාලය.'],
+['වස්තු 5ක් ගණන් කළ විට ලැබෙන අවසාන සංඛ්‍යාව?',['4','5','6'],1,'වස්තු පහක් ගණන් කළ විට 5 ලැබේ.']
+]},
+'අකුරු නුවණ':{icon:'🔤',topic:'අකුරු නුවණ 1',practice:[
+['“අම්මා” යන වචනයේ මුල් අකුර කුමක්ද?',['අ','ම','ආ'],0,'“අම්මා” යන්න අ අකුරෙන් ආරම්භ වේ.'],
+['“මල” යන වචනයේ මුල් අකුර?',['ල','ම','අ'],1,'“මල” යන්න ම අකුරෙන් ආරම්භ වේ.'],
+['“ගස” යන වචනයේ මුල් අකුර?',['ස','ග','අ'],1,'“ගස” යන්න ග අකුරෙන් ආරම්භ වේ.'],
+['“අ” ට පසුව ඇති ස්වර අකුර කුමක්ද?',['ආ','ඇ','ඉ'],0,'ස්වර අකුරු පිළිවෙළේ අට පසුව ආ ඇත.'],
+['“ක” යන්න අකුරක්ද?',['ඔව්','නැත','සංඛ්‍යාවක්'],0,'ක යනු සිංහල ව්‍යංජන අකුරකි.']
+],test:[
+['“අල” යන වචනයේ මුල් අකුර?',['ල','අ','ආ'],1,'“අල” යන්න අ අකුරෙන් ආරම්භ වේ.'],
+['“ප” යන්න කුමක්ද?',['අකුරක්','සංඛ්‍යාවක්','වර්ණයක්'],0,'ප යනු සිංහල අකුරකි.'],
+['“බල” යන වචනයේ මුල් අකුර?',['ල','බ','අ'],1,'“බල” යන්න බ අකුරෙන් ආරම්භ වේ.'],
+['“ඉ” යන්න කුමන අකුරු වර්ගයටද?',['ස්වර','ව්‍යංජන','සංඛ්‍යා'],0,'ඉ යනු ස්වර අකුරකි.'],
+['“න” යන්න අකුරක්ද?',['නැත','ඔව්','විරාම ලකුණක්'],1,'න යනු සිංහල ව්‍යංජන අකුරකි.']
+]},
+'සිංහල කියවීම':{icon:'📖',topic:'සිංහල කියවීම',practice:[
+['“මල” යන වචනයෙන් අදහස් වන්නේ කුමක්ද?',['මලක්','ගසක්','ගලක්'],0,'මල යනු ශාකයක පිපෙන කොටසකි.'],
+['“ගස” යනු කුමක්ද?',['සතෙක්','ශාකයක්','වාහනයක්'],1,'ගසක් යනු ශාකයකි.'],
+['“අම්මා” යන්නෙන් අදහස් වන්නේ?',['මව','පියා','මිතුරා'],0,'අම්මා යනු මවයි.'],
+['“ලොකු” යන්නට විරුද්ධ පදය?',['දිග','කුඩා','උස'],1,'ලොකු යන්නට විරුද්ධ පදය කුඩාය.'],
+['“දුවයි” යන වචනයෙන් කියවෙන්නේ?',['ක්‍රියාවක්','වර්ණයක්','සතෙක්'],0,'දුවයි යනු ක්‍රියාවක් දක්වන වචනයකි.']
+],test:[
+['“පොත” යනු කුමක්ද?',['කියවීමට ඇති දෙයක්','සතෙක්','ගසක්'],0,'පොතක් කියවීමට භාවිත කරයි.'],
+['“සතුටු” යන්නට සමාන අදහසක් ඇති වචනය?',['දුක','ප්‍රීතිමත්','කෝපය'],1,'සතුටු සහ ප්‍රීතිමත් සමාන අදහස් දක්වයි.'],
+['“කුඩා” යන්නට විරුද්ධ පදය?',['ලොකු','කෙටි','අඩු'],0,'කුඩා යන්නට විරුද්ධ පදය ලොකුය.'],
+['“කුරුල්ලා පියාඹයි” වාක්‍යයේ සතා කවුද?',['පියාඹයි','කුරුල්ලා','වාක්‍යය'],1,'කුරුල්ලා යනු සතාය.'],
+['“පාසල” යනු කුමන ස්ථානයක්ද?',['ඉගෙන ගන්නා ස්ථානයක්','වෙළඳසැලක්','රෝහලක්'],0,'පාසලේදී දරුවන් ඉගෙන ගනී.']
+]},
+'පරිසරය':{icon:'🌱',topic:'පරිසරය',practice:[
+['ශාකයකට ජලය උරාගැනීමට උපකාරී වන්නේ කුමක්ද?',['මුල්','මල්','පත්‍ර'],0,'ශාකයේ මුල් පසෙන් ජලය උරාගනී.'],
+['අපට කිරි ලබාදෙන සතෙකු තෝරන්න.',['එළදෙන','සිංහයා','රාජාලියා'],0,'එළදෙනගෙන් කිරි ලබාගත හැකිය.'],
+['අපට දැකීමට උපකාරී වන ඉන්ද්‍රිය?',['කන්','ඇස්','නාසය'],1,'අපි ඇස් භාවිතයෙන් දේවල් දකිමු.'],
+['ආහාර ගැනීමට පෙර කළ යුත්තේ?',['අත් සෝදන්න','මඩ අල්ලන්න','අත් නොසෝදන්න'],0,'අත් සේදීම පිරිසිදුකමට උපකාරී වේ.'],
+['දිවා කාලයේ ආලෝකය ලබාදෙන්නේ?',['චන්ද්‍රයා','සූර්යයා','තරුවක්'],1,'දිවා කාලයේ සූර්යයා ආලෝකය ලබාදෙයි.']
+],test:[
+['ශාකයක පත්‍ර සාමාන්‍යයෙන් කුමන වර්ණයෙන්ද?',['කොළ','නිල්','කළු'],0,'බොහෝ ශාකවල පත්‍ර කොළ පැහැතිය.'],
+['අපට ඇසීමට උපකාරී වන්නේ?',['ඇස්','කන්','දත්'],1,'කන්වලින් ශබ්ද අසන්නෙමු.'],
+['පිරිසිදු ජලය භාවිත කළ යුත්තේ?',['පානයට','කසළ දැමීමට','බිමට වත් කිරීමට පමණක්'],0,'පානයට ආරක්ෂිත පිරිසිදු ජලය අවශ්‍යය.'],
+['ගෙවත්තේ කසළ නිසි තැනට දැමීමෙන්?',['පරිසරය පිරිසිදු වේ','කසළ වැඩි වේ','ජලය අපිරිසිදු වේ'],0,'කසළ නිසි ලෙස බැහැර කිරීමෙන් පරිසරය පිරිසිදු වේ.'],
+['අපට හුස්ම ගැනීමට අවශ්‍ය වන්නේ?',['වාතය','වැලි','ගල්'],0,'ජීවීන්ට හුස්ම ගැනීමට වාතය අවශ්‍යය.']
+]}
+};
+let current=null,mode='practice',answers=[],index=0,score=0;
+function refresh(){
+ const g=+grade.value,t=+term.value;
+ document.getElementById('gradeTitle').textContent='Grade '+g+' · '+['','First','Second','Third'][t]+' Term';
+ paper.classList.add('hidden');
+ if(g===1&&t===1){
+ document.getElementById('gradeStatus').textContent='2026 Grade 1 First Term resource collection is listed by e-Thaksalawa. These original questions follow the listed activity areas; page-by-page textbook alignment has not yet been verified.';
+ document.getElementById('availability').textContent='OFFICIAL RESOURCE FOUND';
+ subjects.innerHTML=Object.entries(packs).map(([name,p])=>'<article class="subject"><h3>'+p.icon+' '+name+'</h3><p class="muted">'+p.topic+'</p><span class="tag">Practice + 5-question test</span><p><button onclick="openPack('+JSON.stringify(name).replace(/"/g,'&quot;')+')">Open paper</button></p></article>').join('');
+ }else{
+ document.getElementById('gradeStatus').textContent='No lesson-level textbook source has been checked for this grade and term in this release. We will add papers after the relevant official textbook or module is verified.';
+ document.getElementById('availability').textContent='SOURCE NEEDED';
+ subjects.innerHTML='<article class="subject"><h3>📘 Textbook verification pending</h3><p class="muted">This grade and term are listed in the library, but no questions are published yet. This prevents guessed questions from being labelled as textbook-based.</p><a href="https://e-thaksalawa.moe.gov.lk/lcms/" target="_blank" rel="noopener">Open official e-Thaksalawa resources ↗</a><br><br><a href="https://nie.lk/" target="_blank" rel="noopener">Open National Institute of Education ↗</a></article>';
+ }
+}
+function openPack(name){current=name;mode='practice';answers=[];index=0;score=0;renderQuestion()}
+function renderQuestion(){
+ const p=packs[current],list=p[mode],q=list[index];
+ paper.classList.remove('hidden');
+ paper.innerHTML='<span class="tag">'+(mode==='practice'?'PRACTICE':'AFTER-PRACTICE TEST')+'</span><h2>'+current+' · '+(mode==='practice'?'පුහුණුව':'පරීක්ෂණය')+'</h2><p class="muted">ප්‍රශ්නය '+(index+1)+' / '+list.length+' · එක් ප්‍රශ්නයකට ලකුණු 20</p><article class="question"><h3>'+q[0]+'</h3>'+q[1].map((v,i)=>'<button class="option '+(answers[index]===i?'selected':'')+'" onclick="choose('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'<div id="feedback"></div></article><div class="row"><button class="secondary" onclick="backSubjects()">විෂය වෙත ආපසු</button><button onclick="nextQuestion()" '+(answers[index]===undefined?'disabled':'')+'>'+(index===list.length-1?(mode==='practice'?'පරීක්ෂණයට යන්න':'ප්‍රතිඵල බලන්න'):'ඊළඟ ප්‍රශ්නය')+' →</button></div>';
+}
+function choose(i){answers[index]=i;const q=packs[current][mode][index],ok=i===q[2];document.getElementById('feedback').innerHTML='<div class="feedback">'+(ok?'✓ නිවැරදියි!':'තව උත්සාහ කරමු.')+' '+q[3]+'</div>';renderButtonOnly()}
+function renderButtonOnly(){const b=paper.querySelector('.row button:last-child');if(b)b.disabled=answers[index]===undefined}
+function nextQuestion(){
+ const list=packs[current][mode];
+ if(index<list.length-1){index++;renderQuestion();return}
+ if(mode==='practice'){mode='test';answers=[];index=0;renderQuestion();return}
+ score=answers.reduce((s,a,i)=>s+(a===list[i][2]?20:0),0);
+ paper.innerHTML='<span class="tag">TEST COMPLETE</span><h2>ඔබේ ප්‍රතිඵලය</h2><div class="score">'+score+' / 100</div><p class="muted">'+(score>=80?'ඉතා හොඳයි! දිගටම පුහුණු වන්න.':score>=50?'හොඳ උත්සාහයක්! පිළිතුරු නැවත බලන්න.':'නැවත පුහුණු වී උත්සාහ කරන්න.')+'</p><button onclick="openPack('+JSON.stringify(current).replace(/"/g,'&quot;')+')">නැවත පුහුණුව අරඹන්න</button> <p><a href="'+source+'" target="_blank" rel="noopener">නිල Grade 1 First Term සම්පත් පිටුව ↗</a></p>';
+}
+function backSubjects(){paper.classList.add('hidden');}
+grade.addEventListener('change',refresh);term.addEventListener('change',refresh);refresh();
+</script>
+</body></html>
