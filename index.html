@@ -188,7 +188,7 @@ body.nova-large-text{font-size:18px}
  <section class="feature-section"><div class="sectionhead"><div><h2>🎓 My certificate</h2><p>Print a personal achievement certificate after completing at least one paper.</p></div></div><div class="certificate-panel"><div><h3>Certificate of Learning</h3><p>Celebrate your effort and progress at Novalearnix.</p></div><button onclick="printCertificate()">Create printable certificate</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>🧑‍🏫 Teacher corner</h2><p>Create and save a simple custom practice question on this device.</p></div></div><div class="teacher-panel"><label for="customPaperTitle">Paper or topic title</label><input id="customPaperTitle" maxlength="70" placeholder="e.g. Science revision"><label for="customQuestion">Question</label><textarea id="customQuestion" rows="3" maxlength="500" placeholder="Write your question here..."></textarea><label for="customAnswer">Correct answer</label><input id="customAnswer" maxlength="250" placeholder="Enter the correct answer"><button onclick="saveCustomQuestion()">Save question</button><div id="customQuestionList" class="custom-list"></div><p class="feature-note">Custom questions are saved locally. This tool does not publish papers to other students.</p></div></section>
 
- <section class="feature-section"><div class="sectionhead"><div><h2>🧠 Flashcard studio</h2><p>Flip cards to revise key ideas. Use Next to practise another card.</p></div></div><div class="flashcard-panel"><div class="flashcard-top"><span id="flashcardSubject">Grade 7 revision</span><span id="flashcardCount">Card 1</span></div><button id="flashcard" class="flashcard" onclick="flipFlashcard()" aria-label="Flip flashcard"><span id="flashcardFace">Tap to reveal the answer</span></button><div class="flashcard-actions"><button class="secondary" onclick="previousFlashcard()">← Previous</button><button onclick="nextFlashcard()">Next card →</button></div><p class="feature-note">Try to answer before flipping the card.</p></div></section>
+ <section class="feature-section"><div class="sectionhead"><div><h2>🧠 Flashcard studio</h2><p>Flip cards to revise key ideas. Use Next to practise another card.</p></div></div><div class="flashcard-panel"><div class="flashcard-top"><span id="flashcardSubject">Grade 7 revision</span><span id="flashcardCount">Card 1</span></div><button type="button" id="flashcard" class="flashcard" data-flash-action="flip" aria-label="Flip flashcard"><span id="flashcardFace">Tap to reveal the answer</span></button><div class="flashcard-actions"><button type="button" class="secondary" data-flash-action="previous">← Previous</button><button type="button" data-flash-action="next">Next card →</button></div><p class="feature-note">Try to answer before flipping the card.</p></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>⏱️ Focus timer</h2><p>Try a quiet study session, then take a short break.</p></div></div><div class="focus-panel"><div class="focus-mode"><button type="button" id="focusStudyMode" data-focus-action="study">Study · 25 min</button><button type="button" id="focusBreakMode" data-focus-action="break" class="secondary">Break · 5 min</button></div><div id="focusClock" class="focus-clock" role="timer" aria-live="off">25:00</div><p id="focusStatus" role="status" aria-live="polite">Ready when you are. Choose a mode and press Start.</p><div class="focus-actions"><button type="button" id="focusStart" data-focus-action="start">Start</button><button type="button" id="focusPause" data-focus-action="pause" class="secondary">Pause</button><button type="button" id="focusReset" data-focus-action="reset" class="secondary">Reset</button></div></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>⚙️ Personalise your learning</h2><p>Choose a display style that feels comfortable.</p></div></div><div class="settings-panel"><div><strong>🌙 Display theme</strong><p class="feature-note">Switch between light and dark appearance.</p></div><button class="secondary" id="themeToggle" onclick="toggleNovaTheme()">Use dark mode</button><div><strong>🔎 Reading size</strong><p class="feature-note">Make website text a little larger.</p></div><button class="secondary" id="readingToggle" onclick="toggleReadingSize()">Increase text size</button></div></section>
  <section class="feature-section"><div class="sectionhead"><div><h2>💾 Back up your progress</h2><p>Download a copy of your locally saved paper results.</p></div></div><div class="backup-panel"><p>Your results are stored in this browser. Export a JSON backup so you can keep a copy. This does not upload your information.</p><button onclick="exportNovaProgress()">Download progress backup</button></div></section>
@@ -508,6 +508,33 @@ function goFeedback(){if(timer){clearInterval(timer);timer=null}showView("feedba
 function submitFeedback(event){event.preventDefault();const type=$("feedbackType").value;const rating=$("feedbackRating").value;const message=$("feedbackMessage").value.trim();if(!message){alert("Please write your feedback first.");return}const title="[Novalearnix Feedback] "+type;const body="## Novalearnix website feedback\n\n- **Type:** "+type+"\n- **Rating:** "+rating+"\n\n## Message\n"+message+"\n\n---\nSubmitted through the Novalearnix feedback page.";const url="https://github.com/omelvin2020/learnnova/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);window.open(url,"_blank","noopener");}
 </script>
 <script>
+(function(){
+ let cardIndex=0,flipped=false;
+ const cards=[
+  {subject:"English",front:"What is a noun?",back:"A word that names a person, place, animal or thing."},
+  {subject:"English",front:"What is an adjective?",back:"A word that describes a noun."},
+  {subject:"Science",front:"What is an observation?",back:"Information gathered using our senses or suitable instruments."},
+  {subject:"Science",front:"What is a fair test?",back:"An investigation where only one factor is changed at a time."},
+  {subject:"Mathematics",front:"What is the perimeter of a shape?",back:"The total distance around the outside of the shape."},
+  {subject:"Mathematics",front:"What is a fraction?",back:"A number that represents part of a whole or a group."},
+  {subject:"Geography",front:"What does a map key show?",back:"The meaning of symbols used on a map."},
+  {subject:"Civic Education",front:"What is a responsibility?",back:"A duty or task a person is expected to carry out."},
+  {subject:"Health",front:"Why is sleep important?",back:"It supports rest, learning, growth and general wellbeing."},
+  {subject:"ICT",front:"What is a strong password?",back:"A long, unique password that is difficult to guess. Keep it private."}
+ ];
+ function drawCard(){
+  const card=cards[cardIndex],subject=document.getElementById("flashcardSubject"),count=document.getElementById("flashcardCount"),face=document.getElementById("flashcardFace"),button=document.getElementById("flashcard");
+  if(!card||!subject||!count||!face||!button)return;
+  subject.textContent=card.subject;count.textContent="Card "+(cardIndex+1)+" of "+cards.length;face.textContent=flipped?card.back:card.front;button.setAttribute("aria-label",flipped?"Show question":"Reveal answer");
+ }
+ document.addEventListener("click",function(event){
+  const button=event.target.closest("[data-flash-action]");if(!button)return;event.preventDefault();
+  const action=button.getAttribute("data-flash-action");
+  if(action==="flip")flipped=!flipped;else if(action==="next"){cardIndex=(cardIndex+1)%cards.length;flipped=false;}else if(action==="previous"){cardIndex=(cardIndex-1+cards.length)%cards.length;flipped=false;}
+  drawCard();
+ });
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",drawCard);else drawCard();
+})();
 (function(){
  let mode="study",remaining=1500,intervalId=null,endAt=0;
  const el=id=>document.getElementById(id);
