@@ -1229,6 +1229,11 @@ function openSubject(name){
  const display=activeSubject.displayName||name,grade=Number(activeGrade)||6;
  $("crumbSubject").textContent=display;
  $("papersTitle").textContent="📚 "+display+" · "+paperText("Online Past Papers","මාර්ගගත පැරණි ප්‍රශ්න පත්‍ර");
+ if(grade===7&&name==="PTS"){
+  $("paperInfoText").textContent="මෙය 7 ශ්‍රේණියේ PTS විෂය ක්ෂේත්‍ර ආවරණය කරන Novalearnix මුල් පුහුණු පත්‍රයකි. පැරණි විභාග පත්‍රයක සම්පූර්ණ පිටපතක් නොවේ.";
+  $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">🛠️</div><div><strong>7 ශ්‍රේණිය · PTS ONLINE EXAM</strong><span>සිංහල මාධ්‍යය · ප්‍රශ්න 20 · ලකුණු 100 · ලිවීම අවශ්‍ය නැත</span></div></div><div class="papergrid"><article class="examcard"><div class="paper-number">🧰</div><h3>PTS Online Paper 01</h3><p>කෘෂිකර්මය, ආහාර, මූලික තාක්ෂණය, ව්‍යාපාර කටයුතු සහ චිත්‍රණය ආශ්‍රිත ප්‍රශ්න 20ක්. ස්වයංක්‍රීය ලකුණු සහ පිළිතුරු පරීක්ෂාව.</p><button class="paper-card-button" onclick="startExam(1)">Start Online Exam →</button></article></div><div class="daily-banner"><div class="daily-icon">📘</div><div><strong>මූලාශ්‍ර සටහන</strong><span>e-තක්සලාව Grade 07 PTS පාඨමාලාවෙන් විෂයය සහ ශ්‍රේණිය තහවුරු කර ඇත. පහත ප්‍රශ්න මුල් පුහුණු ප්‍රශ්න වේ.</span></div></div>';
+  return;
+ }
  const officialPast="https://e-thaksalawa.moe.gov.lk/lcms/course/view.php?id=872";
  const alArchive="https://e-thaksalawa.moe.gov.lk/lcms/course/index.php?categoryid=80";
  const generalArchive="https://e-thaksalawa.moe.gov.lk/lcms/course/section.php?id=14661";
@@ -1253,14 +1258,59 @@ function openSubject(name){
 }
 function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
 function permutations(items){if(items.length<=1)return [items];return items.flatMap((item,i)=>permutations(items.filter((_,j)=>j!==i)).map(rest=>[item,...rest]))}
-function startExamCore(n){const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;secondsLeft=activeGrade>=10||activeGrade===7?7200:1200;const si=isSinhalaPaper(),bank=activeSubject.data.map(normaliseQuestionRow).filter(Boolean);if(!bank.length){alert("This subject does not yet have any valid practice questions. Please choose another subject.");return}const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);questions=selected.flatMap(row=>{const [prompt,correct,wrong1,wrong2,explain,statement,fill]=row;const options=shuffle([correct,wrong1,wrong2]);const claimCorrect=Math.random()<.5;return [
-{type:"Multiple choice",prompt,answer:correct,options,explain},
-{type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+"“"+prompt+"” "+(si?"යන ප්‍රශ්නයට නිවැරදි පිළිතුර “":"The correct answer is “")+(claimCorrect?correct:wrong1)+"”.",answer:String(claimCorrect),explain},
-{type:"Fill in the blank",prompt:fill,answer:correct,explain},
-{type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Write a short answer: ")+prompt,answer:correct,explain},
-{type:"Matching pairs",prompt:(si?"ප්‍රශ්නයට ගැළපෙන නිවැරදි පිළිතුර තෝරන්න: ":"Match the question with its correct answer: ")+prompt,answer:correct,options,explain},
-{type:"Arrange in order",prompt:(si?"මෙම පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න: ":"Arrange these three answers in alphabetical order: ")+[correct,wrong1,wrong2].join(" | "),answer:[correct,wrong1,wrong2].slice().sort((a,b)=>a.localeCompare(b)).join(" → "),options:permutations([correct,wrong1,wrong2]).map(a=>a.join(" → ")),explain:(si?"පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න. ":"Put the three choices in alphabetical order. ")+explain}
-]}).slice(0,activeGrade>=10||activeGrade===7?35:20);showView("examView");$("examCrumb").textContent=(si?activeGrade+" ශ්‍රේණිය":"Grade "+activeGrade)+" / "+(activeSubject.displayName||activeSubject.name)+" / "+paperText("Paper","ප්‍රශ්න පත්‍රය")+" "+n;$("examTitle").textContent=finalTest?paperText("Final Test","අවසාන පරීක්ෂණය"):paperText("Practice Paper ","පුහුණු ප්‍රශ්න පත්‍රය ")+n;$("examResult").innerHTML="";$("prevBtn").classList.remove("hidden");$("nextBtn").classList.remove("hidden");$("prevBtn").textContent=paperText("← Previous","← පෙර");$("nextBtn").textContent=paperText("Next →","ඊළඟ →");document.querySelector("#examView .qnav h3").textContent=paperText("Questions","ප්‍රශ්න");document.querySelector("#examView .qnav small").textContent=paperText("Green = answered · Blue = current","කොළ = පිළිතුරු දී ඇත · නිල් = වත්මන් ප්‍රශ්නය");document.querySelector("#examView .qnav .notice").textContent=paperText("The countdown stays visible while you scroll. Your answers stay on this page until you submit or leave the paper.","ඔබ පිටුව පහළට ගෙන ගියත් කාලය පෙන්වයි. ඔබ ප්‍රශ්න පත්‍රය භාරදෙන තුරු හෝ පිටුවෙන් ඉවත් වන තුරු පිළිතුරු මෙම පිටුවේ පවතී.");const submitBtn=document.querySelector('#examView button.danger');if(submitBtn)submitBtn.textContent=paperText("Submit paper","පිළිතුරු පත්‍රය භාරදෙන්න");renderQuestion();startTimer()}
+function grade7PtsPaper(){
+ const rows=[
+ ["[බහුවරණ] PTS විෂයයේ ප්‍රධාන තාක්ෂණික ක්ෂේත්‍ර අතරට අයත් වන්නේ කුමක්ද?","කෘෂිකර්මය","තාරකා විද්‍යාව","සංගීතය","කෘෂිකර්මය PTS හි ප්‍රධාන ක්ෂේත්‍රයකි."],
+ ["[හඳුනාගැනීම] පැළයකට ජලය සහ ඛනිජ ලවණ ලබාගැනීමට උපකාරී වන්නේ කුමන කොටසද?","මුල්","මල්","පල","මුල් පසෙන් ජලය සහ ඛනිජ ලවණ උරාගනී."],
+ ["[සත්‍ය/අසත්‍ය] ආහාර පිළියෙළ කිරීමට පෙර අත් සෝදා ගැනීම වැදගත්ය.","සත්‍යයි","අසත්‍යයි","අවශ්‍ය නැත","අත් සේදීම ආහාර සනීපාරක්ෂාවේ මූලික පියවරකි."],
+ ["[සත්‍ය/අසත්‍ය] මිනුම් ගැනීමේදී නිවැරදි ඒකක භාවිත කිරීම අවශ්‍ය නොවේ.","අසත්‍යයි","සත්‍යයි","සමහරවිට","නිවැරදි මිනුම් සඳහා සුදුසු ඒකක භාවිත කළ යුතුය."],
+ ["[ගැළපීම] දිග මැනීම සඳහා වඩාත් ගැළපෙන උපකරණය කුමක්ද?","මිනුම් පටිය","උෂ්ණත්වමානය","ඔරලෝසුව","මිනුම් පටිය දිග මැනීමට භාවිත කරයි."],
+ ["[ගැළපීම] පැළයකට අවශ්‍ය ආලෝකය ලබාදෙන ස්වාභාවික මූලාශ්‍රය කුමක්ද?","හිරු එළිය","ශබ්දය","වැලි","බොහෝ පැළ වර්ධනයට හිරු එළිය අවශ්‍ය වේ."],
+ ["[උපකරණ තේරීම] කඩදාසියක සෘජු රේඛාවක් ඇඳීමට සුදුසු උපකරණය කුමක්ද?","රූල","හැන්ද","කෝප්පය","රූල භාවිතයෙන් සෘජු රේඛා ඇඳිය හැකිය."],
+ ["[උපකරණ තේරීම] ද්‍රවයක උෂ්ණත්වය මැනීමට භාවිත කරන්නේ කුමක්ද?","උෂ්ණත්වමානය","මිනුම් පටිය","කතුර","උෂ්ණත්වමානය උෂ්ණත්වය මනී."],
+ ["[ආරක්ෂාව] ආහාර සකස් කරන මේසය පිරිසිදුව තබාගැනීමට හොඳම ක්‍රියාව කුමක්ද?","පිළියෙළ කිරීමට පෙර සහ පසු මේසය පිරිසිදු කිරීම","අපද්‍රව්‍ය මේසය මත තැබීම","අපිරිසිදු උපකරණ නැවත භාවිත කිරීම","පිරිසිදු වැඩබිමක් ආහාර දූෂණය වීමේ අවදානම අඩු කරයි."],
+ ["[ආරක්ෂාව] හානි වූ උපකරණයක් හමු වුවහොත් කළ යුත්තේ කුමක්ද?","භාවිත නොකර ගුරුවරයාට දැනුම් දීම","එය බලෙන් භාවිත කිරීම","අනෙක් අයට ලබාදීම","හානි වූ උපකරණ භාවිත නොකර ගුරුවරයාට දැනුම් දෙන්න."],
+ ["[පියවර තේරීම] පැළයක් වගා කිරීමේදී මුලින්ම කළ යුතු සුදුසු පියවර කුමක්ද?","සුදුසු ස්ථානය සහ පස තෝරාගැනීම","පැළය ඉවත් කිරීම","අස්වැන්න ගබඩා කිරීම","වගාව ආරම්භ කිරීමට පෙර ස්ථානය සහ පස තෝරාගත යුතුය."],
+ ["[පියවර තේරීම] සරල නිර්මාණයක් සෑදීමට පෙර කළ යුත්තේ කුමක්ද?","අරමුණ තීරණය කර සැලැස්මක් සකස් කිරීම","නිම කළ නිර්මාණය පරීක්ෂා කිරීම","ද්‍රව්‍ය ඉවත දැමීම","සැලැස්මක් මඟින් අවශ්‍ය ද්‍රව්‍ය සහ පියවර හඳුනාගත හැකිය."],
+ ["[ක්ෂේත්‍ර හඳුනාගැනීම] එළවළු පැළ වගා කිරීම අයත් වන්නේ කුමන ක්ෂේත්‍රයටද?","කෘෂිකර්මය","ව්‍යාපාර කටයුතු","චිත්‍රණය","පැළ වගා කිරීම කෘෂිකර්මයට අයත් වේ."],
+ ["[ක්ෂේත්‍ර හඳුනාගැනීම] නිෂ්පාදනයක මිල, වියදම සහ ලාභය සලකා බැලීම අයත් වන්නේ කුමන ක්ෂේත්‍රයටද?","ව්‍යාපාර කටයුතු","කෘෂිකර්මය","චිත්‍රණය","මිල සහ ලාභය සලකා බැලීම ව්‍යාපාරික කටයුතුවලට අයත් වේ."],
+ ["[ද්‍රව්‍ය තේරීම] පැළයක් වගා කිරීමට සුදුසු ද්‍රව්‍ය සංයෝජනය කුමක්ද?","පස, බීජ සහ ජලය","ප්ලාස්ටික්, තෙල් සහ ලෝහ","කඩදාසි, තීන්ත සහ වීදුරු","බීජ වගා කිරීමට පස සහ ජලය අවශ්‍ය වේ."],
+ ["[ද්‍රව්‍ය තේරීම] කඩදාසි ආකෘතියක් සෑදීමට වඩාත් ගැළපෙන ද්‍රව්‍යය කුමක්ද?","කඩදාසි පත්‍ර","තෙත් පස","ආහාර තෙල්","කඩදාසි ආකෘතියක් සඳහා කඩදාසි සුදුසු ද්‍රව්‍යයකි."],
+ ["[ප්‍රායෝගික අවස්ථාව] පාසල් වත්තේ පැළ මැලවී ඇත. මුලින්ම කළ යුතු හොඳම දේ කුමක්ද?","පසෙහි තෙතමනය පරීක්ෂා කර අවශ්‍ය ජලය ලබාදීම","සියලු පැළ ඉවත් කිරීම","පැළ මත තෙල් දැමීම","පළමුව පැළවල තත්ත්වය සහ පසෙහි තෙතමනය පරීක්ෂා කළ යුතුය."],
+ ["[ප්‍රායෝගික අවස්ථාව] නිෂ්පාදනයක දෝෂයක් හඳුනාගත් විට කළ යුත්තේ කුමක්ද?","දෝෂය නිවැරදි කර නැවත පරීක්ෂා කිරීම","දෝෂය නොසලකා හැරීම","කිසිවක් නොකිරීම","පරීක්ෂා කිරීම සහ වැඩිදියුණු කිරීම නිර්මාණ ක්‍රියාවලියේ කොටසකි."],
+ ["[චිත්‍රණය] Graphics මඟින් අදහස් පැහැදිලි කිරීමට භාවිත කරන්නේ කුමක්ද?","රූප සහ රූප සටහන්","රස සහ සුවඳ","ශබ්ද පමණක්","චිත්‍රණය දෘශ්‍ය නිරූපණ මඟින් අදහස් සන්නිවේදනය කරයි."],
+ ["[පරිසර හිතකාමී ක්‍රියාව] ද්‍රව්‍ය නැවත භාවිත කිරීමෙන් ලැබෙන ප්‍රධාන වාසිය කුමක්ද?","අපද්‍රව්‍ය අඩු කිරීම","අපද්‍රව්‍ය වැඩි කිරීම","සම්පත් නාස්ති කිරීම","නැවත භාවිතය සම්පත් ඉතිරි කර අපද්‍රව්‍ය අඩු කරයි."]
+ ];
+ return rows.map(r=>({type:"Multiple choice",prompt:r[0],answer:r[1],options:shuffle([r[1],r[2],r[3]]),explain:r[4]}));
+}
+function startExamCore(n){
+ const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;
+ secondsLeft=activeGrade>=10||activeGrade===7?7200:1200;
+ const si=isSinhalaPaper(),bank=activeSubject.data.map(normaliseQuestionRow).filter(Boolean);
+ if(!bank.length){alert("This subject does not yet have any valid practice questions. Please choose another subject.");return}
+ if(activeGrade===7&&activeSubject.name==="PTS"){questions=grade7PtsPaper();}
+ else{
+  const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
+  const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
+  questions=selected.flatMap(row=>{const [prompt,correct,wrong1,wrong2,explain,statement,fill]=row;const options=shuffle([correct,wrong1,wrong2]);const claimCorrect=Math.random()<.5;return [
+   {type:"Multiple choice",prompt,answer:correct,options,explain},
+   {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+"“"+prompt+"” "+(si?"යන ප්‍රශ්නයට නිවැරදි පිළිතුර “":"The correct answer is “")+(claimCorrect?correct:wrong1)+"”.",answer:String(claimCorrect),explain},
+   {type:"Fill in the blank",prompt:fill,answer:correct,explain},
+   {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Write a short answer: ")+prompt,answer:correct,explain},
+   {type:"Matching pairs",prompt:(si?"ප්‍රශ්නයට ගැළපෙන නිවැරදි පිළිතුර තෝරන්න: ":"Match the question with its correct answer: ")+prompt,answer:correct,options,explain},
+   {type:"Arrange in order",prompt:(si?"මෙම පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න: ":"Arrange these three answers in alphabetical order: ")+[correct,wrong1,wrong2].join(" | "),answer:[correct,wrong1,wrong2].slice().sort((a,b)=>a.localeCompare(b)).join(" → "),options:permutations([correct,wrong1,wrong2]).map(a=>a.join(" → ")),explain:(si?"පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න. ":"Put the three choices in alphabetical order. ")+explain}
+  ]}).slice(0,activeGrade>=10||activeGrade===7?35:20);
+ }
+ showView("examView");$("examCrumb").textContent=(si?activeGrade+" ශ්‍රේණිය":"Grade "+activeGrade)+" / "+(activeSubject.displayName||activeSubject.name)+" / "+paperText("Paper","ප්‍රශ්න පත්‍රය")+" "+n;
+ $("examTitle").textContent=finalTest?paperText("Final Test","අවසාන පරීක්ෂණය"):paperText("Online Practice Paper ","මාර්ගගත පුහුණු පත්‍රය ")+n;
+ $("examResult").innerHTML="";$("prevBtn").classList.remove("hidden");$("nextBtn").classList.remove("hidden");
+ $("prevBtn").textContent=paperText("← Previous","← පෙර");$("nextBtn").textContent=paperText("Next →","ඊළඟ →");
+ document.querySelector("#examView .qnav h3").textContent=paperText("Questions","ප්‍රශ්න");
+ document.querySelector("#examView .qnav small").textContent=paperText("Green = answered · Blue = current","කොළ = පිළිතුරු දී ඇත · නිල් = වත්මන් ප්‍රශ්නය");
+ document.querySelector("#examView .qnav .notice").textContent=paperText("The countdown stays visible while you scroll. Your answers stay on this page until you submit or leave the paper.","ඔබ පිටුව පහළට ගෙන ගියත් කාලය පෙන්වයි. ඔබ ප්‍රශ්න පත්‍රය භාරදෙන තුරු හෝ පිටුවෙන් ඉවත් වන තුරු පිළිතුරු මෙම පිටුවේ පවතී.");
+ const submitBtn=document.querySelector('#examView button.danger');if(submitBtn)submitBtn.textContent=paperText("Submit paper","පිළිතුරු පත්‍රය භාරදෙන්න");
+ renderQuestion();startTimer();
+}
 function startExam(n){
  try{
   if(!activeSubject||!Array.isArray(activeSubject.data)||!activeSubject.data.length){
