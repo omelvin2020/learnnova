@@ -1312,7 +1312,7 @@ function startExamCore(n){
    {type:"Multiple choice",prompt,answer:correct,options,explain},
    {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+"“"+prompt+"” "+(si?"යන ප්‍රශ්නයට නිවැරදි පිළිතුර “":"The correct answer is “")+(claimCorrect?correct:wrong1)+"”.",answer:String(claimCorrect),explain},
    {type:"Fill in the blank",prompt:fill,answer:correct,explain},
-   {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Write a short answer: ")+prompt,answer:correct,explain},
+   {type:"Short answer",prompt:(si?"අභියෝගාත්මක ප්‍රශ්නය: මෙම පිළිතුර නිවැරදි වන්නේ ඇයිදැයි පැහැදිලි කරන්න — ":"Advanced reasoning: Explain why this answer is correct — ")+prompt,answer:explain,explain:(si?"ඔබේ පිළිතුරේදී මූලික අදහස සහ හේතුව පැහැදිලි කරන්න. ":"In your response, explain the key idea and the reason. ")+explain},
    {type:"Matching pairs",prompt:(si?"ප්‍රශ්නයට ගැළපෙන නිවැරදි පිළිතුර තෝරන්න: ":"Match the question with its correct answer: ")+prompt,answer:correct,options,explain},
    {type:"Arrange in order",prompt:(si?"මෙම පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න: ":"Arrange these three answers in alphabetical order: ")+[correct,wrong1,wrong2].join(" | "),answer:[correct,wrong1,wrong2].slice().sort((a,b)=>a.localeCompare(b)).join(" → "),options:permutations([correct,wrong1,wrong2]).map(a=>a.join(" → ")),explain:(si?"පිළිතුරු තුන අකාරාදී පිළිවෙළට සකසන්න. ":"Put the three choices in alphabetical order. ")+explain}
   ]}).slice(0,activeGrade>=10||activeGrade===7?35:20);
