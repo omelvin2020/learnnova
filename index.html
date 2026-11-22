@@ -1213,28 +1213,39 @@ function clearAIStudyQuestion(){$("aiQuestion").value="";const si=$("aiLanguage"
 function submitAIStudyQuestion(){
  const q=$("aiQuestion").value.trim(),si=$("aiLanguage").value==="Sinhala",subject=$("aiSubject").value,grade=$("aiGrade").value,status=$("aiStudyStatus");
  if(!q){status.textContent=si?"කරුණාකර පළමුව පාසල් ප්‍රශ්නයක් ලියන්න.":"Please write a school question first.";status.className="ai-message warning";return}
- const stop=new Set(["what","is","are","the","a","an","of","to","in","on","for","with","and","or","how","why","explain","tell","me","about","please","give","මොකක්ද","කුමක්ද","කෙසේද","ඇයි","පැහැදිලි","කරන්න","මට","යනු","හා","සහ","වන්නේ","ද"]);
- const tokens=text=>String(text).toLocaleLowerCase().normalize("NFKC").match(/[\\p{L}\\p{N}]+/gu)?.filter(w=>w.length>1&&!stop.has(w))||[];
+ const stop=new Set(["what","is","are","the","a","an","of","to","in","on","for","with","and","or","how","why","explain","tell","me","about","please","give","can","you","does","do","define","describe","මොකක්ද","කුමක්ද","කෙසේද","ඇයි","පැහැදිලි","කරන්න","මට","යනු","හා","සහ","වන්නේ","ද","කියන්නේ","ලෙස"]);
+ const tokens=value=>String(value).toLocaleLowerCase().normalize("NFKC").match(/[\\p{L}\\p{N}]+/gu)?.filter(w=>w.length>1&&!stop.has(w))||[];
  const wanted=tokens(q);
- // Built-in, reviewed Grade 7 Mathematics explanations for common concepts.
- // These work offline and do not claim to be live AI answers.
- if(subject==="Mathematics" && /\b(?:fraction|fractions)\b|භාග/i.test(q)){
-  status.textContent=si
-   ? ["භාග යනු සම්පූර්ණයක සමාන කොටස්වලින් කොටසක් නිරූපණය කරන සංඛ්‍යාවකි.","සරල උදාහරණයක්: පීසා එකක් සමාන කොටස් 4කට කපා, ඉන් 1 කොටසක් ගත්තොත් එය 1/4 (හතරෙන් එක) වේ.","1/4 හි ඉහළ සංඛ්‍යාව 1 යි. එය ගත් කොටස් ගණනයි (ලවය). පහළ සංඛ්‍යාව 4 යි. එය මුළු සමාන කොටස් ගණනයි (හරය).","තවත් උදාහරණයක්: 3/4 යනු සමාන කොටස් 4කින් කොටස් 3ක් යන්නයි.","මතක තබාගන්න: හරය = මුළු සමාන කොටස් ගණන; ලවය = තෝරාගත් කොටස් ගණන.","මෙය Novalearnix තුළ ඇතුළත් කළ නොමිලේ පාඩම් පැහැදිලි කිරීමකි; සජීවී AI පිළිතුරක් නොවේ."].join("\n\n")
-   : ["Fractions represent parts of a whole that has been divided into equal parts.","Simple example: Imagine a pizza cut into 4 equal slices. If you take 1 slice, you have 1/4 (one quarter) of the pizza.","In 1/4, the top number 1 is the numerator. It tells how many parts are selected. The bottom number 4 is the denominator. It tells how many equal parts make the whole.","Another example: 3/4 means 3 out of 4 equal parts.","Remember: denominator = total equal parts; numerator = selected parts.","This is a free built-in Novalearnix lesson explanation, not a live AI-generated answer."].join("\n\n");
-  status.className="ai-message success";
-  status.style.whiteSpace="pre-wrap";
-  return;
- }
- const pool=(subjects||[]).filter(x=>x.name===subject&&Array.isArray(x.data)).flatMap(x=>x.data.map(row=>{const n=normaliseQuestionRow(row);return n?{question:n[0],answer:n[1],explanation:n[5]||n[4]||""}:null}).filter(Boolean));
- let best=null,bestScore=0;
- for(const item of pool){const candidate=tokens(item.question+" "+item.answer),unique=new Set(candidate),hits=wanted.filter(w=>unique.has(w)).length,score=hits/Math.max(1,wanted.length);if(score>bestScore){bestScore=score;best=item}}
- if(best&&bestScore>=0.34&&wanted.length>0){
-  const title=si?"ප්‍රශ්න බැංකුවෙන් සොයාගත් පිළිතුර":"Answer found in the Novalearnix question bank";
-  status.textContent=title+"\\n\\n"+(si?"ප්‍රශ්නය: ":"Matched question: ")+best.question+"\\n\\n"+(si?"පිළිතුර: ":"Answer: ")+best.answer+(best.explanation&&best.explanation!==best.answer?"\\n\\n"+(si?"වැඩිදුර පැහැදිලි කිරීම: ":"Explanation: ")+best.explanation:"")+"\\n\\n"+(si?"මෙය "+grade+" ශ්‍රේණියේ "+subject+" දැනට ඇති ප්‍රශ්න බැංකුවෙන් ලබාගත් පිළිතුරකි. මෙය සජීවී AI පිළිතුරක් නොවේ.":"Grade "+grade+" · "+subject+" · This is a local question-bank match, not a live AI-generated answer.");
+ if(!wanted.length){status.textContent=si?"කරුණාකර පාඩමට අදාළ ප්‍රධාන වචන ඇතුළත් කරන්න.":"Please include a few meaningful lesson keywords.";status.className="ai-message warning";return}
+ // Use the selected grade's available local question bank, not only the currently open grade.
+ const gradeNumber=Number(String(grade).replace(/\\D/g,""))||7;
+ let gradeSubjects=[];
+ try{gradeSubjects=typeof subjectsForGrade==="function"?subjectsForGrade(gradeNumber):(subjects||[])}catch(e){gradeSubjects=subjects||[]}
+ const chosen=gradeSubjects.filter(x=>x.name===subject&&Array.isArray(x.data));
+ const pool=chosen.flatMap(x=>x.data.map(row=>{
+  const n=normaliseQuestionRow(row);
+  return n?{question:n[0],answer:n[1],explanation:n[5]||n[4]||""}:null;
+ }).filter(Boolean));
+ const variants=w=>w.length>=5?[w,w.slice(0,-1),w.slice(0,-2)]:[w];
+ const related=(x,y)=>variants(x).some(v=>v.length>2&&(y===v||y.startsWith(v)))||variants(y).some(v=>v.length>2&&x.startsWith(v));
+ const ranked=pool.map(item=>{
+  const qTokens=tokens(item.question),allTokens=tokens(item.question+" "+item.answer+" "+item.explanation);
+  const questionHits=wanted.filter(w=>qTokens.some(t=>related(w,t))).length;
+  const allHits=wanted.filter(w=>allTokens.some(t=>related(w,t))).length;
+  const coverage=allHits/wanted.length;
+  const precision=allHits/Math.max(1,Math.min(allTokens.length,wanted.length+3));
+  const score=coverage*.78+precision*.12+(questionHits/Math.max(1,wanted.length))*.10;
+  return {...item,score,coverage};
+ }).sort((x,y)=>y.score-x.score);
+ const best=ranked[0];
+ if(best&&best.coverage>=.34&&best.score>=.18){
+  status.textContent=(si?"ප්‍රශ්න බැංකුවෙන් සොයාගත් අදාළ පිළිතුර":"Relevant answer from the local question bank")+"\\n\\n"+(si?"ගැළපුණු ප්‍රශ්නය: ":"Matched question: ")+best.question+"\\n\\n"+(si?"පිළිතුර: ":"Answer: ")+best.answer+(best.explanation&&best.explanation!==best.answer?"\\n\\n"+(si?"පැහැදිලි කිරීම: ":"Explanation: ")+best.explanation:"")+"\\n\\n"+(si?grade+" ශ්‍රේණිය · "+subject+" · මෙය දැනට ඇති ප්‍රශ්න බැංකුවෙන් ලබාගත් පිළිතුරකි; සජීවී AI පිළිතුරක් නොවේ.":grade+" · "+subject+" · This answer was retrieved from the available question bank; it is not a live AI-generated answer.");
   status.className="ai-message success";
  }else{
-  status.textContent=si?"මෙම ප්‍රශ්නයට ගැළපෙන "+subject+" ප්‍රශ්නයක් දැනට ඇති ප්‍රශ්න බැංකුවෙන් සොයාගත නොහැකි විය. වෙනත් වචන භාවිතා කර නැවත අසන්න, නැතහොත් ඔබේ විෂයට අදාළ ප්‍රශ්නයක් ඇතුළත් කරන්න.\\n\\nසටහන: සජීවී AI පිළිතුරු ලබාදීමට ආරක්ෂිත AI සේවාදායකයක් සහ API සම්බන්ධතාවයක් තවම සකසා නැත; ඔබේ ප්‍රශ්නය පිටතට යවා නැත.":"I couldn't find a close match for this question in the current "+subject+" question bank. Try using key words from a lesson question, or choose a question covered by the bank.\\n\\nNote: Live AI answers are not available because this site has no secure AI server/API configured. Your question was not sent anywhere.";
+  const suggestions=ranked.slice(0,3).filter(x=>x.score>.04);
+  status.textContent=si
+   ? "ඔබේ ප්‍රශ්නයට ප්‍රමාණවත් ලෙස ගැළපෙන පිළිතුරක් "+grade+" ශ්‍රේණියේ "+subject+" ප්‍රශ්න බැංකුවෙන් හමු නොවීය."+(suggestions.length?"\\n\\nළඟින්ම ගැළපුණු පාඩම් ප්‍රශ්න:\\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\\n"):"")+"\\n\\nතවත් ප්‍රශ්න සහ පිළිතුරු එක් කළ විට මෙම සෙවුමෙන් ඒවා සොයාගත හැක. සියලුම නව ප්‍රශ්න ස්වයංක්‍රීයව විසඳන සජීවී AI සේවාවක් තවම සම්බන්ධ කර නැත. ඔබේ ප්‍රශ්නය පිටතට යවා නැත."
+   : "I couldn't find a sufficiently close answer in the Grade "+grade+" "+subject+" question bank."+(suggestions.length?"\\n\\nClosest questions in the bank:\\n"+suggestions.map((x,i)=>(i+1)+". "+x.question).join("\\n"):"")+"\\n\\nThe search can answer more topics as the local question bank is expanded. A live AI service that can independently solve every new question is not connected. Your question was not sent anywhere.";
   status.className="ai-message warning";
  }
  status.style.whiteSpace="pre-wrap";
