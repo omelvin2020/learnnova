@@ -318,7 +318,7 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
 </section>
 <section id="subjectsView" class="hidden"><div class="crumb">Home / Subjects</div><div class="sectionhead"><div><h2>Explore subjects</h2><p>Pick a subject to browse available official past papers.</p></div><input id="subjectSearch" class="search" placeholder="Search subjects..." oninput="renderSubjects()"></div><div id="subjectGrid" class="grid"></div></section>
 <section id="papersView" class="hidden"><div class="crumb"><a href="#" onclick="goSubjects();return false">Subjects</a> / <span id="crumbSubject"></span></div><div class="card"><div class="eyebrow" style="color:#315bd5">Online past papers</div><h2 id="papersTitle"></h2><p class="notice"><span id="paperInfoText">Choose a verified official paper archive for this grade and subject. Availability varies by grade and subject.</span></p><div id="paperGrid" class="papergrid"></div></div></section>
-<section id="officialPaperView" class="hidden"><div class="crumb"><a href="#" onclick="backToSubjectPapers();return false">← Back to subject papers</a></div><div class="card"><div class="examhead"><div><div class="eyebrow" style="color:#315bd5">VERIFIED SOURCE PAPER</div><h2 id="officialPaperTitle" style="margin:0">Official past paper</h2><p class="notice" id="officialPaperMeta"></p></div><div class="timer">◷ <span id="officialTimerText">02:00:00</span></div></div><div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>How this online paper works</strong><span>The original paper is shown below from its official source. Enter your answers in the response sheet. No official marking scheme has been verified for this paper, so Novalearnix will not invent a score or mark your answers automatically.</span></div></div><div class="official-paper-layout"><div><h3>Original question paper</h3><iframe id="officialPaperFrame" class="official-pdf-frame" title="Original official past paper PDF" loading="lazy"></iframe><p class="notice">If the PDF does not appear, <a id="officialPaperSourceLink" href="#" target="_blank" rel="noopener">open the source paper in a new tab</a>.</p></div><div class="official-answer-panel"><h3>Online answer sheet</h3><p class="notice">Part I · Questions 1–20 · Select A, B, C or D.</p><div id="officialAnswerGrid" class="official-answer-grid"></div><h3 style="margin-top:20px">Part II · Written answers</h3><textarea id="officialWrittenAnswers" class="official-response" placeholder="Write your answers for Part II here."></textarea><div class="examactions"><button type="button" class="secondary" onclick="saveOfficialPaperAnswers()">Save answers</button><button type="button" onclick="submitOfficialPaper(false)">Submit online paper</button></div><p class="notice" id="officialPaperStatus" role="status" aria-live="polite">Your answers are stored only in this browser.</p></div></div><div id="officialPaperResult"></div></div></section>
+<section id="officialPaperView" class="hidden"><div class="crumb"><a href="#" onclick="backToSubjectPapers();return false">← Back to subject papers</a></div><div class="card"><div class="examhead"><div><div class="eyebrow" style="color:#315bd5">VERIFIED SOURCE PAPER</div><h2 id="officialPaperTitle" style="margin:0">Official past paper</h2><p class="notice" id="officialPaperMeta"></p></div><div class="timer">◷ <span id="officialTimerText">02:00:00</span></div></div><div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>How this online paper works</strong><span>The original paper is shown below from its official source. Enter your answers in the response sheet. No official marking scheme has been verified for this paper, so Novalearnix will not invent a score or mark your answers automatically.</span></div></div><div class="official-paper-layout"><div><h3>Original question paper</h3><iframe id="officialPaperFrame" class="official-pdf-frame" title="Original official past paper PDF" loading="lazy"></iframe><p class="notice">If the PDF does not appear, <a id="officialPaperSourceLink" href="#" target="_blank" rel="noopener">open the source paper in a new tab</a>.</p></div><div class="official-answer-panel"><h3>Online answer sheet</h3><p class="notice">Set the number of multiple-choice questions in the original paper. This is a response sheet; some papers have different question types.</p><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0"><label for="officialQuestionCount">MCQ count</label><input id="officialQuestionCount" type="number" min="1" max="100" value="50" style="width:90px;padding:8px;border:1px solid #ccd5e5;border-radius:8px"><button type="button" class="secondary" onclick="buildOfficialAnswerRows()">Create answer fields</button></div><div id="officialAnswerGrid" class="official-answer-grid"></div><h3 style="margin-top:20px">Part II · Written answers</h3><textarea id="officialWrittenAnswers" class="official-response" placeholder="Write your answers for Part II here."></textarea><div class="examactions"><button type="button" class="secondary" onclick="saveOfficialPaperAnswers()">Save answers</button><button type="button" onclick="submitOfficialPaper(false)">Submit online paper</button></div><p class="notice" id="officialPaperStatus" role="status" aria-live="polite">Your answers are stored only in this browser.</p></div></div><div id="officialPaperResult"></div></div></section>
 <section id="examView" class="hidden"><div class="card"><div class="examhead"><div><div class="crumb" id="examCrumb"></div><h2 id="examTitle" style="margin:0"></h2></div><div class="timer">◷ <span id="timerText">02:00:00</span></div></div><div class="examlayout"><div><div id="questionArea"></div><div class="examactions"><button class="secondary" id="prevBtn" onclick="moveQuestion(-1)">← Previous</button><button id="nextBtn" onclick="moveQuestion(1)">Next →</button><button class="danger" onclick="submitExam(false)">Submit paper</button></div></div><aside class="qnav"><h3>Questions</h3><div id="questionNumbers" class="qnums"></div><small>Green = answered · Blue = current</small><p class="notice">The countdown stays visible while you scroll. Your answers stay on this page until you submit or leave the paper.</p></aside></div><div id="examResult"></div></div></section>
 
 
@@ -1295,18 +1295,38 @@ function isSinhalaPaper(){return !!activeSubject&&(activeSubject.medium==="Sinha
 function paperText(en,si){return isSinhalaPaper()?si:en}
 
 function officialPastPaperCards(){
- if(Number(activeGrade)!==7||!activeSubject||activeSubject.name!=="History")return "";
- return '<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">🏛️</div><div><strong>ACTUAL OFFICIAL PAST PAPER</strong><span>Western Province · Grade 7 History · 2018 · Sinhala medium · Paper I & II</span></div></div><article class="examcard"><div class="paper-number">📄 2018</div><h3>Grade 7 History — Paper I & II</h3><p>Original paper hosted by the Western Province Department of Education on e‑Thaksalawa. Open it beside the online answer sheet.</p><p class="notice">Official marking scheme not verified · Automatic scoring unavailable</p><button class="paper-card-button" onclick="startOfficialPaper(\'g7-history-wp-2018\')">Start actual online past paper →</button></article></section>';
+ if(!activeSubject)return "";
+ const display=activeSubject.displayName||activeSubject.name,medium=activeSubject.medium||"Sinhala";
+ let html='<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">🏛️</div><div><strong>OFFICIAL PAST-PAPER ARCHIVE</strong><span>Grade '+activeGrade+' · '+escapeHTML(display)+' · Ministry of Education e-Thaksalawa</span></div></div><article class="examcard"><h3>'+paperText("Find an actual past paper","සැබෑ පැරණි ප්‍රශ්න පත්‍රයක් සොයන්න")+'</h3><p>'+paperText("Choose the language of the original paper. Availability varies by subject, grade, year and medium.","මුල් ප්‍රශ්න පත්‍රයේ භාෂාව තෝරන්න. විෂයය, ශ්‍රේණිය, වර්ෂය සහ මාධ්‍යය අනුව පත්‍ර ලබාගත හැකි බව වෙනස් වේ.")+'</p><label for="officialArchiveMedium">Paper medium / ප්‍රශ්න පත්‍ර මාධ්‍යය</label><select id="officialArchiveMedium" class="answerfield" style="margin:7px 0 12px"><option value="Sinhala" '+(medium==="Sinhala"?"selected":"")+'>Sinhala / සිංහල</option><option value="Tamil" '+(medium==="Tamil"?"selected":"")+'>Tamil / දෙමළ</option><option value="English" '+(medium==="English"?"selected":"")+'>English / ඉංග්‍රීසි</option></select><button class="paper-card-button" onclick="startOfficialArchive()">Open online past-paper workspace →</button><p class="notice">The archive search is official. Results are not claimed as verified individual papers until their source and details are checked.</p></article></section>';
+ if(Number(activeGrade)===7&&activeSubject.name==="History"){
+  html+='<section class="term-paper-section"><article class="examcard"><div class="paper-number">📄 2018</div><h3>Grade 7 History — Western Province Paper I & II</h3><p>Individually identified source paper · Sinhala medium · e-Thaksalawa</p><p class="notice">Official marking scheme not verified · Automatic scoring unavailable</p><button class="paper-card-button" onclick="startOfficialPaper(\\'g7-history-wp-2018\\')">Start verified 2018 paper →</button></article></section>';
+ }
+ return html;
 }
-let officialPaperTimer=null,officialAnswers={},activeOfficialPaperId=null;
+let officialPaperTimer=null,officialAnswers={},activeOfficialPaperId=null,officialQuestionCount=50;
 const officialPaperSources={
  "g7-history-wp-2018":{
   title:"Grade 7 History — 2018 Paper I & II",
-  meta:"Western Province Department of Education · Sinhala medium · 2 hours · Original official source",
+  meta:"Western Province Department of Education · Sinhala medium · Original official source",
   url:"https://e-thaksalawa.moe.gov.lk/lcms/pluginfile.php/23027/mod_resource/content/1/Grade%2007%20Paper%20%281%29.pdf",
   questions:20
  }
 };
+function buildOfficialAnswerRows(){
+ officialQuestionCount=Math.max(1,Math.min(100,Number($("officialQuestionCount").value)||50));
+ $("officialQuestionCount").value=officialQuestionCount;
+ $("officialAnswerGrid").innerHTML=Array.from({length:officialQuestionCount},(_,i)=>'<label class="official-answer-row"><span>Question '+(i+1)+'</span><select aria-label="Answer for question '+(i+1)+'" id="officialAnswer'+(i+1)+'" onchange="officialAnswers['+(i+1)+']=this.value"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></label>').join("");
+}
+function startOfficialArchive(){
+ if(!activeSubject)return;
+ const medium=$("officialArchiveMedium")?.value||activeSubject.medium||"Sinhala";
+ const subject=activeSubject.displayName||activeSubject.name;
+ const query="Grade "+activeGrade+" "+subject+" "+medium+" past papers";
+ const url="https://e-thaksalawa.moe.gov.lk/lcms/course/search.php?perpage=all&search="+encodeURIComponent(query);
+ const id="archive-"+activeGrade+"-"+activeSubject.name+"-"+medium;
+ officialPaperSources[id]={title:"Grade "+activeGrade+" "+subject+" — "+medium+" medium archive",meta:"Official e-Thaksalawa search · Grade "+activeGrade+" · "+subject+" · "+medium+" medium. Results depend on the current official archive.",url,questions:50};
+ startOfficialPaper(id);
+}
 function startOfficialPaper(id){
  const paper=officialPaperSources[id];if(!paper)return;
  if(timer){clearInterval(timer);timer=null}
@@ -1316,10 +1336,11 @@ function startOfficialPaper(id){
  $("officialPaperMeta").textContent=paper.meta;
  $("officialPaperFrame").src=paper.url;
  $("officialPaperSourceLink").href=paper.url;
- $("officialAnswerGrid").innerHTML=Array.from({length:paper.questions},(_,i)=>'<label class="official-answer-row"><span>Question '+(i+1)+'</span><select aria-label="Answer for question '+(i+1)+'" id="officialAnswer'+(i+1)+'" onchange="officialAnswers['+(i+1)+']=this.value"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></label>').join("");
+ $("officialQuestionCount").value=paper.questions||50;
+ buildOfficialAnswerRows();
  $("officialWrittenAnswers").value="";
  $("officialPaperResult").innerHTML="";
- $("officialPaperStatus").textContent="Your answers are stored only in this browser. No answer key is available for automatic marking.";
+ $("officialPaperStatus").textContent="Answers are stored only in this browser. Automatic marking is unavailable unless an official marking scheme is verified.";
  showView("officialPaperView");
  let remaining=7200;
  const update=()=>{const h=String(Math.floor(remaining/3600)).padStart(2,"0"),m=String(Math.floor((remaining%3600)/60)).padStart(2,"0"),sec=String(remaining%60).padStart(2,"0");$("officialTimerText").textContent=h+":"+m+":"+sec};
@@ -1328,8 +1349,8 @@ function startOfficialPaper(id){
 }
 function saveOfficialPaperAnswers(){
  const paper=officialPaperSources[activeOfficialPaperId];if(!paper)return;
- for(let i=1;i<=paper.questions;i++){const el=$("officialAnswer"+i);if(el)officialAnswers[i]=el.value}
- const payload={paper:activeOfficialPaperId,answers:officialAnswers,written:$("officialWrittenAnswers").value,savedAt:new Date().toISOString()};
+ for(let i=1;i<=officialQuestionCount;i++){const el=$("officialAnswer"+i);if(el)officialAnswers[i]=el.value}
+ const payload={paper:activeOfficialPaperId,answers:officialAnswers,written:$("officialWrittenAnswers").value,questionCount:officialQuestionCount,savedAt:new Date().toISOString()};
  try{localStorage.setItem("novalearnixOfficialPaper_"+activeOfficialPaperId,JSON.stringify(payload));$("officialPaperStatus").textContent="Answers saved on this browser. No answers were sent to a server."}catch(e){$("officialPaperStatus").textContent="This browser could not save the answers. You can still submit this page."}
 }
 function submitOfficialPaper(auto){
@@ -1338,7 +1359,7 @@ function submitOfficialPaper(auto){
  saveOfficialPaperAnswers();
  const count=Object.values(officialAnswers).filter(Boolean).length;
  const written=$("officialWrittenAnswers").value.trim();
- $("officialPaperResult").innerHTML='<div class="resultbox"><h2>Paper submitted</h2><div class="score">'+count+' / '+paper.questions+'</div><p>Multiple-choice responses entered. '+(written?"Written response section has content.":"No written responses entered yet.")+'</p><p class="notice">'+(auto?"The time limit ended. ":"")+'This is a completion count, not a mark. An official answer key or marking scheme has not been verified, so no score has been calculated.</p><button type="button" class="secondary" onclick="backToSubjectPapers()">Back to papers</button></div>';
+ $("officialPaperResult").innerHTML='<div class="resultbox"><h2>Paper submitted</h2><div class="score">'+count+' / '+officialQuestionCount+' answered</div><p>Multiple-choice responses entered. '+(written?"Written response section has content.":"No written responses entered yet.")+'</p><p class="notice">'+(auto?"The time limit ended. ":"")+'This is a completion count, not a mark. An official answer key or marking scheme has not been verified, so no score has been calculated.</p><button type="button" class="secondary" onclick="backToSubjectPapers()">Back to papers</button></div>';
  $("officialPaperStatus").textContent="Submitted and saved locally.";
  document.querySelectorAll("#officialAnswerGrid select,#officialWrittenAnswers").forEach(el=>el.disabled=true);
 }
@@ -1348,7 +1369,6 @@ function backToSubjectPapers(){
  document.querySelectorAll("#officialAnswerGrid select,#officialWrittenAnswers").forEach(el=>el.disabled=false);
  showView("papersView");
 }
-
 function openSubject(name){
  activeSubject=subjects.find(s=>s.name===name);
  if(!activeSubject)return;
