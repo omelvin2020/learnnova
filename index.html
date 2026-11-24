@@ -1504,22 +1504,40 @@ function grade7PtsPaper2024(){
  return rows.map(r=>({type:"Multiple choice",prompt:r[0],answer:r[1],options:shuffle([r[1],r[2],r[3]]),explain:r[4]}));
 }
 
-function expandAdvancedQuestionSet(base,target,si){
- const explanationPool=base.map(q=>String(q.explain||"").trim()).filter(Boolean);
- return base.flatMap((q,index)=>{
-  const options=Array.isArray(q.options)?q.options.slice():[];
-  const wrong=options.filter(x=>x!==q.answer);
-  const reason=String(q.explain||"").trim();
-  const out=[q];
-  if(reason)out.push({type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+reason,answer:"true",explain:reason});
-  out.push({type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short recall: write the answer to — ")+q.prompt,answer:q.answer,explain:reason});
-  if(reason&&wrong.length>=2){
-   const other=explanationPool.filter(v=>v!==reason).slice(0,2);
-   if(other.length===2)out.push({type:"Reasoning check",prompt:(si?"හේතු දැක්වීම: නිවැරදි පිළිතුරට සහාය දක්වන පැහැදිලි කිරීම තෝරන්න — ":"Reasoning challenge: Which explanation supports the correct answer? — ")+q.prompt,answer:reason,options:shuffle([reason,...other]),explain:reason});
-  }
-  if(wrong.length>=2)out.push({type:"Error analysis",prompt:(si?"දෝෂ විශ්ලේෂණය: වැරදි තේරීම නිවැරදි කරන්න — ":"Error analysis: Correct the learner's choice — ")+q.prompt+" (“"+wrong[0]+"”)",answer:q.answer,options:shuffle([q.answer,wrong[0],wrong[1]]),explain:reason});
-  return out;
- }).slice(0,target);
+function makePrimaryDistinctQuestion(row,index,si){
+ const [prompt,correct,wrong1,wrong2,explain,statement]=row;
+ const type=index%4;
+ const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
+ const reason=String(explain||statement||correct).trim();
+ if(type===0)return {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason};
+ if(type===1){
+  const useFalse=index%8===5&&!!wrong1;
+  const proposition=useFalse
+   ?(si?"“"+prompt+"” සඳහා පිළිතුර “"+wrong1+"” වේ.":"For “"+prompt+"”, the answer is “"+wrong1+"”.")
+   :(String(statement||"").trim()&&String(statement).trim()!==prompt?String(statement).trim():(si?"“"+prompt+"” සඳහා නිවැරදි පිළිතුර “"+correct+"” වේ.":"For “"+prompt+"”, the answer is “"+correct+"”."));
+  return {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+proposition,answer:useFalse?"false":"true",explain:reason};
+ }
+ if(type===2)return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
+ return {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the item with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
+}
+function makeDistinctSecondaryQuestion(row,index,si){
+ const [prompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
+ const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
+ const reason=String(explain||statement||correct).trim();
+ const kind=index%6;
+ if(kind===0)return {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason};
+ if(kind===1)return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
+ if(kind===2){
+  const useFalse=index%12===8&&!!wrong1;
+  const proposition=useFalse
+   ?(si?"“"+prompt+"” සඳහා පිළිතුර “"+wrong1+"” වේ.":"For “"+prompt+"”, the answer is “"+wrong1+"”.")
+   :(String(statement||"").trim()&&String(statement).trim()!==prompt?String(statement).trim():(si?"“"+prompt+"” සඳහා නිවැරදි පිළිතුර “"+correct+"” වේ.":"For “"+prompt+"”, the answer is “"+correct+"”."));
+  return {type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+proposition,answer:useFalse?"false":"true",explain:reason};
+ }
+ if(kind===3)return {type:"Error analysis",prompt:(si?"ශිෂ්‍යයෙකු “"+wrong1+"” ලෙස පිළිතුරු දී ඇත. නිවැරදි පිළිතුර තෝරන්න: ":"A learner answered “"+wrong1+"”. Choose the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
+ if(kind===4&&typeof fillIn==="string"&&fillIn!==prompt&&/_{2,}|…|\.{3}/.test(fillIn))return {type:"Fill in the blank",prompt:fillIn,answer:correct,explain:reason};
+ if(kind===5)return {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the item with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
+ return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
 }
 function startExamCore(n){
  const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;
@@ -1529,43 +1547,23 @@ function startExamCore(n){
  if(activeGrade<=5){
   const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
   const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
-  questions=selected.slice(0,7).flatMap((row,rowIndex)=>{
-   const [prompt,correct,wrong1,wrong2,explain,statement]=row;
-   const reason=String(explain||statement||correct).trim();
-   const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
-   const falseStatement=si?"මෙම ප්‍රශ්නයේ නිවැරදි පිළිතුර "+wrong1+" වේ.":"The correct answer to this question is "+wrong1+".";
-   const trueStatement=String(statement||"").trim();
-   const tfStatement=rowIndex%2===0&&trueStatement&&trueStatement!==prompt&&trueStatement!==correct?trueStatement:(rowIndex%2===0?(si?"මෙම ප්‍රශ්නයේ නිවැරදි පිළිතුර ":"The correct answer to this question is ")+correct+".":falseStatement);
-   return [
-    {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason},
-    {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+tfStatement,answer:tfStatement===falseStatement?"false":"true",explain:reason},
-    {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason},
-    {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the question with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason}
-   ];
-  });
+  questions=selected.slice(0,28).map((row,rowIndex)=>makePrimaryDistinctQuestion(row,rowIndex,si));
  }
- else if(activeGrade===7&&activeSubject.name==="PTS"){questions=expandAdvancedQuestionSet(grade7PtsPaper(n),45,si);}
+ else if(activeGrade===7&&activeSubject.name==="PTS"){
+  const ptsRows=grade7PtsPaper(n).map(q=>{
+   const wrong=(Array.isArray(q.options)?q.options:[]).filter(v=>v!==q.answer);
+   return normaliseQuestionRow([q.prompt,q.answer,wrong[0]||"වෙනත් පිළිතුරක්",wrong[1]||"නොගැළපෙන පිළිතුරක්",q.explain||"",q.explain||"",""]);
+  }).filter(Boolean);
+  const offset=finalTest?Math.floor(Math.random()*ptsRows.length):(n-1)%Math.max(1,ptsRows.length);
+  const selected=finalTest?shuffle(ptsRows):ptsRows.map((_,i)=>ptsRows[(i+offset)%ptsRows.length]);
+  questions=selected.slice(0,45).map((row,rowIndex)=>makeDistinctSecondaryQuestion(row,rowIndex,si));
+ }
  else{
   const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
   const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
-  const explanationPool=bank.map(row=>String(row[4]||row[5]||"").trim()).filter(Boolean);
-  questions=selected.flatMap((row,rowIndex)=>{
-   const [prompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
-   const reason=String(explain||statement||correct).trim(),fact=String(statement||"").trim();
-   const baseOptions=[correct,wrong1,wrong2].filter((v,i,a)=>v&&a.indexOf(v)===i);
-   const otherReasons=[...new Set(explanationPool.filter(v=>v!==reason))];
-   const reasonOptions=[reason,...otherReasons.slice(0,2)];
-   const out=[
-    {type:"Multiple choice",prompt,answer:correct,options:shuffle(baseOptions),explain:reason},
-    {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Recall check — write the key answer: ")+prompt,answer:correct,explain:reason},
-    {type:"Error analysis",prompt:(si?"දෝෂ විශ්ලේෂණය: ශිෂ්‍යයෙකු “":"Error analysis: A learner chose “")+String(wrong1)+"” "+(si?"ලෙස පිළිතුරු දී ඇත. නිවැරදි පිළිතුර තෝරන්න: ":"as an answer. Choose the correction: ")+prompt,answer:correct,options:shuffle(baseOptions),explain:reason}
-   ];
-   if(fact&&fact!==correct&&fact!==prompt)out.push({type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"Evaluate this statement — true or false: ")+fact,answer:"true",explain:reason});
-   if(fillIn&&fillIn!==prompt&&/_{2,}|…|\\.\\.\\./.test(fillIn))out.push({type:"Fill in the blank",prompt:fillIn,answer:correct,explain:reason});
-   if(reason&&reason!==correct&&reasonOptions.length>=3)out.push({type:"Reasoning check",prompt:(si?"හේතු විමසීම: ප්‍රශ්නයට නිවැරදි පිළිතුර තහවුරු කරන පැහැදිලි කිරීම තෝරන්න — ":"Reasoning challenge: Choose the explanation that supports the answer — ")+prompt,answer:reason,options:shuffle(reasonOptions),explain:reason});
-   return out;
-  }).slice(0,activeGrade<=5?30:45);
+  questions=selected.slice(0,45).map((row,rowIndex)=>makeDistinctSecondaryQuestion(row,rowIndex,si));
  }
+ if(!questions.length){alert("There are not enough valid questions in this subject yet.");return}
  showView("examView");$("examCrumb").textContent=(si?activeGrade+" ශ්‍රේණිය":"Grade "+activeGrade)+" / "+(activeSubject.displayName||activeSubject.name)+" / "+paperText("Paper","ප්‍රශ්න පත්‍රය")+" "+n;
  $("examTitle").textContent=finalTest?paperText("Final Test","අවසාන පරීක්ෂණය"):paperText("Online Practice Paper ","මාර්ගගත පුහුණු පත්‍රය ")+n;
  $("examResult").innerHTML="";$("prevBtn").classList.remove("hidden");$("nextBtn").classList.remove("hidden");
