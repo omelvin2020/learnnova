@@ -284,10 +284,28 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
 .mini-game-options button{width:100%;min-height:42px;white-space:normal}
 .mini-game-feedback{margin-top:10px;font-weight:700}
 @media(max-width:520px){.mini-game-options{grid-template-columns:1fr}}
+
+/* Environment Explorer learning activities */
+.environment-hero{padding:27px;border-radius:21px;color:#fff;background:linear-gradient(115deg,#16765c,#269b83 55%,#4b9bce);box-shadow:0 15px 35px #16765c22;margin-bottom:18px}
+.environment-hero h2{font-size:clamp(25px,4vw,34px);margin:5px 0}.environment-hero p{margin:4px 0;color:#effff8;max-width:720px}
+.environment-topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:18px 0}
+.environment-topic{background:#fff;border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:var(--shadow)}
+.environment-topic h3{margin:7px 0 4px}.environment-topic p{color:var(--muted);font-size:13px;min-height:40px}
+.environment-emoji{font-size:35px;width:58px;height:58px;border-radius:16px;background:#eaf8f1;display:grid;place-items:center}
+.environment-topic button{background:linear-gradient(110deg,#16765c,#269b83)}
+.environment-activity{margin:18px 0;min-height:190px}
+.environment-empty{text-align:center;padding:16px;color:var(--muted)}
+.environment-note{padding:13px 15px;border-radius:12px;background:#edf8f2;color:#245c48;margin:12px 0}
+.environment-question{padding:15px 0;border-top:1px solid var(--line);margin-top:14px}
+.environment-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px;margin:12px 0}
+.environment-options button{background:#eef4f2;color:#244b3e;border:1px solid #d9e9e1;box-shadow:none;text-align:left}
+.environment-options button:disabled{opacity:1}.environment-options button.correct-choice{background:#e0f6e9;color:#08764f;border-color:#8dd2ad}.environment-options button.wrong-choice{background:#fff0ef;color:#a83232;border-color:#efb0aa}
+.environment-feedback{min-height:25px;font-weight:700;margin:10px 0}.environment-actions{display:flex;gap:9px;flex-wrap:wrap}
+@media(max-width:600px){.environment-hero{padding:21px}.environment-topic p{min-height:0}}
 </style>
 </head>
 <body>
-<div class="topbar"><div class="topinner"><div class="brand"><span class="brandmark">✦</span> Novalearnix</div><div class="toplinks"><button id="navHome" class="active" onclick="goHome()">Home</button><button id="navSubjects" onclick="goSubjects()">Subjects</button><button id="navEntertainment" onclick="goEntertainment()">🎮 Entertainment</button><button id="navNumberWriting" onclick="goNumberWriting()">🔢 Number writing</button><button id="navMore" onclick="goMore()">More features</button><button id="navFeedback" onclick="goFeedback()">Feedback</button><button id="navAI" onclick="goAIStudy()">🤖 AI Study</button><button id="navSound" onclick="goSoundSettings()">🔊 Sound settings</button></div></div></div>
+<div class="topbar"><div class="topinner"><div class="brand"><span class="brandmark">✦</span> Novalearnix</div><div class="toplinks"><button id="navHome" class="active" onclick="goHome()">Home</button><button id="navSubjects" onclick="goSubjects()">Subjects</button><button id="navEntertainment" onclick="goEntertainment()">🎮 Entertainment</button><button id="navEnvironment" onclick="goEnvironment()">🌿 Environment</button><button id="navNumberWriting" onclick="goNumberWriting()">🔢 Number writing</button><button id="navMore" onclick="goMore()">More features</button><button id="navFeedback" onclick="goFeedback()">Feedback</button><button id="navAI" onclick="goAIStudy()">🤖 AI Study</button><button id="navSound" onclick="goSoundSettings()">🔊 Sound settings</button></div></div></div>
 <main class="wrap">
 <section id="homeView">
 <div class="hero"><div><div class="eyebrow">Sri Lankan learning · Grades 1–13</div><h1>Learn something new.<br>Every single day.</h1><p>Welcome to Novalearnix. Explore school subjects from Grade 1 to A/L, practise by school term, and take a separate final test to check your learning.</p><button onclick="goSubjects()">Explore subjects&nbsp; →</button></div><div class="heroart">📚</div></div>
@@ -357,6 +375,21 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
 <article class="tool-card"><h3>💰 Simple Interest Calculator</h3><p>Calculate simple interest and the total amount.</p><label for="advInterestP">Principal</label><input id="advInterestP" type="number" min="0" step="any" placeholder="Starting amount"><label for="advInterestR">Annual rate (%)</label><input id="advInterestR" type="number" min="0" step="any" placeholder="Rate"><label for="advInterestT">Time (years)</label><input id="advInterestT" type="number" min="0" step="any" placeholder="Years"><button type="button" onclick="runAdvancedStudyTool('interest')">Calculate interest</button><div id="advInterestOut" class="tool-result" aria-live="polite">Enter the principal, rate and time.</div></article>
 <article class="tool-card"><h3>⚗️ Chemical Formula Counter</h3><p>Count atoms in formulas such as H2O, CO2 and Ca(OH)2. Parentheses and subscripts are supported.</p><label for="advFormula">Chemical formula</label><input id="advFormula" maxlength="40" placeholder="e.g. Ca(OH)2"><button type="button" onclick="runAdvancedStudyTool('formula')">Count atoms</button><div id="advFormulaOut" class="tool-result" aria-live="polite">Enter a chemical formula.</div></article>
 </div></section></section>
+
+<section id="environmentView" class="hidden">
+ <div class="crumb"><a href="#" onclick="goHome();return false">Home</a> / Environment Explorer</div>
+ <div class="environment-hero"><div class="eyebrow">🌱 EXPLORE THE WORLD AROUND YOU</div><h2>Environment Explorer</h2><p>Learn through pictures, sorting, matching and short challenges. Choose a topic to begin an activity.</p></div>
+ <div class="environment-topics">
+  <article class="environment-topic"><div class="environment-emoji">🌳</div><h3>Parts of a Plant</h3><p>Explore roots, stem, leaves, flowers, fruits and seeds.</p><button onclick="startEnvironmentActivity('plants')">Explore plants →</button></article>
+  <article class="environment-topic"><div class="environment-emoji">🐄</div><h3>Domestic Animals</h3><p>Meet familiar domestic animals and learn how people care for them.</p><button onclick="startEnvironmentActivity('animals')">Meet animals →</button></article>
+  <article class="environment-topic"><div class="environment-emoji">🚗</div><h3>Air, Water and Road Vehicles</h3><p>Discover how different vehicles travel and where they move.</p><button onclick="startEnvironmentActivity('vehicles')">Explore vehicles →</button></article>
+  <article class="environment-topic"><div class="environment-emoji">🌅</div><h3>Morning, Day and Night</h3><p>Notice changes in the sky, light and everyday activities.</p><button onclick="startEnvironmentActivity('times')">Explore the day →</button></article>
+ </div>
+ <section class="environment-activity card" id="environmentActivity" aria-live="polite">
+  <div class="environment-empty"><div style="font-size:42px">🧭</div><h3>Choose an activity above</h3><p>Each topic includes a short learning note and interactive questions. You can try again at any time.</p></div>
+ </section>
+ <button class="secondary" onclick="goHome()">← Back to Home</button>
+</section>
 
 <section id="feedbackView" class="hidden">
  <div class="feedback-wrap">
@@ -1217,7 +1250,7 @@ function progressId(subject,paper){return (activeGrade<=5?"Grade "+activeGrade+"
 function saveProgress(subject,paper,score){let p=getProgress();p[progressId(subject,paper)]={score:score,date:new Date().toISOString()};localStorage.setItem("learnnovaProgress",JSON.stringify(p));updateStats()}
 function updateStats(){const p=getProgress(),done=Object.keys(p).filter(k=>activeGrade===7?!k.startsWith("Grade 1-")&&!k.startsWith("Grade 2-")&&!k.startsWith("Grade 3-")&&!k.startsWith("Grade 4-")&&!k.startsWith("Grade 5-"):k.startsWith("Grade "+activeGrade+"-")).length;$("completedStat").textContent=done;const st=$("subjectTotal"),pt=$("paperTotal");if(st)st.textContent=subjects.length+" Grade "+activeGrade+" subjects";if(pt)pt.textContent=(subjects.length*PAPER_COUNT)+" practice papers";if($("homeSubjectCount"))$("homeSubjectCount").textContent=subjects.length;if($("homePaperCount"))$("homePaperCount").textContent=subjects.length*PAPER_COUNT}
 function changeGrade(value){const g=Number(value);if(!Number.isInteger(g)||g<1||g>13)return;activeGrade=g;subjects=g<=5?makePrimarySubjects(g):subjectsForGrade(g);if($("welcomeText"))$("welcomeText").textContent="Welcome to Novalearnix Grade "+g+". Choose a subject and enjoy learning.";$("paperInfoText").textContent="Choose an interactive practice paper for Grade "+g+".";renderHome();if(!$("subjectsView").classList.contains("hidden"))renderSubjects()}
-function showView(id){["homeView","subjectsView","papersView","examView","feedbackView","moreView","learningToolsView","aiStudyView","soundSettingsView","numberWritingView","drawingView","entertainmentView"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");$("navHome").classList.toggle("active",id==="homeView");$("navSubjects").classList.toggle("active",id==="subjectsView");$("navFeedback").classList.toggle("active",id==="feedbackView");$("navMore").classList.toggle("active",id==="moreView");$("navEntertainment").classList.toggle("active",id==="entertainmentView");$("navSound").classList.toggle("active",id==="soundSettingsView");$("navAI").classList.toggle("active",id==="aiStudyView");window.scrollTo({top:0,behavior:"smooth"})}
+function showView(id){["homeView","subjectsView","papersView","examView","feedbackView","moreView","learningToolsView","aiStudyView","soundSettingsView","numberWritingView","drawingView","entertainmentView","environmentView"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");$("navHome").classList.toggle("active",id==="homeView");$("navSubjects").classList.toggle("active",id==="subjectsView");$("navFeedback").classList.toggle("active",id==="feedbackView");$("navMore").classList.toggle("active",id==="moreView");$("navEntertainment").classList.toggle("active",id==="entertainmentView");$("navEnvironment").classList.toggle("active",id==="environmentView");$("navSound").classList.toggle("active",id==="soundSettingsView");$("navAI").classList.toggle("active",id==="aiStudyView");window.scrollTo({top:0,behavior:"smooth"})}
 let currentNumberWriting=1;
 const numberWritingNames={English:["One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten"],Sinhala:["එක","දෙක","තුන","හතර","පහ","හය","හත","අට","නවය","දහය"]};
 function goNumberWriting(){if(timer){clearInterval(timer);timer=null}showView("numberWritingView");drawNumberWriting()}
@@ -1780,6 +1813,38 @@ const old=window.initLearningTools;window.initLearningTools=function(){if(old)ol
 })();
 
 
+const environmentActivities={
+ plants:{title:"🌳 Parts of a Plant",note:"A plant has different parts that work together. Roots take in water and help hold the plant in the soil. The stem supports the plant and carries water. Leaves make food using light. Flowers help many plants produce seeds; fruits can protect seeds.",items:[
+  {q:"Which part usually takes in water from the soil?",opts:["Roots","Flower","Fruit"],a:0,why:"Roots absorb water and minerals from the soil."},
+  {q:"Which part supports the plant and carries water?",opts:["Stem","Seed","Petal"],a:0,why:"The stem supports the plant and transports water."},
+  {q:"Which part usually makes food using sunlight?",opts:["Leaves","Roots","Fruit"],a:0,why:"Leaves contain chlorophyll and carry out photosynthesis."},
+  {q:"Which part can develop from a flower and protect seeds?",opts:["Fruit","Root","Stem"],a:0,why:"In many plants, the fruit develops from the flower and contains seeds."},
+  {q:"Which part can grow into a new plant?",opts:["Seed","Thorn","Dry leaf"],a:0,why:"A suitable seed can germinate and grow into a new plant."}]},
+ animals:{title:"🐄 Domestic Animals",note:"Domestic animals live with people or are cared for by people. They may provide help, food or companionship. They need suitable food, clean water, shelter and kind treatment.",items:[
+  {q:"Which animal is commonly kept for milk?",opts:["Cow","Eagle","Tiger"],a:0,why:"Cows are commonly cared for to provide milk."},
+  {q:"Which animal can help guard a home?",opts:["Dog","Butterfly","Frog"],a:0,why:"Dogs can be trained to alert people and help guard homes."},
+  {q:"Which animal is commonly kept for eggs?",opts:["Hen","Goat","Horse"],a:0,why:"Hens lay eggs."},
+  {q:"What should every domestic animal have?",opts:["Clean water and suitable food","Only sweets","No shelter"],a:0,why:"Animals need clean water, suitable food and safe shelter."},
+  {q:"Which is a kind way to treat a domestic animal?",opts:["Handle it gently","Tease it","Leave it without water"],a:0,why:"Gentle care helps keep animals safe and healthy."}]},
+ vehicles:{title:"🚗 Air, Water and Road Vehicles",note:"Vehicles travel in different places. Aeroplanes and helicopters travel through the air. Boats and ships travel on water. Cars, buses, bicycles and lorries travel on roads.",items:[
+  {q:"Which vehicle travels through the air?",opts:["Aeroplane","Bus","Boat"],a:0,why:"An aeroplane flies through the air."},
+  {q:"Which vehicle is designed to travel on water?",opts:["Ship","Bicycle","Car"],a:0,why:"Ships travel on water."},
+  {q:"Which one is a road vehicle?",opts:["Bus","Helicopter","Sailboat"],a:0,why:"A bus travels on roads."},
+  {q:"A family wants to cross a river where there is no bridge. Which may help?",opts:["Boat","Train","Aeroplane"],a:0,why:"A boat can carry people across water."},
+  {q:"Which group contains only road vehicles?",opts:["Car, bus and bicycle","Ship, boat and canoe","Jet, helicopter and glider"],a:0,why:"Cars, buses and bicycles are used on roads."}]},
+ times:{title:"🌅 Morning, Day and Night",note:"Morning is the early part of the day, when the Sun appears to rise. Daytime is usually brighter. At night, our part of Earth faces away from the Sun, so the sky is generally dark and we may see the Moon and stars.",items:[
+  {q:"Which time usually comes first?",opts:["Morning","Night","Late evening"],a:0,why:"Morning begins the daily sequence."},
+  {q:"When is the Sun usually highest in the sky?",opts:["Around midday","At midnight","Before sunrise"],a:0,why:"The Sun is generally highest around midday."},
+  {q:"Which objects may be seen in the night sky?",opts:["Moon and stars","Only rainbows","The midday Sun"],a:0,why:"The Moon and stars can often be seen at night."},
+  {q:"Which activity is commonly done before school in the morning?",opts:["Getting ready for the day","Going to bed for the night","Watching the midnight sky"],a:0,why:"Many students get ready for school in the morning."},
+  {q:"Put the parts of a usual day in the correct order.",opts:["Morning → Day → Night","Night → Morning → Day","Day → Night → Morning"],a:0,why:"A simple daily sequence is morning, daytime and night."}]}
+};
+let activeEnvironmentKey="",environmentQuestionIndex=0,environmentScore=0,environmentAnswered=false;
+function goEnvironment(){if(timer){clearInterval(timer);timer=null}showView("environmentView");$("environmentActivity").scrollIntoView({behavior:"smooth",block:"start"})}
+function startEnvironmentActivity(key){const activity=environmentActivities[key];if(!activity)return;activeEnvironmentKey=key;environmentQuestionIndex=0;environmentScore=0;environmentAnswered=false;renderEnvironmentActivity();$("environmentActivity").scrollIntoView({behavior:"smooth",block:"nearest"})}
+function renderEnvironmentActivity(){const a=environmentActivities[activeEnvironmentKey],panel=$("environmentActivity");if(!a||!panel)return;const q=a.items[environmentQuestionIndex];panel.innerHTML='<div class="eyebrow" style="color:#16765c">INTERACTIVE LEARNING ACTIVITY</div><h2>'+a.title+'</h2><div class="environment-note">'+a.note+'</div><div class="environment-question"><div class="qmeta">Question '+(environmentQuestionIndex+1)+' of '+a.items.length+' · Score '+environmentScore+'/'+a.items.length+'</div><h3>'+q.q+'</h3><div class="environment-options">'+q.opts.map((v,i)=>'<button type="button" onclick="answerEnvironmentActivity('+i+')" '+(environmentAnswered?'disabled':'')+'>'+v+'</button>').join('')+'</div><div class="environment-feedback" id="environmentFeedback" aria-live="polite"></div><div class="environment-actions"><button type="button" class="secondary" onclick="startEnvironmentActivity(\''+activeEnvironmentKey+'\')">↻ Restart activity</button><button type="button" id="environmentNext" onclick="nextEnvironmentQuestion()" '+(environmentAnswered?'':'disabled')+'>'+(environmentQuestionIndex===a.items.length-1?'See results':'Next question →')+'</button></div></div>'}
+function answerEnvironmentActivity(choice){if(environmentAnswered)return;const a=environmentActivities[activeEnvironmentKey],q=a.items[environmentQuestionIndex],buttons=$("environmentActivity").querySelectorAll(".environment-options button");environmentAnswered=true;if(choice===q.a)environmentScore++;buttons.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("correct-choice");else if(i===choice)b.classList.add("wrong-choice")});$("environmentFeedback").textContent=(choice===q.a?"✓ Correct! ":"Not quite. ")+q.why;$("environmentNext").disabled=false}
+function nextEnvironmentQuestion(){if(!environmentAnswered)return;const a=environmentActivities[activeEnvironmentKey];if(environmentQuestionIndex<a.items.length-1){environmentQuestionIndex++;environmentAnswered=false;renderEnvironmentActivity();return}const panel=$("environmentActivity");panel.innerHTML='<div style="text-align:center;padding:18px"><div style="font-size:48px">🎉</div><h2>Activity complete!</h2><div class="score">'+environmentScore+'/'+a.items.length+'</div><p>You answered '+Math.round(environmentScore/a.items.length*100)+'% correctly in '+a.title+'.</p><div class="environment-actions" style="justify-content:center"><button onclick="startEnvironmentActivity(\''+activeEnvironmentKey+'\')">Play again</button><button class="secondary" onclick="goEnvironment()">Choose another topic</button></div></div>'}
 let memoryDeck=[],memoryOpen=[],memoryMatches=0,memoryMoves=0;
 function goEntertainment(){if(timer){clearInterval(timer);timer=null}showView("entertainmentView");$("entertainmentView").querySelector(".entertainment-hero").classList.remove("hidden");$("entertainmentView").querySelector(".entertainment-grid").classList.remove("hidden");$("drawingView").classList.add("hidden");startMemoryGame();newScramble();newQuickMath();resetTicTacToe()}
 function startMemoryGame(){const faces=["🐼","🚀","🍉","🎸","🌈","🐢"];memoryDeck=[...faces,...faces].sort(()=>Math.random()-.5);memoryOpen=[];memoryMatches=0;memoryMoves=0;drawMemoryGame();$("memoryGameStatus").textContent="Find the matching pairs! Moves: 0"}
