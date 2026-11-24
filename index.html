@@ -1447,7 +1447,7 @@ function openSubject(name){
   {title:paperText("TERM 3","තෙවන වාරය"),desc:paperText("Practice papers 07–09","පුහුණු පත්‍ර 07–09"),items:[7,8,9],icon:"🏆"},
   {title:paperText("FULL-YEAR REVISION","වසර අවසාන පුනරීක්ෂණය"),desc:paperText("Practice paper 10","පුහුණු පත්‍රය 10"),items:[10],icon:"⭐"}
  ];
- const sections=groups.map(g=>'<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">'+g.icon+'</div><div><strong>'+g.title+'</strong><span>'+g.desc+'</span></div></div><div class="papergrid">'+g.items.map(n=>'<article class="examcard"><div class="paper-number">📝 '+String(n).padStart(2,"0")+'</div><h3>'+paperText("Online Practice Paper ","මාර්ගගත පුහුණු පත්‍රය ")+String(n).padStart(2,"0")+'</h3><p>'+paperText("Up to "+(grade<=5?30:45)+" questions · reasoning challenges · error analysis · automatic marking","ප්‍රශ්න "+(grade<=5?30:45)+"ක් දක්වා · හේතු දැක්වීමේ අභියෝග · දෝෂ විශ්ලේෂණය · ස්වයංක්‍රීය ලකුණු")+'</p><button class="paper-card-button" onclick="startExam('+n+')">'+paperText("Start Paper ","පත්‍රය ආරම්භ කරන්න ")+n+' →</button></article>').join("")+'</div></section>').join("");
+ const sections=groups.map(g=>'<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">'+g.icon+'</div><div><strong>'+g.title+'</strong><span>'+g.desc+'</span></div></div><div class="papergrid">'+g.items.map(n=>'<article class="examcard"><div class="paper-number">📝 '+String(n).padStart(2,"0")+'</div><h3>'+paperText("Online Practice Paper ","මාර්ගගත පුහුණු පත්‍රය ")+String(n).padStart(2,"0")+'</h3><p>'+(grade<=5?paperText("28 questions · 4 types: MCQ, True/False, Short Answer and Matching · automatic marking","ප්‍රශ්න 28යි · ප්‍රශ්න වර්ග 4යි: බහුවරණ, සත්‍ය/අසත්‍ය, කෙටි පිළිතුරු සහ ගැළපීම · ස්වයංක්‍රීය ලකුණු"):paperText("Up to 45 questions · advanced reasoning and examination-style challenges · automatic marking","Up to 45 questions · advanced reasoning and examination-style challenges · automatic marking"))+'</p><button class="paper-card-button" onclick="startExam('+n+')">'+paperText("Start Paper ","පත්‍රය ආරම්භ කරන්න ")+n+' →</button></article>').join("")+'</div></section>').join("");
  const finalCard='<section class="term-paper-section"><div class="papergrid"><article class="examcard"><div class="paper-number">🎯</div><h3>'+paperText("Randomised Final Test","අහඹු අවසාන පරීක්ෂණය")+'</h3><p>'+paperText("A mixed test selected from this subject’s available question bank.","මෙම විෂයේ පවතින ප්‍රශ්න බැංකුවෙන් තෝරාගත් මිශ්‍ර පරීක්ෂණයකි.")+'</p><button class="paper-card-button" onclick="startExam(\'FINAL_TEST\')">'+paperText("Start Final Test","අවසාන පරීක්ෂණය ආරම්භ කරන්න")+' →</button></article></div></section>';
  $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📚</div><div><strong>'+paperText("NOVALEARNIX ONLINE EXAM CENTRE","NOVALEARNIX මාර්ගගත විභාග මධ්‍යස්ථානය")+'</strong><span>'+paperText("Grade ","ශ්‍රේණිය ")+grade+' · '+display+' · '+paperText("10 practice papers + final test","පුහුණු පත්‍ර 10ක් + අවසාන පරීක්ෂණය")+'</span></div></div>'+sections+finalCard+'<div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>'+paperText("About these papers","මෙම ප්‍රශ්න පත්‍ර පිළිබඳව")+'</strong><span>'+paperText("Questions are generated from the subject question bank currently available on Novalearnix. They are practice papers and are not presented as verbatim official past papers. Exact past-paper conversion can be added when verified source papers are available.","ප්‍රශ්න Novalearnix හි දැනට ඇති විෂය ප්‍රශ්න බැංකුවෙන් සකස් කර ඇත. මේවා පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල එලෙසම පිටපත් කළ ප්‍රශ්න ලෙස ඉදිරිපත් නොකෙරේ. තහවුරු කළ මුල් ප්‍රශ්න පත්‍ර ලැබුණු විට ඒවා පදනම් කරගත් වෙනම පත්‍ර එක් කළ හැකිය.")+'</span></div></div>';
 }
@@ -1526,7 +1526,25 @@ function startExamCore(n){
  secondsLeft=activeGrade>=10?7200:activeGrade<=5?1800:3600;
  const si=isSinhalaPaper(),bank=activeSubject.data.map(normaliseQuestionRow).filter(Boolean);
  if(!bank.length){alert("This subject does not yet have any valid practice questions. Please choose another subject.");return}
- if(activeGrade===7&&activeSubject.name==="PTS"){questions=expandAdvancedQuestionSet(grade7PtsPaper(n),45,si);}
+ if(activeGrade<=5){
+  const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
+  const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
+  questions=selected.slice(0,7).flatMap((row,rowIndex)=>{
+   const [prompt,correct,wrong1,wrong2,explain,statement]=row;
+   const reason=String(explain||statement||correct).trim();
+   const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
+   const falseStatement=si?"මෙම ප්‍රශ්නයේ නිවැරදි පිළිතුර "+wrong1+" වේ.":"The correct answer to this question is "+wrong1+".";
+   const trueStatement=String(statement||"").trim();
+   const tfStatement=rowIndex%2===0&&trueStatement&&trueStatement!==prompt&&trueStatement!==correct?trueStatement:(rowIndex%2===0?(si?"මෙම ප්‍රශ්නයේ නිවැරදි පිළිතුර ":"The correct answer to this question is ")+correct+".":falseStatement);
+   return [
+    {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason},
+    {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+tfStatement,answer:tfStatement===falseStatement?"false":"true",explain:reason},
+    {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason},
+    {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the question with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason}
+   ];
+  });
+ }
+ else if(activeGrade===7&&activeSubject.name==="PTS"){questions=expandAdvancedQuestionSet(grade7PtsPaper(n),45,si);}
  else{
   const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
   const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
