@@ -1408,18 +1408,18 @@ function startExamCore(n){
   const explanationPool=bank.map(row=>String(row[4]||row[5]||"").trim()).filter(Boolean);
   questions=selected.flatMap((row,rowIndex)=>{
    const [prompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
-   const reason=String(explain||statement||correct).trim();
+   const reason=String(explain||statement||correct).trim(),fact=String(statement||"").trim();
    const baseOptions=[correct,wrong1,wrong2].filter((v,i,a)=>v&&a.indexOf(v)===i);
    const otherReasons=[...new Set(explanationPool.filter(v=>v!==reason))];
    const reasonOptions=[reason,...otherReasons.slice(0,2)];
    const out=[
     {type:"Multiple choice",prompt,answer:correct,options:shuffle(baseOptions),explain:reason},
     {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Recall check — write the key answer: ")+prompt,answer:correct,explain:reason},
-    {type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"Evaluate this statement — true or false: ")+String(statement||reason),answer:"true",explain:reason},
     {type:"Error analysis",prompt:(si?"දෝෂ විශ්ලේෂණය: ශිෂ්‍යයෙකු “":"Error analysis: A learner chose “")+String(wrong1)+"” "+(si?"ලෙස පිළිතුරු දී ඇත. නිවැරදි පිළිතුර තෝරන්න: ":"as an answer. Choose the correction: ")+prompt,answer:correct,options:shuffle(baseOptions),explain:reason}
    ];
+   if(fact&&fact!==correct&&fact!==prompt)out.push({type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"Evaluate this statement — true or false: ")+fact,answer:"true",explain:reason});
    if(fillIn&&fillIn!==prompt&&/_{2,}|…|\\.\\.\\./.test(fillIn))out.push({type:"Fill in the blank",prompt:fillIn,answer:correct,explain:reason});
-   if(reasonOptions.length>=3)out.push({type:"Reasoning check",prompt:(si?"හේතු විමසීම: ප්‍රශ්නයට නිවැරදි පිළිතුර තහවුරු කරන පැහැදිලි කිරීම තෝරන්න — ":"Reasoning challenge: Choose the explanation that supports the answer — ")+prompt,answer:reason,options:shuffle(reasonOptions),explain:reason});
+   if(reason&&reason!==correct&&reasonOptions.length>=3)out.push({type:"Reasoning check",prompt:(si?"හේතු විමසීම: ප්‍රශ්නයට නිවැරදි පිළිතුර තහවුරු කරන පැහැදිලි කිරීම තෝරන්න — ":"Reasoning challenge: Choose the explanation that supports the answer — ")+prompt,answer:reason,options:shuffle(reasonOptions),explain:reason});
    return out;
   }).slice(0,activeGrade<=5?30:45);
  }
