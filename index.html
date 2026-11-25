@@ -393,7 +393,18 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
 <article class="tool-card"><h3>⚡ Ohm's Law Explorer</h3><p>Enter two known values and calculate the third using V = I × R.</p><label for="advOhmTarget">Calculate</label><select id="advOhmTarget"><option value="V">Voltage (V)</option><option value="I">Current (I)</option><option value="R">Resistance (R)</option></select><label for="advOhmV">Voltage V (leave blank if unknown)</label><input id="advOhmV" type="number" min="0" step="any" placeholder="Volts"><label for="advOhmI">Current I (leave blank if unknown)</label><input id="advOhmI" type="number" min="0" step="any" placeholder="Amperes"><label for="advOhmR">Resistance R (leave blank if unknown)</label><input id="advOhmR" type="number" min="0" step="any" placeholder="Ohms"><button type="button" onclick="runAdvancedStudyTool('ohm')">Calculate</button><div id="advOhmOut" class="tool-result" aria-live="polite">Enter the two known values.</div></article>
 <article class="tool-card"><h3>💰 Simple Interest Calculator</h3><p>Calculate simple interest and the total amount.</p><label for="advInterestP">Principal</label><input id="advInterestP" type="number" min="0" step="any" placeholder="Starting amount"><label for="advInterestR">Annual rate (%)</label><input id="advInterestR" type="number" min="0" step="any" placeholder="Rate"><label for="advInterestT">Time (years)</label><input id="advInterestT" type="number" min="0" step="any" placeholder="Years"><button type="button" onclick="runAdvancedStudyTool('interest')">Calculate interest</button><div id="advInterestOut" class="tool-result" aria-live="polite">Enter the principal, rate and time.</div></article>
 <article class="tool-card"><h3>⚗️ Chemical Formula Counter</h3><p>Count atoms in formulas such as H2O, CO2 and Ca(OH)2. Parentheses and subscripts are supported.</p><label for="advFormula">Chemical formula</label><input id="advFormula" maxlength="40" placeholder="e.g. Ca(OH)2"><button type="button" onclick="runAdvancedStudyTool('formula')">Count atoms</button><div id="advFormulaOut" class="tool-result" aria-live="polite">Enter a chemical formula.</div></article>
-</div></section></section>
+</div></section>
+<section class="feature-section" id="dailyToolsSection">
+ <div class="sectionhead"><div><h2>🧰 Five fresh study tools</h2><p>Interactive tools for data, maths, planning and research. Your saved entries stay in this browser.</p></div></div>
+ <div class="tools-grid">
+  <article class="tool-card"><h3>📍 Coordinate Plotter</h3><p>Plot up to 12 ordered pairs on a coordinate grid from −5 to 5.</p><label for="novaCoordinateInput">Points, separated by semicolons</label><input id="novaCoordinateInput" maxlength="180" placeholder="Example: 2,3; -1,4; 0,-2"><button type="button" onclick="plotNovaCoordinates()">Plot points</button><div id="novaCoordinateOutput" class="tool-result" aria-live="polite">Enter points such as 2,3; -1,4.</div></article>
+  <article class="tool-card"><h3>🎲 Probability Simulator</h3><p>Run a coin-toss or dice experiment and compare observed results with chance.</p><label for="novaProbabilityKind">Experiment</label><select id="novaProbabilityKind" onchange="updateNovaProbabilityTargets()"><option value="coin">Coin toss</option><option value="die">Six-sided die</option></select><label for="novaProbabilityTarget">Outcome to count</label><select id="novaProbabilityTarget"><option>Heads</option><option>Tails</option></select><label for="novaProbabilityTrials">Number of trials (1–500)</label><input id="novaProbabilityTrials" type="number" min="1" max="500" value="100"><button type="button" onclick="runNovaProbability()">Run experiment</button><div id="novaProbabilityOutput" class="tool-result" aria-live="polite">Choose an experiment and run it.</div></article>
+  <article class="tool-card"><h3>💰 Personal Budget Planner</h3><p>Record a planned amount and everyday expenses to see the remaining balance.</p><label for="novaBudgetIncome">Available amount (Rs.)</label><input id="novaBudgetIncome" type="number" min="0" step="0.01" placeholder="e.g. 2500"><button type="button" class="secondary" onclick="saveNovaBudgetIncome()">Save available amount</button><label for="novaBudgetLabel">Expense description</label><input id="novaBudgetLabel" maxlength="60" placeholder="e.g. Bus fare"><label for="novaBudgetAmount">Expense (Rs.)</label><input id="novaBudgetAmount" type="number" min="0" step="0.01" placeholder="e.g. 120"><button type="button" onclick="addNovaBudgetExpense()">Add expense</button><div id="novaBudgetOutput" class="tool-result" aria-live="polite">Your budget summary will appear here.</div></article>
+  <article class="tool-card"><h3>🍲 Ratio Recipe Scaler</h3><p>Scale one ingredient amount when the number of servings changes.</p><label for="novaRecipeIngredient">Ingredient</label><input id="novaRecipeIngredient" maxlength="50" placeholder="e.g. rice"><label for="novaRecipeAmount">Original amount</label><input id="novaRecipeAmount" type="number" min="0" step="any" placeholder="e.g. 2"><label for="novaRecipeUnit">Unit</label><input id="novaRecipeUnit" maxlength="20" placeholder="cups, grams, spoons..."><label for="novaRecipeFrom">Original servings</label><input id="novaRecipeFrom" type="number" min="1" step="1" value="4"><label for="novaRecipeTo">New servings</label><input id="novaRecipeTo" type="number" min="1" step="1" value="6"><button type="button" onclick="scaleNovaRecipe()">Scale ingredient</button><div id="novaRecipeOutput" class="tool-result" aria-live="polite">The scaled amount will appear here.</div></article>
+  <article class="tool-card"><h3>📚 Source Reference Builder</h3><p>Make a simple, consistent reference note for a book or website. Check source details yourself.</p><label for="novaSourceAuthor">Author or organisation</label><input id="novaSourceAuthor" maxlength="100" placeholder="e.g. National Institute of Education"><label for="novaSourceYear">Year</label><input id="novaSourceYear" maxlength="10" placeholder="e.g. 2025"><label for="novaSourceTitle">Title</label><input id="novaSourceTitle" maxlength="160" placeholder="Book or webpage title"><label for="novaSourceUrl">Web address (optional)</label><input id="novaSourceUrl" maxlength="300" placeholder="https://..."><button type="button" onclick="saveNovaSourceReference()">Save reference</button><div id="novaSourceOutput" class="tool-result" aria-live="polite">Saved references will appear here.</div></article>
+ </div>
+</section>
+</section>
 
 <section id="environmentView" class="hidden">
  <div class="crumb"><a href="#" onclick="goHome();return false">Home</a> / Environment Explorer</div>
@@ -445,6 +456,12 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="entertainment-card"><div class="feature-icon">🧭</div><h3>Compass Quest</h3><p>Use turns and compass directions to find the destination.</p><div id="miniGame-compass" class="mini-game-panel" aria-live="polite">Follow the directions and choose the final heading.</div><button type="button" onclick="startMiniGame('compass')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">🔐</div><h3>Code Breaker</h3><p>Decode short messages using A = 1, B = 2, and so on.</p><div id="miniGame-code" class="mini-game-panel" aria-live="polite">Use the alphabet number key to crack a code.</div><button type="button" onclick="startMiniGame('code')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">🧩</div><h3>Story Logic</h3><p>Solve short everyday reasoning puzzles.</p><div id="miniGame-logic" class="mini-game-panel" aria-live="polite">Read a situation carefully and choose the logical answer.</div><button type="button" onclick="startMiniGame('logic')">Start / restart</button></article>
+
+  <article class="entertainment-card"><div class="feature-icon">🍕</div><h3>Fraction Chef</h3><p>Scale a recipe, share portions and solve five kitchen fraction challenges.</p><div id="freshGameOutput-fraction" class="mini-game-panel" role="status" aria-live="polite">Press Start to prepare your first recipe challenge.</div><button type="button" onclick="startFreshGame('fraction')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">💡</div><h3>Circuit Lab Quest</h3><p>Explore switches, cells, conductors and simple circuits in five rounds.</p><div id="freshGameOutput-circuit" class="mini-game-panel" role="status" aria-live="polite">Press Start to investigate the circuit.</div><button type="button" onclick="startFreshGame('circuit')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">📊</div><h3>Data Detective</h3><p>Read a small data report, compare values and solve five evidence questions.</p><div id="freshGameOutput-data" class="mini-game-panel" role="status" aria-live="polite">Press Start to inspect the data.</div><button type="button" onclick="startFreshGame('data')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🪐</div><h3>Planet Mission</h3><p>Complete five space-science missions using clues about our Solar System.</p><div id="freshGameOutput-planet" class="mini-game-panel" role="status" aria-live="polite">Press Start to launch your mission.</div><button type="button" onclick="startFreshGame('planet')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">✍️</div><h3>Sentence Studio</h3><p>Choose clear grammar, punctuation and word choices in five short challenges.</p><div id="freshGameOutput-sentence" class="mini-game-panel" role="status" aria-live="polite">Press Start to edit your first sentence.</div><button type="button" onclick="startFreshGame('sentence')">Start / restart</button></article>
  </div>
  <button class="secondary" onclick="goHome()">← Back to Home</button>
 
@@ -1357,7 +1374,7 @@ function clearAIStudyQuestion(){$("aiQuestion").value="";const si=$("aiLanguage"
 async function submitAIStudyQuestion(){
  const q=$("aiQuestion").value.trim(),si=$("aiLanguage").value==="Sinhala",subject=$("aiSubject").value,grade=$("aiGrade").value,status=$("aiStudyStatus");
  if(!q){status.textContent=si?"කරුණාකර පළමුව පාසල් ප්‍රශ්නයක් ලියන්න.":"Please write a school question first.";status.className="ai-message warning";return}
- if(typeof window.runNovalearnixBrowserAI!=="function"){status.textContent=si?"බ්‍රවුසර AI එන්ජිම සූදානම් නැත. පිටුව නැවත පූරණය කර උත්සාහ කරන්න.":"The browser AI engine is not ready. Refresh the page and try again.";status.className="ai-message warning";return}
+ if(typeof window.runNovalearnixBrowserAI!=="function"){status.textContent=si?"බ්‍රවුසර AI නොමැති බැවින් දේශීය ප්‍රශ්න බැංකුවෙන් සොයමින්...":"Browser AI is unavailable, so the local question bank will be searched instead.";status.className="ai-message warning";searchLocalAIStudyQuestion();return}
  const button=document.querySelector('#aiStudyView .ai-send-row button');
  if(button)button.disabled=true;
  status.className="ai-message warning";status.style.whiteSpace="pre-wrap";
@@ -1866,8 +1883,84 @@ function toggleNovaTheme(){const dark=document.body.classList.toggle("nova-dark"
 function toggleReadingSize(){const large=document.body.classList.toggle("nova-large-text");localStorage.setItem("novaLargeText",large?"yes":"no");$("readingToggle").textContent=large?"Use normal text":"Increase text size"}
 function exportNovaProgress(){const data={product:"Novalearnix",exportedAt:new Date().toISOString(),profile:localRead("novaStudentProfile",{}),paperResults:getProgress(),customQuestions:localRead("novaCustomQuestions",[])};const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});const url=URL.createObjectURL(blob);const link=document.createElement("a");link.href=url;link.download="novalearnix-progress-backup.json";document.body.appendChild(link);link.click();link.remove();URL.revokeObjectURL(url)}
 function goMore(){if(timer){clearInterval(timer);timer=null}showView("moreView");renderMoreFeatures()}
-function goLearningTools(){if(timer){clearInterval(timer);timer=null}showView("learningToolsView");initLearningTools()}
+function goLearningTools(){if(timer){clearInterval(timer);timer=null}showView("learningToolsView");initLearningTools();renderNovaDailyTools()}
 function localRead(key,fallback){try{return JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback))}catch(e){return fallback}}
+
+function renderNovaDailyTools(){
+ const mapItems=localRead("novaConceptMapItems",[]);
+ const refs=localRead("novaSourceReferences",[]);
+ const expenses=localRead("novaBudgetExpenses",[]);
+ const income=localRead("novaBudgetIncome","");
+ if($("novaBudgetIncome"))$("novaBudgetIncome").value=income;
+ if($("novaSourceOutput"))$("novaSourceOutput").innerHTML=refs.length?'<strong>Saved references</strong><ul>'+refs.slice().reverse().slice(0,8).map(r=>'<li>'+escapeFeatureText(r.formatted)+'</li>').join("")+'</ul>':"No references saved yet.";
+ if($("novaCoordinateOutput"))$("novaCoordinateOutput").textContent="Enter points such as 2,3; -1,4.";
+ if($("novaProbabilityOutput"))$("novaProbabilityOutput").textContent="Choose an experiment and run it.";
+ if($("novaRecipeOutput"))$("novaRecipeOutput").textContent="The scaled amount will appear here.";
+ renderNovaBudget();
+}
+function plotNovaCoordinates(){
+ const raw=$("novaCoordinateInput").value.trim(),out=$("novaCoordinateOutput");
+ if(!raw){out.textContent="Enter at least one point.";return}
+ const pairs=raw.split(/[;\n]+/).map(part=>part.trim()).filter(Boolean).map(part=>part.split(",").map(v=>Number(v.trim())));
+ if(!pairs.length||pairs.length>12||pairs.some(p=>p.length!==2||!p.every(Number.isFinite)||p.some(v=>v< -5||v>5))){out.textContent="Use up to 12 points in x,y form, with each coordinate from −5 to 5.";return}
+ const size=264,step=24,origin=132;
+ let svg='<svg viewBox="0 0 264 264" role="img" aria-label="Coordinate grid with plotted points" style="width:100%;max-width:320px;height:auto;display:block;margin:8px auto;background:#fff;border:1px solid #d9e1ef;border-radius:10px">';
+ for(let n=-5;n<=5;n++){
+  const p=origin+n*step;
+  svg+='<line x1="'+p+'" y1="12" x2="'+p+'" y2="252" stroke="#e5eaf3" stroke-width="1"/><line x1="12" y1="'+p+'" x2="252" y2="'+p+'" stroke="#e5eaf3" stroke-width="1"/>';
+ }
+ svg+='<line x1="12" y1="'+origin+'" x2="252" y2="'+origin+'" stroke="#34415d" stroke-width="2"/><line x1="'+origin+'" y1="12" x2="'+origin+'" y2="252" stroke="#34415d" stroke-width="2"/>';
+ pairs.forEach((p,i)=>{const x=origin+p[0]*step,y=origin-p[1]*step;svg+='<circle cx="'+x+'" cy="'+y+'" r="5" fill="#6a55c8"/><text x="'+(x+7)+'" y="'+(y-7)+'" font-size="10" fill="#26324a">P'+(i+1)+'</text>'});
+ svg+='<text x="250" y="126" font-size="10" fill="#34415d">x</text><text x="139" y="16" font-size="10" fill="#34415d">y</text></svg>';
+ out.innerHTML=svg+'<p>'+pairs.map((p,i)=>'P'+(i+1)+' = ('+p[0]+', '+p[1]+')').join(' · ')+'</p>';
+}
+function updateNovaProbabilityTargets(){
+ const kind=$("novaProbabilityKind"),target=$("novaProbabilityTarget");if(!kind||!target)return;
+ const options=kind.value==="coin"?["Heads","Tails"]:["1","2","3","4","5","6"];
+ target.innerHTML=options.map(v=>'<option>'+v+'</option>').join("");
+}
+function runNovaProbability(){
+ const kind=$("novaProbabilityKind").value,target=$("novaProbabilityTarget").value,trials=Number($("novaProbabilityTrials").value),out=$("novaProbabilityOutput");
+ if(!Number.isInteger(trials)||trials<1||trials>500){out.textContent="Choose a whole number of trials from 1 to 500.";return}
+ let hits=0,counts=kind==="coin"?{Heads:0,Tails:0}:{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0};
+ for(let i=0;i<trials;i++){const result=kind==="coin"?(Math.random()<.5?"Heads":"Tails"):String(1+Math.floor(Math.random()*6));counts[result]++;if(result===target)hits++}
+ out.textContent=Object.entries(counts).map(([k,v])=>k+": "+v).join(" · ")+" | "+target+": "+hits+"/"+trials+" ("+(hits/trials*100).toFixed(1)+"%). Theoretical chance: "+(kind==="coin"?"50%":"16.7%")+".";
+}
+function renderNovaBudget(){
+ const out=$("novaBudgetOutput");if(!out)return;
+ const entries=localRead("novaBudgetExpenses",[]),income=Number(localRead("novaBudgetIncome",0))||0,total=entries.reduce((sum,x)=>sum+(Number(x.amount)||0),0),balance=income-total;
+ const list=entries.length?'<ul>'+entries.map((x,i)=>'<li>'+escapeFeatureText(x.label)+' — Rs. '+Number(x.amount).toFixed(2)+' <button type="button" class="secondary" onclick="removeNovaBudgetExpense('+i+')">Remove</button></li>').join("")+'</ul>':"<p>No expenses recorded yet.</p>";
+ out.innerHTML='<strong>Available: Rs. '+income.toFixed(2)+'</strong><br>Total expenses: Rs. '+total.toFixed(2)+'<br><strong>Remaining: Rs. '+balance.toFixed(2)+'</strong>'+list;
+}
+function saveNovaBudgetIncome(){
+ const value=$("novaBudgetIncome").value.trim(),n=Number(value);
+ if(value===""||!Number.isFinite(n)||n<0){$("novaBudgetOutput").textContent="Enter an available amount of zero or more.";return}
+ localStorage.setItem("novaBudgetIncome",JSON.stringify(n));renderNovaBudget();
+}
+function addNovaBudgetExpense(){
+ const label=$("novaBudgetLabel").value.trim(),raw=$("novaBudgetAmount").value.trim(),amount=Number(raw);
+ if(!label||raw===""||!Number.isFinite(amount)||amount<=0){$("novaBudgetOutput").textContent="Enter an expense description and an amount greater than zero.";return}
+ const entries=localRead("novaBudgetExpenses",[]);entries.push({label:label.slice(0,60),amount,date:new Date().toISOString().slice(0,10)});localStorage.setItem("novaBudgetExpenses",JSON.stringify(entries.slice(-100)));
+ $("novaBudgetLabel").value="";$("novaBudgetAmount").value="";renderNovaBudget();
+}
+function removeNovaBudgetExpense(index){
+ const entries=localRead("novaBudgetExpenses",[]);if(index<0||index>=entries.length)return;entries.splice(index,1);localStorage.setItem("novaBudgetExpenses",JSON.stringify(entries));renderNovaBudget();
+}
+function scaleNovaRecipe(){
+ const ingredient=$("novaRecipeIngredient").value.trim(),amount=Number($("novaRecipeAmount").value),unit=$("novaRecipeUnit").value.trim(),from=Number($("novaRecipeFrom").value),to=Number($("novaRecipeTo").value),out=$("novaRecipeOutput");
+ if(!ingredient||!unit||!Number.isFinite(amount)||amount<0||!Number.isInteger(from)||!Number.isInteger(to)||from<1||to<1){out.textContent="Enter an ingredient, unit, non-negative amount and positive whole-number serving counts.";return}
+ const result=amount*to/from;out.textContent=ingredient+": "+result.toLocaleString(undefined,{maximumFractionDigits:3})+" "+unit+" for "+to+" servings.";
+}
+function saveNovaSourceReference(){
+ const author=$("novaSourceAuthor").value.trim(),year=$("novaSourceYear").value.trim(),title=$("novaSourceTitle").value.trim(),url=$("novaSourceUrl").value.trim(),out=$("novaSourceOutput");
+ if(!title){out.textContent="Enter a book or webpage title.";return}
+ if(url&&!/^https?:\/\/\S+$/i.test(url)){out.textContent="Enter a complete web address beginning with http:// or https://, or leave it blank.";return}
+ const formatted=(author?author+". ":"")+(year?"("+year+"). ":"")+title+"."+(url?" "+url:"");
+ const refs=localRead("novaSourceReferences",[]);refs.push({author,year,title,url,formatted,createdAt:new Date().toISOString()});localStorage.setItem("novaSourceReferences",JSON.stringify(refs.slice(-50)));
+ $("novaSourceAuthor").value="";$("novaSourceYear").value="";$("novaSourceTitle").value="";$("novaSourceUrl").value="";
+ out.innerHTML='<strong>Saved reference</strong><p>'+escapeFeatureText(formatted)+'</p>'+refs.slice(0,0).join("");
+}
+
 function saveStudentProfile(){const name=$("studentName").value.trim().slice(0,30);if(!name){$("profileMessage").textContent="Please enter a display name.";return}localStorage.setItem("novaStudentProfile",JSON.stringify({name}));$("profileMessage").textContent="Profile saved for "+name+" ✓";renderMoreFeatures()}
 function renderMoreFeatures(){
  renderFlashcard();const dark=localStorage.getItem("novaTheme")==="dark";document.body.classList.toggle("nova-dark",dark);$("themeToggle").textContent=dark?"Use light mode":"Use dark mode";const large=localStorage.getItem("novaLargeText")==="yes";document.body.classList.toggle("nova-large-text",large);$("readingToggle").textContent=large?"Use normal text":"Increase text size";renderFocusClock();
@@ -2037,6 +2130,75 @@ function answerMiniGame(name,index){
  state.answered=true;renderMiniGame(name);
 }
 function nextMiniGame(name){const state=miniGameState[name];if(!state||!state.answered)return;state.index++;state.answered=false;state.feedback="";renderMiniGame(name);}
+
+const freshGameBanks={
+ fraction:[
+  {prompt:"A fruit drink uses 1/4 litre of juice for one jug. How much juice is needed for two jugs?",options:["1/2 litre","1/4 litre","3/4 litre","1 litre"],answer:"1/2 litre",explain:"Two quarters make 2/4, which simplifies to 1/2."},
+  {prompt:"A pizza has 8 equal slices. Three slices are eaten. What fraction is left?",options:["5/8","3/8","5/3","1/8"],answer:"5/8",explain:"Eight slices minus three leaves five of the eight equal slices."},
+  {prompt:"Which fraction is equivalent to 3/5?",options:["6/10","3/10","5/6","9/5"],answer:"6/10",explain:"Multiplying the numerator and denominator of 3/5 by 2 gives 6/10."},
+  {prompt:"A recipe needs 3/4 cup of flour. You have added 1/4 cup. How much more is needed?",options:["1/2 cup","1/4 cup","3/4 cup","1 cup"],answer:"1/2 cup",explain:"3/4 − 1/4 = 2/4 = 1/2."},
+  {prompt:"Two-thirds of a basket of 12 mangoes are ripe. How many are ripe?",options:["8","6","4","10"],answer:"8",explain:"12 ÷ 3 = 4, and 4 × 2 = 8."}
+ ],
+ circuit:[
+  {prompt:"A bulb is connected to a cell, but the switch is open. What will happen?",options:["The bulb stays off","The bulb shines brighter","The cell becomes a switch","The wire produces light"],answer:"The bulb stays off",explain:"An open switch breaks the circuit, so current cannot flow around the complete path."},
+  {prompt:"Which material is commonly used for the conducting core of electrical wires?",options:["Copper","Rubber","Dry wood","Glass"],answer:"Copper",explain:"Copper allows electric current to pass through it easily."},
+  {prompt:"What is the main job of a cell in a simple circuit?",options:["Supply electrical energy","Stop all current","Make the wire longer","Act as an insulator"],answer:"Supply electrical energy",explain:"A cell provides the energy that drives current through a complete circuit."},
+  {prompt:"A wire becomes disconnected from one terminal. What has happened to the circuit?",options:["It is open","It is a closed circuit","It has gained another cell","It has become a parallel circuit"],answer:"It is open",explain:"A disconnected wire creates a gap in the conducting path."},
+  {prompt:"Two bulbs are connected in series. One bulb is removed and the path is broken. What happens to the other bulb?",options:["It goes out too","It becomes twice as bright","It changes colour","It keeps shining normally"],answer:"It goes out too",explain:"In a series circuit, the same path carries current through both bulbs. A break stops the current."}
+ ],
+ data:[
+  {prompt:"A school library recorded borrowed books: Monday 12, Tuesday 18, Wednesday 9, Thursday 21. Which day had the most loans?",detail:"MON 12  ·  TUE 18  ·  WED 9  ·  THU 21",options:["Thursday","Tuesday","Monday","Wednesday"],answer:"Thursday",explain:"21 is the greatest value in the report."},
+  {prompt:"Using the same library report, how many books were borrowed on Monday and Tuesday altogether?",detail:"MON 12  ·  TUE 18  ·  WED 9  ·  THU 21",options:["30","27","39","21"],answer:"30",explain:"12 + 18 = 30 books."},
+  {prompt:"How many more books were borrowed on Thursday than on Wednesday?",detail:"WED 9  ·  THU 21",options:["12","10","30","9"],answer:"12",explain:"21 − 9 = 12 books."},
+  {prompt:"What was the average number of books borrowed per day across the four days?",detail:"MON 12  ·  TUE 18  ·  WED 9  ·  THU 21",options:["15","12","18","60"],answer:"15",explain:"The total is 60; 60 divided by 4 days is 15."},
+  {prompt:"On Friday, 15 books were borrowed. Which day would then have the second-highest number of loans?",detail:"MON 12  ·  TUE 18  ·  WED 9  ·  THU 21  ·  FRI 15",options:["Tuesday","Friday","Monday","Wednesday"],answer:"Tuesday",explain:"Thursday has 21, followed by Tuesday with 18."}
+ ],
+ planet:[
+  {prompt:"Which planet follows the closest path to the Sun?",options:["Mercury","Earth","Mars","Neptune"],answer:"Mercury",explain:"Mercury is the innermost planet in the Solar System."},
+  {prompt:"Which planet is often called the Red Planet?",options:["Mars","Venus","Saturn","Uranus"],answer:"Mars",explain:"Iron-rich dust gives much of Mars its reddish appearance."},
+  {prompt:"Which planet is the largest in our Solar System?",options:["Jupiter","Earth","Mercury","Venus"],answer:"Jupiter",explain:"Jupiter is the largest planet by diameter and mass."},
+  {prompt:"Which planet is especially famous for its broad ring system?",options:["Saturn","Mars","Mercury","Earth"],answer:"Saturn",explain:"Saturn's rings are made mostly of ice and rocky particles."},
+  {prompt:"One complete revolution of Earth around the Sun is used to define what?",options:["A year","A day","An hour","A month"],answer:"A year",explain:"Earth takes about 365.24 days to complete one orbit around the Sun."}
+ ],
+ sentence:[
+  {prompt:"Choose the sentence with correct punctuation.",options:["Where is the library?","Where is the library.","Where is the library,","where is the library?"],answer:"Where is the library?",explain:"A direct question begins with a capital letter and ends with a question mark."},
+  {prompt:"In the sentence “The bright kite floated above the field”, which word is the adjective?",options:["bright","floated","above","field"],answer:"bright",explain:"Bright describes the noun kite."},
+  {prompt:"Choose the correct past-tense form: “Yesterday, we ___ our science project to the class.”",options:["presented","present","presenting","presents"],answer:"presented",explain:"Presented is the past-tense form of present."},
+  {prompt:"Choose the best joining word: “I packed an umbrella ___ the sky looked cloudy.”",options:["because","although","or","unless"],answer:"because",explain:"Because introduces the reason for packing the umbrella."},
+  {prompt:"Which sentence has correct subject–verb agreement?",options:["The birds sing at dawn.","The birds sings at dawn.","The bird sing at dawn.","The birds singing at dawn."],answer:"The birds sing at dawn.",explain:"The plural subject birds takes the verb sing."}
+ ]
+};
+const freshGameState={};
+function startFreshGame(name){
+ const bank=freshGameBanks[name];if(!bank)return;
+ freshGameState[name]={questions:shuffle(bank),index:0,score:0,answered:false,feedback:""};
+ renderFreshGame(name);
+}
+function renderFreshGame(name){
+ const panel=$("freshGameOutput-"+name),state=freshGameState[name];if(!panel||!state)return;
+ if(state.index>=state.questions.length){
+  panel.innerHTML='<strong>🏁 Mission complete!</strong><p>You scored '+state.score+' out of '+state.questions.length+'.</p><p>'+(state.score===5?"Perfect round!":state.score>=3?"Great work — you used your clues well.":"Good effort. Read the explanations and try again.")+'</p><button type="button" onclick="startFreshGame(\''+name+'\')">Play again</button>';
+  return;
+ }
+ const q=state.questions[state.index];
+ let html='<strong>Round '+(state.index+1)+' / '+state.questions.length+' · Score '+state.score+'</strong><p>'+escapeFeatureText(q.prompt)+'</p>';
+ if(q.detail)html+='<p class="feature-note">'+escapeFeatureText(q.detail)+'</p>';
+ html+='<div class="mini-game-options">'+q.options.map((option,i)=>'<button type="button" '+(state.answered?"disabled":"")+' onclick="answerFreshGame(\''+name+'\','+i+')">'+escapeFeatureText(option)+'</button>').join("")+'</div>';
+ if(state.answered)html+='<div class="mini-game-feedback">'+escapeFeatureText(state.feedback)+'</div><p>'+escapeFeatureText(q.explain)+'</p><button type="button" onclick="nextFreshGame(\''+name+'\')">'+(state.index===state.questions.length-1?"See results →":"Next round →")+'</button>';
+ panel.innerHTML=html;
+}
+function answerFreshGame(name,index){
+ const state=freshGameState[name];if(!state||state.answered)return;
+ const q=state.questions[state.index];if(!q||index<0||index>=q.options.length)return;
+ if(q.options[index]===q.answer){state.score++;state.feedback="✓ Correct! "+q.answer;}
+ else state.feedback="Not quite. The best answer is: "+q.answer;
+ state.answered=true;renderFreshGame(name);
+}
+function nextFreshGame(name){
+ const state=freshGameState[name];if(!state||!state.answered)return;
+ state.index++;state.answered=false;state.feedback="";renderFreshGame(name);
+}
+
 /* Drawing Studio controls */
 let drawingColour="#202b45",drawingMode="brush",drawingUndoStack=[],drawingRedoStack=[],drawingIsDown=false,drawingLastPoint=null,drawingStartPoint=null,drawingShapeSnapshot=null;
  const drawingShapeModes=["line","rect","circle","triangle","diamond","pentagon","hexagon","star","heart","arrow","customShape"];
