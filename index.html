@@ -440,7 +440,19 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   </div>
  </div>
 </section>
-<section id="aiStudyView" class="hidden"><div class="crumb"><a href="#" onclick="goHome();return false" data-en="Home" data-si="මුල් පිටුව">Home</a> / <span data-en="AI Study Assistant" data-si="AI අධ්‍යයන සහායක">AI Study Assistant</span></div><div class="ai-study-hero"><div class="eyebrow" data-en="NOVALEARNIX STUDY SUPPORT" data-si="NOVALEARNIX අධ්‍යයන සහාය">NOVALEARNIX STUDY SUPPORT</div><h2>🤖 <span data-en="AI Study Assistant" data-si="AI අධ්‍යයන සහායක">AI Study Assistant</span></h2><p data-en="Get support with school subjects, understand difficult lessons, practise questions and improve your answers. Designed for schoolwork only." data-si="පාසල් විෂයයන් ඉගෙනීමට සහාය ලබාගන්න. අපහසු පාඩම් සරලව තේරුම් ගන්න, ප්‍රශ්න පුහුණු වන්න සහ ඔබේ පිළිතුරු වැඩිදියුණු කරගන්න. මෙම පිටුව පාසල් වැඩ සඳහා පමණි.">Get support with school subjects, understand difficult lessons, practise questions and improve your answers. Designed for schoolwork only.</p></div><div class="ai-study-layout"><div class="ai-chat-panel"><h3 data-en="Ask a schoolwork question" data-si="පාසල් වැඩ පිළිබඳ ප්‍රශ්නයක් අසන්න">Ask a schoolwork question</h3><p class="notice" data-en="Choose your grade, subject and language, then write your question." data-si="ඔබේ ශ්‍රේණිය, විෂයය සහ භාෂාව තෝරා ප්‍රශ්නය ලියන්න.">Choose your grade, subject and language, then write your question.</p><div class="ai-controls"><div><label for="aiGrade" data-en="Grade" data-si="ශ්‍රේණිය">Grade</label><select id="aiGrade"><option data-si="1 ශ්‍රේණිය">Grade 1</option><option data-si="2 ශ්‍රේණිය">Grade 2</option><option data-si="3 ශ්‍රේණිය">Grade 3</option><option data-si="4 ශ්‍රේණිය">Grade 4</option><option data-si="5 ශ්‍රේණිය">Grade 5</option><option data-si="6 ශ්‍රේණිය">Grade 6</option><option data-si="7 ශ්‍රේණිය" selected>Grade 7</option><option data-si="8 ශ්‍රේණිය">Grade 8</option><option data-si="9 ශ්‍රේණිය">Grade 9</option><option data-si="10 ශ්‍රේණිය">Grade 10</option><option data-si="11 ශ්‍රේණිය">Grade 11</option><option data-si="12 ශ්‍රේණිය">Grade 12</option><option data-si="13 ශ්‍රේණිය">Grade 13</option></select></div><div><label for="aiSubject" data-en="Subject" data-si="විෂයය">Subject</label><select id="aiSubject"><option value="Mathematics" data-si="ගණිතය">Mathematics</option><option value="Science" data-si="විද්‍යාව">Science</option><option value="History" data-si="ඉතිහාසය">History</option><option value="Art" data-si="චිත්‍ර කලාව">Art</option><option value="Practical Technical Skills" data-si="ප්‍රායෝගික තාක්ෂණික කුසලතා">Practical Technical Skills</option><option value="Buddhism" data-si="බුද්ධ ධර්මය">Buddhism</option><option value="English" data-si="ඉංග්‍රීසි">English</option><option value="Sinhala" data-si="සිංහල">Sinhala</option><option value="Other school subject" data-si="වෙනත් පාසල් විෂයයක්">Other school subject</option></select></div><div><label for="aiLanguage" data-en="Page and answer language" data-si="පිටුවේ සහ පිළිතුරේ භාෂාව">Page and answer language</label><select id="aiLanguage" onchange="updateAIUILanguage()"><option value="English">English</option><option value="Sinhala">සිංහල</option></select></div></div><label for="aiQuestion" data-en="Your question" data-si="ඔබේ ප්‍රශ්නය">Your question</label><textarea id="aiQuestion" maxlength="1500" data-placeholder-en="Example: Explain photosynthesis in simple words..." data-placeholder-si="උදාහරණය: ප්‍රභාසංස්ලේෂණය සරලව පැහැදිලි කරන්න..." placeholder="Example: Explain photosynthesis in simple words..."></textarea><div class="ai-send-row"><button type="button" onclick="submitAIStudyQuestion()" data-en="Try local browser AI ↗" data-si="දේශීය බ්‍රවුසර AI උත්සාහ කරන්න ↗">Try local browser AI ↗</button><button type="button" class="secondary" onclick="searchLocalAIStudyQuestion()" data-en="Search question bank" data-si="ප්‍රශ්න බැංකුව සොයන්න">Search question bank</button><button type="button" class="secondary" onclick="clearAIStudyQuestion()" data-en="Clear" data-si="මකන්න">Clear</button></div><div id="aiStudyStatus" class="ai-message warning" role="status" data-en="Ask a question. A free AI model will run in your browser; the first download may take a while." data-si="ප්‍රශ්නයක් අසන්න. නොමිලේ AI ආකෘතිය ඔබේ බ්‍රවුසරයේ ක්‍රියාත්මක වේ. පළමු බාගත කිරීම සඳහා කාලයක් ගත විය හැක.">Ask a question. A free AI model will run in your browser; the first download may take a while.</div><p class="ai-privacy" data-en="No secure AI server/API is configured. The experimental browser model runs on your device when available; model files are downloaded from public hosting. Your question is not sent to an AI server. Use Search question bank for the non-AI fallback. Do not enter private information. Sinhala answers may be less accurate than English." data-si="ආරක්ෂිත AI සේවාදායකයක්/API සම්බන්ධ කර නැත. ලබාගත හැකි විට පරීක්ෂණාත්මක බ්‍රවුසර ආකෘතිය ඔබේ උපාංගයේ ක්‍රියා කරයි; ආකෘති ගොනු පොදු සේවාදායකයකින් බාගත වේ. ඔබේ ප්‍රශ්නය AI සේවාදායකයකට යවන්නේ නැත. AI නොවන විකල්පය ලෙස “ප්‍රශ්න බැංකුව සොයන්න” භාවිත කරන්න. පෞද්ගලික තොරතුරු ඇතුළත් නොකරන්න. සිංහල පිළිතුරු අඩු නිවැරදි විය හැකිය.">The question is processed on your device. The AI library and model files are downloaded from public hosting; your question is not sent to an AI server. Do not enter private information. Sinhala answers may be less accurate than English.</p></div><aside class="ai-side-panel"><h3 data-en="✨ What can it help with?" data-si="✨ මෙයින් ලබාගත හැකි සහාය">✨ What can it help with?</h3><ul><li data-en="Explain textbook lessons step by step" data-si="පාඩම් පොතේ පාඩම් පියවරෙන් පියවර පැහැදිලි කිරීම">Explain textbook lessons step by step</li><li data-en="Help you understand homework questions" data-si="ගෙදර වැඩ ප්‍රශ්න තේරුම් ගැනීමට සහාය වීම">Help you understand homework questions</li><li data-en="Create revision and practice questions" data-si="පුනරීක්ෂණ සහ පුහුණු ප්‍රශ්න සකස් කිරීම">Create revision and practice questions</li><li data-en="Check a written answer and explain how to improve it" data-si="ලියූ පිළිතුර පරීක්ෂා කර එය වැඩිදියුණු කරන ආකාරය පැහැදිලි කිරීම">Check a written answer and explain how to improve it</li><li data-en="Explain difficult words in Sinhala or English" data-si="අපහසු වචන සිංහලෙන් හෝ ඉංග්‍රීසියෙන් පැහැදිලි කිරීම">Explain difficult words in Sinhala or English</li></ul><h3 style="margin-top:20px" data-en="Try a question" data-si="උදාහරණ ප්‍රශ්නයක් තෝරන්න">Try a question</h3><div class="ai-prompts"><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Explain fractions with a simple example.')" data-en="Explain fractions" data-si="භාග සංඛ්‍යා පැහැදිලි කරන්න">Explain fractions</button><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Give me five Grade 7 History revision questions.')" data-en="History practice questions" data-si="ඉතිහාසය පුහුණු ප්‍රශ්න">History practice questions</button><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Explain this lesson in simple Sinhala.')" data-en="Explain a lesson in Sinhala" data-si="පාඩමක් සරල සිංහලෙන් පැහැදිලි කරන්න">Explain a lesson in Sinhala</button></div></aside></div></section>
+<section id="aiStudyView" class="hidden"><div class="crumb"><a href="#" onclick="goHome();return false" data-en="Home" data-si="මුල් පිටුව">Home</a> / <span data-en="AI Study Assistant" data-si="AI අධ්‍යයන සහායක">AI Study Assistant</span></div><div class="ai-study-hero"><div class="eyebrow" data-en="NOVALEARNIX STUDY SUPPORT" data-si="NOVALEARNIX අධ්‍යයන සහාය">NOVALEARNIX STUDY SUPPORT</div><h2>🤖 <span data-en="AI Study Assistant" data-si="AI අධ්‍යයන සහායක">AI Study Assistant</span></h2><p data-en="Get support with school subjects, understand difficult lessons, practise questions and improve your answers. Designed for schoolwork only." data-si="පාසල් විෂයයන් ඉගෙනීමට සහාය ලබාගන්න. අපහසු පාඩම් සරලව තේරුම් ගන්න, ප්‍රශ්න පුහුණු වන්න සහ ඔබේ පිළිතුරු වැඩිදියුණු කරගන්න. මෙම පිටුව පාසල් වැඩ සඳහා පමණි.">Get support with school subjects, understand difficult lessons, practise questions and improve your answers. Designed for schoolwork only.</p></div><div class="ai-study-layout"><div class="ai-chat-panel"><h3 data-en="Ask a schoolwork question" data-si="පාසල් වැඩ පිළිබඳ ප්‍රශ්නයක් අසන්න">Ask a schoolwork question</h3><p class="notice" data-en="Choose your grade, subject and language, then write your question." data-si="ඔබේ ශ්‍රේණිය, විෂයය සහ භාෂාව තෝරා ප්‍රශ්නය ලියන්න.">Choose your grade, subject and language, then write your question.</p><div class="ai-controls"><div><label for="aiGrade" data-en="Grade" data-si="ශ්‍රේණිය">Grade</label><select id="aiGrade"><option data-si="1 ශ්‍රේණිය">Grade 1</option><option data-si="2 ශ්‍රේණිය">Grade 2</option><option data-si="3 ශ්‍රේණිය">Grade 3</option><option data-si="4 ශ්‍රේණිය">Grade 4</option><option data-si="5 ශ්‍රේණිය">Grade 5</option><option data-si="6 ශ්‍රේණිය">Grade 6</option><option data-si="7 ශ්‍රේණිය" selected>Grade 7</option><option data-si="8 ශ්‍රේණිය">Grade 8</option><option data-si="9 ශ්‍රේණිය">Grade 9</option><option data-si="10 ශ්‍රේණිය">Grade 10</option><option data-si="11 ශ්‍රේණිය">Grade 11</option><option data-si="12 ශ්‍රේණිය">Grade 12</option><option data-si="13 ශ්‍රේණිය">Grade 13</option></select></div><div><label for="aiSubject" data-en="Subject" data-si="විෂයය">Subject</label><select id="aiSubject"><option value="Mathematics" data-si="ගණිතය">Mathematics</option><option value="Science" data-si="විද්‍යාව">Science</option><option value="History" data-si="ඉතිහාසය">History</option><option value="Art" data-si="චිත්‍ර කලාව">Art</option><option value="Practical Technical Skills" data-si="ප්‍රායෝගික තාක්ෂණික කුසලතා">Practical Technical Skills</option><option value="Buddhism" data-si="බුද්ධ ධර්මය">Buddhism</option><option value="English" data-si="ඉංග්‍රීසි">English</option><option value="Sinhala" data-si="සිංහල">Sinhala</option><option value="Other school subject" data-si="වෙනත් පාසල් විෂයයක්">Other school subject</option></select></div><div><label for="aiLanguage" data-en="Page and answer language" data-si="පිටුවේ සහ පිළිතුරේ භාෂාව">Page and answer language</label><select id="aiLanguage" onchange="updateAIUILanguage()"><option value="English">English</option><option value="Sinhala">සිංහල</option></select></div></div><label for="aiQuestion" data-en="Your question" data-si="ඔබේ ප්‍රශ්නය">Your question</label><textarea id="aiQuestion" maxlength="1500" data-placeholder-en="Example: Explain photosynthesis in simple words..." data-placeholder-si="උදාහරණය: ප්‍රභාසංස්ලේෂණය සරලව පැහැදිලි කරන්න..." placeholder="Example: Explain photosynthesis in simple words..."></textarea><div class="ai-send-row"><button type="button" onclick="submitAIStudyQuestion()" data-en="Try local browser AI ↗" data-si="දේශීය බ්‍රවුසර AI උත්සාහ කරන්න ↗">Try local browser AI ↗</button><button type="button" class="secondary" onclick="searchLocalAIStudyQuestion()" data-en="Search question bank" data-si="ප්‍රශ්න බැංකුව සොයන්න">Search question bank</button><button type="button" class="secondary" onclick="clearAIStudyQuestion()" data-en="Clear" data-si="මකන්න">Clear</button></div><div id="aiStudyStatus" class="ai-message warning" role="status" data-en="Ask a question. A free AI model will run in your browser; the first download may take a while." data-si="ප්‍රශ්නයක් අසන්න. නොමිලේ AI ආකෘතිය ඔබේ බ්‍රවුසරයේ ක්‍රියාත්මක වේ. පළමු බාගත කිරීම සඳහා කාලයක් ගත විය හැක.">Ask a question. A free AI model will run in your browser; the first download may take a while.</div><p class="ai-privacy" data-en="No secure AI server/API is configured. The experimental browser model runs on your device when available; model files are downloaded from public hosting. Your question is not sent to an AI server. Use Search question bank for the non-AI fallback. Do not enter private information. Sinhala answers may be less accurate than English." data-si="ආරක්ෂිත AI සේවාදායකයක්/API සම්බන්ධ කර නැත. ලබාගත හැකි විට පරීක්ෂණාත්මක බ්‍රවුසර ආකෘතිය ඔබේ උපාංගයේ ක්‍රියා කරයි; ආකෘති ගොනු පොදු සේවාදායකයකින් බාගත වේ. ඔබේ ප්‍රශ්නය AI සේවාදායකයකට යවන්නේ නැත. AI නොවන විකල්පය ලෙස “ප්‍රශ්න බැංකුව සොයන්න” භාවිත කරන්න. පෞද්ගලික තොරතුරු ඇතුළත් නොකරන්න. සිංහල පිළිතුරු අඩු නිවැරදි විය හැකිය.">The question is processed on your device. The AI library and model files are downloaded from public hosting; your question is not sent to an AI server. Do not enter private information. Sinhala answers may be less accurate than English.</p></div><aside class="ai-side-panel"><h3 data-en="✨ What can it help with?" data-si="✨ මෙයින් ලබාගත හැකි සහාය">✨ What can it help with?</h3><ul><li data-en="Explain textbook lessons step by step" data-si="පාඩම් පොතේ පාඩම් පියවරෙන් පියවර පැහැදිලි කිරීම">Explain textbook lessons step by step</li><li data-en="Help you understand homework questions" data-si="ගෙදර වැඩ ප්‍රශ්න තේරුම් ගැනීමට සහාය වීම">Help you understand homework questions</li><li data-en="Create revision and practice questions" data-si="පුනරීක්ෂණ සහ පුහුණු ප්‍රශ්න සකස් කිරීම">Create revision and practice questions</li><li data-en="Check a written answer and explain how to improve it" data-si="ලියූ පිළිතුර පරීක්ෂා කර එය වැඩිදියුණු කරන ආකාරය පැහැදිලි කිරීම">Check a written answer and explain how to improve it</li><li data-en="Explain difficult words in Sinhala or English" data-si="අපහසු වචන සිංහලෙන් හෝ ඉංග්‍රීසියෙන් පැහැදිලි කිරීම">Explain difficult words in Sinhala or English</li></ul><h3 style="margin-top:20px" data-en="Try a question" data-si="උදාහරණ ප්‍රශ්නයක් තෝරන්න">Try a question</h3><div class="ai-prompts"><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Explain fractions with a simple example.')" data-en="Explain fractions" data-si="භාග සංඛ්‍යා පැහැදිලි කරන්න">Explain fractions</button><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Give me five Grade 7 History revision questions.')" data-en="History practice questions" data-si="ඉතිහාසය පුහුණු ප්‍රශ්න">History practice questions</button><button class="ai-prompt" type="button" onclick="useAIStudyPrompt('Explain this lesson in simple Sinhala.')" data-en="Explain a lesson in Sinhala" data-si="පාඩමක් සරල සිංහලෙන් පැහැදිලි කරන්න">Explain a lesson in Sinhala</button></div></aside></div>
+<section class="feature-section" id="novaNewTools20261126">
+ <div class="sectionhead"><div><h2>🧰 Five New Investigation Tools</h2><p>Explore geometry, number form and simple science calculations.</p></div></div>
+ <div class="tools-grid">
+  <article class="tool-card"><h3>📐 Polygon Perimeter Explorer</h3><p>Enter at least three side lengths separated by commas. Use the same unit for every side.</p><label for="novaPerimeterSides">Side lengths</label><input id="novaPerimeterSides" type="text" maxlength="120" placeholder="e.g. 5, 5, 6"><button type="button" onclick="calculateNovaPerimeter()">Calculate perimeter</button><p id="novaPerimeterOut" class="tool-result" role="status" aria-live="polite">Your result will appear here.</p></article>
+  <article class="tool-card"><h3>📏 Angle Sum Explorer</h3><p>Choose a polygon. The tool calculates its interior-angle sum and, for a regular polygon, one interior angle.</p><label for="novaAngleSides">Number of sides</label><select id="novaAngleSides"><option value="3">Triangle — 3</option><option value="4">Quadrilateral — 4</option><option value="5">Pentagon — 5</option><option value="6">Hexagon — 6</option><option value="7">Heptagon — 7</option><option value="8">Octagon — 8</option><option value="9">Nonagon — 9</option><option value="10">Decagon — 10</option><option value="12">Dodecagon — 12</option></select><button type="button" onclick="calculateNovaAngleSum()">Calculate angle sum</button><p id="novaAngleOut" class="tool-result" role="status" aria-live="polite">Choose a polygon to begin.</p></article>
+  <article class="tool-card"><h3>🔬 Scientific Notation Converter</h3><p>Convert a number into the form a × 10ⁿ, where 1 ≤ |a| &lt; 10.</p><label for="novaSciValue">Number</label><input id="novaSciValue" type="number" step="any" placeholder="e.g. 0.0042"><button type="button" onclick="convertNovaScientific()">Convert number</button><p id="novaSciOut" class="tool-result" role="status" aria-live="polite">The scientific notation will appear here.</p></article>
+  <article class="tool-card"><h3>⚙️ Mechanical Advantage Calculator</h3><p>For a simple machine, mechanical advantage = load ÷ effort. Enter both in the same force unit.</p><label for="novaMALoad">Load</label><input id="novaMALoad" type="number" min="0" step="any" placeholder="e.g. 80"><label for="novaMAEffort">Effort</label><input id="novaMAEffort" type="number" min="0" step="any" placeholder="e.g. 20"><button type="button" onclick="calculateNovaMechanicalAdvantage()">Calculate</button><p id="novaMAOut" class="tool-result" role="status" aria-live="polite">The mechanical advantage will appear here.</p></article>
+  <article class="tool-card"><h3>🧪 Pressure Calculator</h3><p>Pressure = force ÷ area. Enter force in newtons (N) and area in square metres (m²).</p><label for="novaPressureForce">Force (N)</label><input id="novaPressureForce" type="number" min="0" step="any" placeholder="e.g. 120"><label for="novaPressureArea">Area (m²)</label><input id="novaPressureArea" type="number" min="0" step="any" placeholder="e.g. 3"><button type="button" onclick="calculateNovaPressure()">Calculate pressure</button><p id="novaPressureOut" class="tool-result" role="status" aria-live="polite">Pressure will appear here in pascals (Pa).</p></article>
+ </div>
+ <p class="feature-note">These calculators run in your browser. Check units and working in your textbook or class notes.</p>
+</section>
+</section>
 <section id="soundSettingsView" class="hidden"><div class="crumb"><a href="#" onclick="goHome();return false">Home</a> / Sound settings</div><div class="settings-panel sound-settings"><div class="sound-settings-hero"><div class="sound-icon">🎧</div><div><div class="eyebrow" style="color:#315bd5">PERSONALISE YOUR AUDIO</div><h2>Sound settings</h2><p>Choose how questions and answer explanations sound. Changes are saved on this device.</p></div></div><div class="sound-setting-row"><div><label for="soundVoice">Voice</label><p>Choose an installed browser voice.</p></div><select id="soundVoice" onchange="saveSoundSettings()"><option value="auto">Automatic (match question language)</option></select></div><div class="sound-setting-row"><div><label for="soundStyle">Voice style</label><p>Change the voice tone.</p></div><select id="soundStyle" onchange="saveSoundSettings()"><option value="natural">Natural</option><option value="gentle">Gentle</option><option value="bright">Bright</option><option value="deep">Deep</option></select></div><div class="sound-setting-row"><div><label for="soundSpeed">Speaking speed</label><p>Slow, normal or fast.</p><strong id="soundSpeedValue">0.9x</strong></div><input id="soundSpeed" type="range" min="0.6" max="1.4" step="0.1" value="0.9" oninput="updateSoundLabels()" onchange="saveSoundSettings()"></div><div class="sound-setting-row"><div><label for="soundVolume">Volume</label><p>Adjust voice loudness.</p><strong id="soundVolumeValue">100%</strong></div><input id="soundVolume" type="range" min="0" max="1" step="0.05" value="1" oninput="updateSoundLabels()" onchange="saveSoundSettings()"></div><div class="sound-setting-row"><div><label for="soundPitch">Pitch</label><p>Fine-tune the voice tone.</p><strong id="soundPitchValue">1.0</strong></div><input id="soundPitch" type="range" min="0.7" max="1.4" step="0.1" value="1" oninput="updateSoundLabels()" onchange="saveSoundSettings()"></div><div class="sound-preview"><button onclick="previewSoundSettings()">▶ Preview voice</button><button class="secondary" onclick="stopQuestionVoice()">■ Stop preview</button><button class="secondary" onclick="resetSoundSettings()">↺ Reset</button></div><p id="soundSettingsStatus" class="voice-status">Your settings are saved automatically on this device.</p><p class="notice">Available voices depend on Windows and browser voices. Sinhala voice availability may vary.</p><button class="secondary" onclick="goHome()">← Back to Home</button></div></section>
 <section id="entertainmentView" class="hidden">
  <div class="crumb"><a href="#" onclick="goHome();return false">Home</a> / Entertainment Zone</div>
@@ -462,6 +474,12 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="entertainment-card"><div class="feature-icon">📊</div><h3>Data Detective</h3><p>Read a small data report, compare values and solve five evidence questions.</p><div id="freshGameOutput-data" class="mini-game-panel" role="status" aria-live="polite">Press Start to inspect the data.</div><button type="button" onclick="startFreshGame('data')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">🪐</div><h3>Planet Mission</h3><p>Complete five space-science missions using clues about our Solar System.</p><div id="freshGameOutput-planet" class="mini-game-panel" role="status" aria-live="polite">Press Start to launch your mission.</div><button type="button" onclick="startFreshGame('planet')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">✍️</div><h3>Sentence Studio</h3><p>Choose clear grammar, punctuation and word choices in five short challenges.</p><div id="freshGameOutput-sentence" class="mini-game-panel" role="status" aria-live="polite">Press Start to edit your first sentence.</div><button type="button" onclick="startFreshGame('sentence')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">📐</div><h3>Shape Architect</h3><p>Plan shapes, compare measurements and solve five geometry missions.</p><div id="freshGameOutput-shape" class="mini-game-panel" role="status" aria-live="polite">Press Start to open the design brief.</div><button type="button" onclick="startFreshGame('shape')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🏺</div><h3>History Time Traveller</h3><p>Read timelines and evidence clues to solve five history investigations.</p><div id="freshGameOutput-history" class="mini-game-panel" role="status" aria-live="polite">Press Start to examine the first clue.</div><button type="button" onclick="startFreshGame('history')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🔊</div><h3>Sound Wave Detective</h3><p>Investigate vibrations, pitch and sound-wave clues in five rounds.</p><div id="freshGameOutput-sound" class="mini-game-panel" role="status" aria-live="polite">Press Start to investigate sound.</div><button type="button" onclick="startFreshGame('sound')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🤝</div><h3>Civic Choices Quest</h3><p>Make thoughtful choices about fairness, teamwork and shared places.</p><div id="freshGameOutput-civic" class="mini-game-panel" role="status" aria-live="polite">Press Start to begin the community mission.</div><button type="button" onclick="startFreshGame('civic')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🌦️</div><h3>Weather Forecast Mission</h3><p>Interpret weather reports and choose sensible plans for five situations.</p><div id="freshGameOutput-weather" class="mini-game-panel" role="status" aria-live="polite">Press Start to read the forecast.</div><button type="button" onclick="startFreshGame('weather')">Start / restart</button></article>
+
  </div>
  <button class="secondary" onclick="goHome()">← Back to Home</button>
 
@@ -1451,24 +1469,30 @@ function openSubject(name){
  const display=activeSubject.displayName||name,grade=Number(activeGrade)||6;
  $("crumbSubject").textContent=display;
  $("papersTitle").textContent="📚 "+display+" · "+paperText("Original Exam-Style Papers","මුල් විභාග ආකෘති ප්‍රශ්න පත්‍ර");
- const bank=Array.isArray(activeSubject.data)?activeSubject.data.filter(row=>normaliseQuestionRow(row)): [];
+ const bank=questionBankForSubject(activeSubject,grade);
  if(!bank.length){
   $("paperInfoText").textContent=paperText("There are no question-bank items available for this subject yet.","මෙම විෂය සඳහා තවමත් ප්‍රශ්න බැංකුවක් සකස් කර නොමැත.");
   $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📘</div><div><strong>'+paperText("More questions coming soon","ප්‍රශ්න ඉක්මනින් එක් කෙරේ")+'</strong><span>'+paperText("Choose another subject with available questions.","ප්‍රශ්න ඇති වෙනත් විෂයක් තෝරන්න.")+'</span></div></div>';
   return;
  }
- $("paperInfoText").textContent=paperText("Choose a term and start an original Sri Lankan exam-style practice paper. Questions are newly written for practice, based on the available subject question bank. Answers are marked automatically and explanations are shown after submission. These are not official past papers.","වාරය තෝරා ශ්‍රී ලංකාවේ පාසල් විභාග ආකෘතියට අනුව සකස් කළ මුල් පුහුණු ප්‍රශ්න පත්‍රයක් ආරම්භ කරන්න. පවතින විෂය ප්‍රශ්න බැංකුව අනුව නව ප්‍රශ්න සකස් කර ඇත. පිළිතුරු ස්වයංක්‍රීයව ලකුණු කර පැහැදිලි කිරීම් පෙන්වයි. මේවා නිල පැරණි ප්‍රශ්න පත්‍ර නොවේ.");
+ $("paperInfoText").textContent=paperText("Choose a term and start an original Sri Lankan exam-style practice paper. Questions are newly written for practice, based on the available subject question bank. Answers are marked automatically and explanations are shown after submission. Papers use separate question-bank sections; a paper is unavailable when there are not enough distinct questions.","වාරය තෝරා පවතින විෂය ප්‍රශ්න බැංකුවෙන් සකස් කළ මුල් පුහුණු පත්‍රයක් ආරම්භ කරන්න. පිළිතුරු ස්වයංක්‍රීයව ලකුණු කර පැහැදිලි කිරීම් පෙන්වයි. සෑම පත්‍රයකටම වෙනස් ප්‍රශ්න කොටසක් වෙන් කර ඇත. ප්‍රමාණවත් වෙනස් ප්‍රශ්න නොමැති පත්‍රයක් ආරම්භ කළ නොහැක.");
  const groups=[
   {title:paperText("TERM 1","පළමු වාරය"),desc:paperText("Exam-style papers 01–03","විභාග ආකෘති පත්‍ර 01–03"),items:[1,2,3],icon:"🌱"},
   {title:paperText("TERM 2","දෙවන වාරය"),desc:paperText("Exam-style papers 04–06","විභාග ආකෘති පත්‍ර 04–06"),items:[4,5,6],icon:"📘"},
   {title:paperText("TERM 3","තෙවන වාරය"),desc:paperText("Exam-style papers 07–09","විභාග ආකෘති පත්‍ර 07–09"),items:[7,8,9],icon:"🏆"},
   {title:paperText("FULL-YEAR REVISION","වසර අවසාන පුනරීක්ෂණය"),desc:paperText("Full-year exam-style paper 10","වසර අවසාන විභාග ආකෘති පත්‍රය 10"),items:[10],icon:"⭐"}
  ];
- const sections=groups.map(g=>'<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">'+g.icon+'</div><div><strong>'+g.title+'</strong><span>'+g.desc+'</span></div></div><div class="papergrid">'+g.items.map(n=>'<article class="examcard"><div class="paper-number">📝 '+String(n).padStart(2,"0")+'</div><h3>'+paperText("Exam-Style Practice Paper ","විභාග ආකෘති පුහුණු පත්‍රය ")+String(n).padStart(2,"0")+'</h3><p>'+(grade<=5?paperText(Math.min(bank.length,28)+" questions · 4 types: MCQ, True/False, Short Answer and Matching · automatic marking",Math.min(bank.length,28)+" ප්‍රශ්නයි · ප්‍රශ්න වර්ග 4යි: බහුවරණ, සත්‍ය/අසත්‍ය, කෙටි පිළිතුරු සහ ගැළපීම · ස්වයංක්‍රීය ලකුණු"):paperText(Math.min(bank.length,45)+" questions · varied question types · automatic marking",Math.min(bank.length,45)+" questions · varied question types · automatic marking"))+'</p><button class="paper-card-button" onclick="startExam('+n+')">'+paperText("Start Paper ","පත්‍රය ආරම්භ කරන්න ")+n+' →</button></article>').join("")+'</div></section>').join("");
- const finalCard='<section class="term-paper-section"><div class="papergrid"><article class="examcard"><div class="paper-number">🎯</div><h3>'+paperText("Randomised Final Test","අහඹු අවසාන පරීක්ෂණය")+'</h3><p>'+paperText("A mixed test selected from this subject’s available question bank.","මෙම විෂයේ පවතින ප්‍රශ්න බැංකුවෙන් තෝරාගත් මිශ්‍ර පරීක්ෂණයකි.")+'</p><button class="paper-card-button" onclick="startExam(\'FINAL_TEST\')">'+paperText("Start Final Test","අවසාන පරීක්ෂණය ආරම්භ කරන්න")+' →</button></article></div></section>';
- $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📚</div><div><strong>'+paperText("NOVALEARNIX ONLINE EXAM CENTRE","NOVALEARNIX මාර්ගගත විභාග මධ්‍යස්ථානය")+'</strong><span>'+paperText("Grade ","ශ්‍රේණිය ")+grade+' · '+display+' · '+paperText("10 practice papers + final test","පුහුණු පත්‍ර 10ක් + අවසාන පරීක්ෂණය")+'</span></div></div>'+sections+finalCard+'<div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>'+paperText("About these papers","මෙම ප්‍රශ්න පත්‍ර පිළිබඳව")+'</strong><span>'+paperText("Questions are generated from the subject question bank currently available on Novalearnix. They are practice papers and are not presented as verbatim official past papers. Exact past-paper conversion can be added when verified source papers are available.","ප්‍රශ්න Novalearnix හි දැනට ඇති විෂය ප්‍රශ්න බැංකුවෙන් සකස් කර ඇත. මේවා පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල එලෙසම පිටපත් කළ ප්‍රශ්න ලෙස ඉදිරිපත් නොකෙරේ. තහවුරු කළ මුල් ප්‍රශ්න පත්‍ර ලැබුණු විට ඒවා පදනම් කරගත් වෙනම පත්‍ර එක් කළ හැකිය.")+'</span></div></div>';
-}
-function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
+ const limit=grade<=5?28:45;
+ const sections=groups.map(g=>'<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">'+g.icon+'</div><div><strong>'+g.title+'</strong><span>'+g.desc+'</span></div></div><div class="papergrid">'+g.items.map(n=>{
+  const count=paperRowsForNumber(bank,n,limit).length;
+  const disabled=count===0;
+  const description=count?paperText(count+" distinct question(s) · automatic marking",count+" වෙනස් ප්‍රශ්න · ස්වයංක්‍රීය ලකුණු"):paperText("Not enough distinct questions yet","තවමත් ප්‍රමාණවත් වෙනස් ප්‍රශ්න නැත");
+  const buttonText=disabled?paperText("More questions needed","තවත් ප්‍රශ්න අවශ්‍යයි"):paperText("Start Paper ","පත්‍රය ආරම්භ කරන්න ")+n+" →";
+  return '<article class="examcard"><div class="paper-number">📝 '+String(n).padStart(2,"0")+'</div><h3>'+paperText("Exam-Style Practice Paper ","විභාග ආකෘති පුහුණු පත්‍රය ")+String(n).padStart(2,"0")+'</h3><p>'+description+'</p><button class="paper-card-button" '+(disabled?'disabled aria-disabled="true"':'onclick="startExam('+n+')"')+'>'+buttonText+'</button></article>';
+ }).join("")+'</div></section>').join("");
+ const finalCard='<section class="term-paper-section"><div class="papergrid"><article class="examcard"><div class="paper-number">🎯</div><h3>'+paperText("Randomised Final Test","අහඹු අවසාන පරීක්ෂණය")+'</h3><p>'+paperText("A mixed test selected from this subject’s distinct available question bank.","මෙම විෂයේ ඇති වෙනස් ප්‍රශ්න බැංකුවෙන් තෝරාගත් මිශ්‍ර පරීක්ෂණයකි.")+'</p><button class="paper-card-button" onclick="startExam(\'FINAL_TEST\')">'+paperText("Start Final Test","අවසාන පරීක්ෂණය ආරම්භ කරන්න")+' →</button></article></div></section>';
+ $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📚</div><div><strong>'+paperText("NOVALEARNIX ONLINE EXAM CENTRE","NOVALEARNIX මාර්ගගත විභාග මධ්‍යස්ථානය")+'</strong><span>'+paperText("Up to 10 practice papers + final test","පුහුණු පත්‍ර 10ක් දක්වා + අවසාන පරීක්ෂණය")+'</span></div></div>'+sections+finalCard+'<div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>'+paperText("About these papers","මෙම ප්‍රශ්න පත්‍ර පිළිබඳව")+'</strong><span>'+paperText("Questions are generated from the subject question bank currently available on Novalearnix. They are practice papers and are not presented as verbatim official past papers. Exact past-paper conversion can be added when verified source papers are available.","ප්‍රශ්න Novalearnix හි දැනට ඇති විෂය ප්‍රශ්න බැංකුවෙන් සකස් කර ඇත. මේවා පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල එලෙසම පිටපත් කළ ප්‍රශ්න ලෙස ඉදිරිපත් නොකෙරේ. තහවුරු කළ මුල් ප්‍රශ්න පත්‍ර ලැබුණු විට ඒවා පදනම් කරගත් වෙනම පත්‍ර එක් කළ හැකිය.")+'</span></div></div>';
+}function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
 function permutations(items){if(items.length<=1)return [items];return items.flatMap((item,i)=>permutations(items.filter((_,j)=>j!==i)).map(rest=>[item,...rest]))}
 function grade7PtsPaper(n){if(n===2)return grade7PtsPaper2024();
  const rows=[
@@ -1521,65 +1545,84 @@ function grade7PtsPaper2024(){
  return rows.map(r=>({type:"Multiple choice",prompt:r[0],answer:r[1],options:shuffle([r[1],r[2],r[3]]),explain:r[4]}));
 }
 
-function makePrimaryDistinctQuestion(row,index,si){
- const [prompt,correct,wrong1,wrong2,explain,statement]=row;
- const type=index%4;
- const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
- const reason=String(explain||statement||correct).trim();
- if(type===0)return {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason};
- if(type===1){
-  const useFalse=index%8===5&&!!wrong1;
-  const proposition=useFalse
-   ?(si?"“"+prompt+"” සඳහා පිළිතුර “"+wrong1+"” වේ.":"For “"+prompt+"”, the answer is “"+wrong1+"”.")
-   :(String(statement||"").trim()&&String(statement).trim()!==prompt?String(statement).trim():(si?"“"+prompt+"” සඳහා නිවැරදි පිළිතුර “"+correct+"” වේ.":"For “"+prompt+"”, the answer is “"+correct+"”."));
-  return {type:"True or false",prompt:(si?"සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+proposition,answer:useFalse?"false":"true",explain:reason};
- }
- if(type===2)return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
- return {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the item with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
+function questionConceptTokens(row){
+ const stop=new Set(["what","which","who","where","when","why","how","is","are","the","a","an","of","to","in","on","for","with","and","or","does","do","did","from","by","it","this","that","as","be","can","could","would","should","කුමක්ද","කවුද","කොහේද","කෙසේද","ඇයි","යනු","වන්නේ","වෙන්නේ","සඳහා","කළ","කරන","එක","මෙම","එය","ද","හා","සහ","වන","වූ"]);
+ const source=[row[0],row[1],row[5],row[6]].filter(Boolean).join(" ").replace(/^\s*\[[^\]]+\]\s*/," ");
+ const words=source.toLocaleLowerCase().normalize("NFKC").match(/[\p{L}\p{N}]+/gu)||[];
+ return new Set(words.filter(w=>w.length>1&&!stop.has(w)));
 }
-function makeDistinctSecondaryQuestion(row,index,si){
- const [prompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
- const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
- const reason=String(explain||statement||correct).trim();
- const kind=index%6;
- if(kind===0)return {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:reason};
- if(kind===1)return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
- if(kind===2){
-  const useFalse=index%12===8&&!!wrong1;
-  const proposition=useFalse
-   ?(si?"“"+prompt+"” සඳහා පිළිතුර “"+wrong1+"” වේ.":"For “"+prompt+"”, the answer is “"+wrong1+"”.")
-   :(String(statement||"").trim()&&String(statement).trim()!==prompt?String(statement).trim():(si?"“"+prompt+"” සඳහා නිවැරදි පිළිතුර “"+correct+"” වේ.":"For “"+prompt+"”, the answer is “"+correct+"”."));
-  return {type:"True or false",prompt:(si?"මෙම ප්‍රකාශය සත්‍ය ද අසත්‍ය ද? ":"True or false: ")+proposition,answer:useFalse?"false":"true",explain:reason};
- }
- if(kind===3)return {type:"Error analysis",prompt:(si?"ශිෂ්‍යයෙකු “"+wrong1+"” ලෙස පිළිතුරු දී ඇත. නිවැරදි පිළිතුර තෝරන්න: ":"A learner answered “"+wrong1+"”. Choose the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
- if(kind===4&&typeof fillIn==="string"&&fillIn!==prompt&&/_{2,}|…|\.{3}/.test(fillIn))return {type:"Fill in the blank",prompt:fillIn,answer:correct,explain:reason};
- if(kind===5)return {type:"Matching pairs",prompt:(si?"නිවැරදි පිළිතුර සමඟ ගළපන්න: ":"Match the item with the correct answer: ")+prompt,answer:correct,options:shuffle(options),explain:reason};
- return {type:"Short answer",prompt:(si?"කෙටි පිළිතුරක් ලියන්න: ":"Short answer: ")+prompt,answer:correct,explain:reason};
+function questionRowsAreDuplicates(a,b){
+ const ap=norm(String(a[0]||"").replace(/^\s*\[[^\]]+\]\s*/," "));
+ const bp=norm(String(b[0]||"").replace(/^\s*\[[^\]]+\]\s*/," "));
+ if(ap&&ap===bp)return true;
+ const at=questionConceptTokens(a),bt=questionConceptTokens(b);
+ if(at.size<3||bt.size<3)return false;
+ let shared=0;at.forEach(w=>{if(bt.has(w))shared++});
+ const union=at.size+bt.size-shared;
+ const jaccard=shared/Math.max(1,union);
+ const containment=shared/Math.max(1,Math.min(at.size,bt.size));
+ return (shared>=3&&jaccard>=0.9)||(shared>=4&&(jaccard>=0.68||containment>=0.86));
 }
-function startExamCore(n){
- const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;
- secondsLeft=activeGrade>=10?7200:activeGrade<=5?1800:3600;
- const si=isSinhalaPaper(),bank=activeSubject.data.map(normaliseQuestionRow).filter(Boolean);
- if(!bank.length){alert("This subject does not yet have any valid practice questions. Please choose another subject.");return}
- if(activeGrade<=5){
-  const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
-  const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
-  questions=selected.slice(0,28).map((row,rowIndex)=>makePrimaryDistinctQuestion(row,rowIndex,si));
- }
- else if(activeGrade===7&&activeSubject.name==="PTS"){
-  const ptsRows=grade7PtsPaper(n).map(q=>{
+function distinctQuestionRows(rows){
+ const result=[];
+ rows.forEach(row=>{
+  const clean=normaliseQuestionRow(row);
+  if(!clean)return;
+  if(!result.some(existing=>questionRowsAreDuplicates(existing,clean)))result.push(clean);
+ });
+ return result;
+}
+function questionBankForSubject(subject,grade){
+ let rows=(Array.isArray(subject.data)?subject.data:[]).map(normaliseQuestionRow).filter(Boolean);
+ if(grade===7&&subject.name==="PTS"){
+  const extra=grade7PtsPaper(1).map(q=>{
    const wrong=(Array.isArray(q.options)?q.options:[]).filter(v=>v!==q.answer);
    return normaliseQuestionRow([q.prompt,q.answer,wrong[0]||"වෙනත් පිළිතුරක්",wrong[1]||"නොගැළපෙන පිළිතුරක්",q.explain||"",q.explain||"",""]);
   }).filter(Boolean);
-  const offset=finalTest?Math.floor(Math.random()*ptsRows.length):(n-1)%Math.max(1,ptsRows.length);
-  const selected=finalTest?shuffle(ptsRows):ptsRows.map((_,i)=>ptsRows[(i+offset)%ptsRows.length]);
-  questions=selected.slice(0,45).map((row,rowIndex)=>makeDistinctSecondaryQuestion(row,rowIndex,si));
+  rows=rows.concat(extra);
  }
- else{
-  const offset=finalTest?Math.floor(Math.random()*bank.length):activeSubject.catalogGenerated?(n-1)%bank.length:n<=4?(n-1)*4:(activeSubject.newPaperStart||0)+(n-5)*6;
-  const selected=finalTest?shuffle(bank.map((_,i)=>bank[(i+offset)%bank.length])):bank.map((_,i)=>bank[(i+offset)%bank.length]);
-  questions=selected.slice(0,45).map((row,rowIndex)=>makeDistinctSecondaryQuestion(row,rowIndex,si));
+ return distinctQuestionRows(rows);
+}
+function paperRowsForNumber(bank,n,limit){
+ const number=Number(n);
+ if(!Number.isInteger(number)||number<1||number>10)return [];
+ const chunkSize=Math.ceil(bank.length/10);
+ if(!chunkSize)return [];
+ const start=(number-1)*chunkSize;
+ return bank.slice(start,start+chunkSize).slice(0,limit);
+}
+function buildQuestionFromBankRow(row,si,primary){
+ const [rawPrompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
+ const marker=(String(rawPrompt).match(/^\s*\[([^\]]+)\]/)||[])[1]||"";
+ const tag=marker.toLocaleLowerCase();
+ const prompt=String(rawPrompt).replace(/^\s*\[[^\]]+\]\s*/,"");
+ const options=[...new Set([correct,wrong1,wrong2].filter(Boolean))];
+ const explanation=String(explain||statement||"").trim();
+ if(/සත්‍ය|අසත්‍ය|true\s*\/\s*false|true or false/.test(tag)){
+  const answer=norm(correct);
+  const boolAnswer=["true","සත්‍ය","සත්‍යයි","නිවැරදියි","ඔව්"].includes(answer)?"true":["false","අසත්‍ය","අසත්‍යයි","වැරදියි","නැත"].includes(answer)?"false":null;
+  if(boolAnswer)return {type:"True or false",prompt,answer:boolAnswer,explain:explanation};
  }
+ if(/ගැළපීම|ගැලපීම|matching/.test(tag)&&options.length>1)return {type:"Matching pairs",prompt,answer:correct,options:shuffle(options),explain:explanation};
+ if(/කෙටි පිළිතුරු|කෙටි පිළිතුර|short answer/.test(tag))return {type:"Short answer",prompt,answer:correct,explain:explanation};
+ if(!primary&&/දෝෂ විශ්ලේෂණය|error analysis/.test(tag)&&options.length>1)return {type:"Error analysis",prompt,answer:correct,options:shuffle(options),explain:explanation};
+ if(!primary&&/හේතු දැක්වීම|reasoning check/.test(tag)&&options.length>1)return {type:"Reasoning check",prompt,answer:correct,options:shuffle(options),explain:explanation};
+ if(!primary&&/පිළිවෙළට|arrange in order/.test(tag)&&options.length>1)return {type:"Arrange in order",prompt,answer:correct,options:shuffle(options),explain:explanation};
+ if(!primary&&/හිස්තැන|fill in the blank/.test(tag)&&fillIn)return {type:"Fill in the blank",prompt:fillIn,answer:correct,explain:explanation};
+ if(typeof fillIn==="string"&&fillIn!==rawPrompt&&/_{2,}|…|\.{3}/.test(fillIn))return {type:primary?"Short answer":"Fill in the blank",prompt:fillIn,answer:correct,explain:explanation};
+ if(options.length<2)return {type:"Short answer",prompt,answer:correct,explain:explanation};
+ return {type:"Multiple choice",prompt:rawPrompt,answer:correct,options:shuffle(options),explain:explanation};
+}
+function makePrimaryDistinctQuestion(row,index,si){return buildQuestionFromBankRow(row,si,true)}
+function makeDistinctSecondaryQuestion(row,index,si){return buildQuestionFromBankRow(row,si,false)}
+function startExamCore(n){
+ const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;
+ secondsLeft=activeGrade>=10?7200:activeGrade<=5?1800:3600;
+ const si=isSinhalaPaper(),bank=questionBankForSubject(activeSubject,activeGrade),limit=activeGrade<=5?28:45;
+ if(!bank.length){alert("This subject does not yet have any valid practice questions.");return}
+ const selected=finalTest?shuffle(bank).slice(0,limit):paperRowsForNumber(bank,n,limit);
+ if(!selected.length){alert("This paper needs more distinct questions in the subject question bank. Choose an available paper or another subject.");return}
+ questions=selected.map((row,rowIndex)=>activeGrade<=5?makePrimaryDistinctQuestion(row,rowIndex,si):makeDistinctSecondaryQuestion(row,rowIndex,si));
  if(!questions.length){alert("There are not enough valid questions in this subject yet.");return}
  showView("examView");$("examCrumb").textContent=(si?activeGrade+" ශ්‍රේණිය":"Grade "+activeGrade)+" / "+(activeSubject.displayName||activeSubject.name)+" / "+paperText("Paper","ප්‍රශ්න පත්‍රය")+" "+n;
  $("examTitle").textContent=finalTest?paperText("Final Test","අවසාන පරීක්ෂණය"):paperText("Online Practice Paper ","මාර්ගගත පුහුණු පත්‍රය ")+n;
@@ -2200,6 +2243,45 @@ function nextFreshGame(name){
  state.index++;state.answered=false;state.feedback="";renderFreshGame(name);
 }
 
+
+Object.assign(freshGameBanks,{
+ shape:[
+  {prompt:"A square garden tile has sides of 6 cm. What is its perimeter?",options:["24 cm","12 cm","36 cm","18 cm"],answer:"24 cm",explain:"A square has four equal sides: 4 × 6 = 24 cm."},
+  {prompt:"A rectangular poster is 9 cm long and 4 cm wide. What is its area?",options:["36 cm²","26 cm²","13 cm²","18 cm²"],answer:"36 cm²",explain:"Area of a rectangle = length × width = 9 × 4 = 36 cm²."},
+  {prompt:"Two angles of a triangle are 48° and 67°. What is the third angle?",options:["65°","75°","55°","115°"],answer:"65°",explain:"Triangle angles total 180°; 180 − 48 − 67 = 65°."},
+  {prompt:"A cube-shaped box has how many vertices (corners)?",options:["8","6","10","12"],answer:"8",explain:"A cube has 8 vertices, 12 edges and 6 square faces."},
+  {prompt:"A shape has five straight sides. What is its name?",options:["Pentagon","Hexagon","Quadrilateral","Octagon"],answer:"Pentagon",explain:"A pentagon is a polygon with five sides."}
+ ],
+ history:[
+  {prompt:"A timeline lists events at 300 BCE, 120 BCE and 40 CE. Which date is earliest?",options:["300 BCE","120 BCE","40 CE","They are all the same"],answer:"300 BCE",explain:"For BCE dates, the larger number is further back in time."},
+  {prompt:"A diary written by a person who witnessed an event is usually what kind of source?",options:["Primary source","A modern summary","A fictional map","A later textbook"],answer:"Primary source",explain:"A first-hand diary is evidence created by someone close to the time being studied."},
+  {prompt:"Archaeologists find pottery pieces near an old settlement. What might these help them investigate?",options:["How people lived and used objects","The exact thoughts of every resident","Tomorrow's weather","The colour of the sky"],answer:"How people lived and used objects",explain:"Objects can provide clues about daily activities, skills and trade."},
+  {prompt:"Two historical accounts disagree. What is the strongest next step?",options:["Compare their evidence and who created each account","Choose the longer account automatically","Ignore both accounts","Assume the newest account is always correct"],answer:"Compare their evidence and who created each account",explain:"Historians compare sources, context and supporting evidence before drawing conclusions."},
+  {prompt:"A settlement beside a river grows into a busy trading place. Which explanation is most reasonable?",options:["The river may help with water, farming and transport","Rivers prevent all travel","The settlement has no resources","Trade only happens far from water"],answer:"The river may help with water, farming and transport",explain:"Rivers can support several activities that help communities grow."}
+ ],
+ sound:[
+  {prompt:"What starts the production of sound?",options:["Vibrations","A shadow","A still object","A change of colour"],answer:"Vibrations",explain:"Sound is produced when an object vibrates and causes nearby particles to vibrate."},
+  {prompt:"A sound has a higher pitch than another. It usually has what?",options:["A higher frequency","A lower frequency","No vibrations","A longer silence"],answer:"A higher frequency",explain:"Pitch is related to frequency: higher frequency usually means higher pitch."},
+  {prompt:"A sound becomes louder while its frequency stays the same. What usually increases?",options:["Amplitude","Wavelength of light","The object's colour","The length of the room"],answer:"Amplitude",explain:"Greater sound-wave amplitude is associated with greater loudness."},
+  {prompt:"Why can sound not travel through a perfect vacuum?",options:["There are no particles to carry the vibration","The vacuum is too bright","Sound needs sunlight","The vacuum has too many particles"],answer:"There are no particles to carry the vibration",explain:"Sound is a mechanical wave and needs a material medium."},
+  {prompt:"A guitar string is tightened while its length stays the same. What usually happens to its pitch?",options:["It becomes higher","It becomes lower","It stops vibrating forever","It turns into light"],answer:"It becomes higher",explain:"A tighter string generally vibrates faster and produces a higher pitch."}
+ ],
+ civic:[
+  {prompt:"A shared playground has litter after a community event. What is a constructive first response?",options:["Tell the organiser or a responsible adult and arrange a safe clean-up","Blame one person without evidence","Leave more litter","Damage the playground"],answer:"Tell the organiser or a responsible adult and arrange a safe clean-up",explain:"Shared places are cared for through respectful communication and cooperation."},
+  {prompt:"A group is choosing a class project. What helps everyone take part fairly?",options:["Listen to different ideas before deciding","Let only the loudest person decide","Ignore quieter classmates","Change the rules for one friend"],answer:"Listen to different ideas before deciding",explain:"Listening gives everyone a chance to contribute."},
+  {prompt:"What is a fair way to choose a class representative?",options:["Use an agreed, transparent voting process","Choose secretly without telling the class","Pick only a close friend","Count only some votes"],answer:"Use an agreed, transparent voting process",explain:"Clear rules and honest counting help a group trust its decision."},
+  {prompt:"Why should public equipment be used carefully?",options:["Many people share it and depend on it","It belongs to nobody, so it does not matter","It should be kept unusable","Only one person may benefit"],answer:"Many people share it and depend on it",explain:"Care for shared resources helps everyone use them safely and fairly."},
+  {prompt:"Two classmates disagree about a team task. What is a helpful next step?",options:["Explain each view calmly and agree on roles","Stop the whole project immediately","Refuse to listen","Make fun of one another"],answer:"Explain each view calmly and agree on roles",explain:"Calm discussion and clear responsibilities help teams solve disagreements."}
+ ],
+ weather:[
+  {prompt:"A weather station records 23°C at 8 a.m., 30°C at noon and 27°C at 4 p.m. When was it warmest?",detail:"08:00 — 23°C · 12:00 — 30°C · 16:00 — 27°C",options:["Noon","8 a.m.","4 p.m.","All readings are equal"],answer:"Noon",explain:"30°C is the highest temperature in the report."},
+  {prompt:"A forecast gives a high chance of rain during an outdoor school event. Which plan is sensible?",options:["Prepare a sheltered or indoor alternative","Ignore the forecast completely","Leave all equipment outside","Assume rain is impossible"],answer:"Prepare a sheltered or indoor alternative",explain:"Using a forecast helps people make flexible plans."},
+  {prompt:"The temperature falls from 31°C to 26°C. By how many degrees did it fall?",options:["5°C","7°C","3°C","57°C"],answer:"5°C",explain:"31 − 26 = 5 degrees Celsius."},
+  {prompt:"Which statement describes climate rather than today's weather?",options:["The usual pattern of conditions in a region over many years","Rain is falling this afternoon","The wind is strong right now","It is 28°C at noon"],answer:"The usual pattern of conditions in a region over many years",explain:"Weather describes short-term conditions; climate describes long-term patterns."},
+  {prompt:"A forecast says strong winds are expected near the coast. Which activity should be reconsidered first?",options:["A small-boat trip","Reading indoors","A classroom drawing activity","Organising books"],answer:"A small-boat trip",explain:"Weather conditions matter when planning activities that depend on safe travel."}
+ ]
+});
+
 /* Drawing Studio controls */
 let drawingColour="#202b45",drawingMode="brush",drawingUndoStack=[],drawingRedoStack=[],drawingIsDown=false,drawingLastPoint=null,drawingStartPoint=null,drawingShapeSnapshot=null;
  const drawingShapeModes=["line","rect","circle","triangle","diamond","pentagon","hexagon","star","heart","arrow","customShape"];
@@ -2238,6 +2320,37 @@ document.addEventListener("click",e=>{const sticker=e.target.closest(".drawing-s
 
 function goFeedback(){if(timer){clearInterval(timer);timer=null}showView("feedbackView")}
 function submitFeedback(event){event.preventDefault();const type=$("feedbackType").value;const rating=$("feedbackRating").value;const message=$("feedbackMessage").value.trim();if(!message){alert("Please write your feedback first.");return}const title="[Novalearnix Feedback] "+type;const body="## Novalearnix website feedback\n\n- **Type:** "+type+"\n- **Rating:** "+rating+"\n\n## Message\n"+message+"\n\n---\nSubmitted through the Novalearnix feedback page.";const url="https://github.com/omelvin2020/learnnova/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);window.open(url,"_blank","noopener");}
+
+function calculateNovaPerimeter(){
+ const raw=$("novaPerimeterSides").value.trim(),parts=raw.split(/[,\s;]+/).filter(Boolean),values=parts.map(Number),out=$("novaPerimeterOut");
+ if(values.length<3||values.some(v=>!Number.isFinite(v)||v<=0)){out.textContent="Enter at least three positive side lengths, separated by commas or spaces.";return}
+ const total=values.reduce((sum,v)=>sum+v,0);
+ out.textContent="Perimeter = "+Number(total.toFixed(4))+" units. Add each side length once.";
+}
+function calculateNovaAngleSum(){
+ const sides=Number($("novaAngleSides").value),out=$("novaAngleOut");
+ if(!Number.isInteger(sides)||sides<3||sides>12){out.textContent="Choose a polygon with 3 to 12 sides.";return}
+ const sum=(sides-2)*180,each=sum/sides;
+ out.textContent="Interior-angle sum = "+sum+"°. If the polygon is regular, each interior angle = "+Number(each.toFixed(4))+"°.";
+}
+function convertNovaScientific(){
+ const raw=$("novaSciValue").value.trim(),value=Number(raw),out=$("novaSciOut");
+ if(!raw||!Number.isFinite(value)){out.textContent="Enter a valid finite number.";return}
+ if(value===0){out.textContent="0 = 0 × 10^0.";return}
+ const exponent=Math.floor(Math.log10(Math.abs(value))),coefficient=value/Math.pow(10,exponent);
+ out.textContent=value+" = "+Number(coefficient.toPrecision(6))+" × 10^"+exponent+".";
+}
+function calculateNovaMechanicalAdvantage(){
+ const load=Number($("novaMALoad").value),effort=Number($("novaMAEffort").value),out=$("novaMAOut");
+ if(!Number.isFinite(load)||!Number.isFinite(effort)||load<=0||effort<=0){out.textContent="Enter positive load and effort values in the same unit.";return}
+ out.textContent="Mechanical advantage = load ÷ effort = "+Number((load/effort).toFixed(4))+".";
+}
+function calculateNovaPressure(){
+ const force=Number($("novaPressureForce").value),area=Number($("novaPressureArea").value),out=$("novaPressureOut");
+ if(!Number.isFinite(force)||!Number.isFinite(area)||force<0||area<=0){out.textContent="Enter a non-negative force and a positive area.";return}
+ out.textContent="Pressure = force ÷ area = "+Number((force/area).toFixed(4))+" Pa.";
+}
+
 </script>
 <script>
 (function(){
