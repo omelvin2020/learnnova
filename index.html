@@ -1546,7 +1546,7 @@ function grade7PtsPaper2024(){
 }
 
 function questionConceptTokens(row){
- const stop=new Set(["what","which","who","where","when","why","how","is","are","the","a","an","of","to","in","on","for","with","and","or","does","do","did","from","by","it","this","that","as","be","can","could","would","should","කුමක්ද","කවුද","කොහේද","කෙසේද","ඇයි","යනු","වන්නේ","වෙන්නේ","සඳහා","කළ","කරන","එක","මෙම","එය","ද","හා","සහ","වන","වූ"]);
+ const stop=new Set(["what","which","who","where","when","why","how","is","are","the","a","an","of","to","in","on","for","with","and","or","does","do","did","from","by","it","this","that","as","be","can","could","would","should","true","false","සත්‍ය","අසත්‍ය","කුමක්ද","කවුද","කොහේද","කෙසේද","ඇයි","යනු","වන්නේ","වෙන්නේ","සඳහා","කළ","කරන","එක","මෙම","එය","ද","හා","සහ","වන","වූ"].map(norm));
  const source=[row[0],row[1],row[5],row[6]].filter(Boolean).join(" ").replace(/^\s*\[[^\]]+\]\s*/," ");
  const words=source.toLocaleLowerCase().normalize("NFKC").match(/[\p{L}\p{N}]+/gu)||[];
  return new Set(words.filter(w=>w.length>1&&!stop.has(w)));
@@ -1601,7 +1601,8 @@ function buildQuestionFromBankRow(row,si,primary){
  const explanation=String(explain||statement||"").trim();
  if(/සත්‍ය|අසත්‍ය|true\s*\/\s*false|true or false/.test(tag)){
   const answer=norm(correct);
-  const boolAnswer=["true","සත්‍ය","සත්‍යයි","නිවැරදියි","ඔව්"].includes(answer)?"true":["false","අසත්‍ය","අසත්‍යයි","වැරදියි","නැත"].includes(answer)?"false":null;
+  const trueValues=["true","සත්‍ය","සත්‍යයි","නිවැරදියි","ඔව්"].map(norm),falseValues=["false","අසත්‍ය","අසත්‍යයි","වැරදියි","නැත"].map(norm);
+  const boolAnswer=trueValues.includes(answer)?"true":falseValues.includes(answer)?"false":null;
   if(boolAnswer)return {type:"True or false",prompt,answer:boolAnswer,explain:explanation};
  }
  if(/ගැළපීම|ගැලපීම|matching/.test(tag)&&options.length>1)return {type:"Matching pairs",prompt,answer:correct,options:shuffle(options),explain:explanation};
