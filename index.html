@@ -1586,10 +1586,11 @@ function questionBankForSubject(subject,grade){
 function paperRowsForNumber(bank,n,limit){
  const number=Number(n);
  if(!Number.isInteger(number)||number<1||number>10)return [];
- const chunkSize=Math.ceil(bank.length/10);
- if(!chunkSize)return [];
- const start=(number-1)*chunkSize;
- return bank.slice(start,start+chunkSize).slice(0,limit);
+ const base=Math.floor(bank.length/10),remainder=bank.length%10;
+ const size=base+(number<=remainder?1:0);
+ const start=(number-1)*base+Math.min(number-1,remainder);
+ if(!size)return [];
+ return bank.slice(start,start+size).slice(0,limit);
 }
 function buildQuestionFromBankRow(row,si,primary){
  const [rawPrompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
