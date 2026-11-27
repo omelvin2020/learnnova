@@ -449,10 +449,10 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="tool-card"><h3>🔬 Scientific Notation Converter</h3><p>Convert a number into the form a × 10ⁿ, where 1 ≤ |a| &lt; 10.</p><label for="novaSciValue">Number</label><input id="novaSciValue" type="number" step="any" placeholder="e.g. 0.0042"><button type="button" onclick="convertNovaScientific()">Convert number</button><p id="novaSciOut" class="tool-result" role="status" aria-live="polite">The scientific notation will appear here.</p></article>
   <article class="tool-card"><h3>⚙️ Mechanical Advantage Calculator</h3><p>For a simple machine, mechanical advantage = load ÷ effort. Enter both in the same force unit.</p><label for="novaMALoad">Load</label><input id="novaMALoad" type="number" min="0" step="any" placeholder="e.g. 80"><label for="novaMAEffort">Effort</label><input id="novaMAEffort" type="number" min="0" step="any" placeholder="e.g. 20"><button type="button" onclick="calculateNovaMechanicalAdvantage()">Calculate</button><p id="novaMAOut" class="tool-result" role="status" aria-live="polite">The mechanical advantage will appear here.</p></article>
   <article class="tool-card"><h3>🧪 Pressure Calculator</h3><p>Pressure = force ÷ area. Enter force in newtons (N) and area in square metres (m²).</p><label for="novaPressureForce">Force (N)</label><input id="novaPressureForce" type="number" min="0" step="any" placeholder="e.g. 120"><label for="novaPressureArea">Area (m²)</label><input id="novaPressureArea" type="number" min="0" step="any" placeholder="e.g. 3"><button type="button" onclick="calculateNovaPressure()">Calculate pressure</button><p id="novaPressureOut" class="tool-result" role="status" aria-live="polite">Pressure will appear here in pascals (Pa).</p></article>
-  <article class="tool-card"><h3>📊 Mean, Median &amp; Mode Lab</h3><p>Enter a small list of numbers separated by commas or spaces to calculate its centre and range.</p><label for="novaStatsInput">Numbers</label><input id="novaStatsInput" type="text" maxlength="300" placeholder="e.g. 4, 7, 7, 9, 13"><button type="button" onclick="calculateNovaStatistics()">Analyse data</button><p id="novaStatsOut" class="tool-result" role="status" aria-live="polite">Your data summary will appear here.</p></article>
-  <article class="tool-card"><h3>🚲 Speed, Distance &amp; Time Solver</h3><p>Choose the value to calculate. Use kilometres and hours for consistent units.</p><label for="novaMotionMode">Solve for</label><select id="novaMotionMode"><option value="speed">Speed (km/h)</option><option value="distance">Distance (km)</option><option value="time">Time (hours)</option></select><label for="novaMotionDistance">Distance (km)</label><input id="novaMotionDistance" type="number" min="0" step="any" placeholder="e.g. 12"><label for="novaMotionTime">Time (hours)</label><input id="novaMotionTime" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="novaMotionSpeed">Speed (km/h)</label><input id="novaMotionSpeed" type="number" min="0" step="any" placeholder="e.g. 24"><button type="button" onclick="calculateNovaMotion()">Calculate</button><p id="novaMotionOut" class="tool-result" role="status" aria-live="polite">The missing value will appear here.</p></article>
-  <article class="tool-card"><h3>⚖️ Density Explorer</h3><p>Density = mass ÷ volume. Enter mass in grams and volume in cubic centimetres.</p><label for="novaDensityMass">Mass (g)</label><input id="novaDensityMass" type="number" min="0" step="any" placeholder="e.g. 120"><label for="novaDensityVolume">Volume (cm³)</label><input id="novaDensityVolume" type="number" min="0" step="any" placeholder="e.g. 40"><button type="button" onclick="calculateNovaDensity()">Calculate density</button><p id="novaDensityOut" class="tool-result" role="status" aria-live="polite">Density will appear here in g/cm³.</p></article>
-  <article class="tool-card"><h3>🧭 Map Scale Calculator</h3><p>For a scale of 1 : N, multiply map distance by N to find real distance. Enter map distance in centimetres.</p><label for="novaMapDistance">Map distance (cm)</label><input id="novaMapDistance" type="number" min="0" step="any" placeholder="e.g. 3"><label for="novaMapScale">Scale denominator (N)</label><input id="novaMapScale" type="number" min="1" step="1" placeholder="e.g. 50000"><button type="button" onclick="calculateNovaMapScale()">Calculate real distance</button><p id="novaMapScaleOut" class="tool-result" role="status" aria-live="polite">Real distance will appear here.</p></article>
+  <article class="tool-card"><h3>📊 Frequency Table Builder</h3><p>Enter a list of numbers to build a sorted frequency table.</p><label for="novaFrequencyInput">Data values</label><input id="novaFrequencyInput" type="text" maxlength="300" placeholder="e.g. 2, 3, 2, 5, 3, 3"><button type="button" onclick="buildNovaFrequencyTable()">Build table</button><p id="novaFrequencyOut" class="tool-result" role="status" aria-live="polite">Your frequency table will appear here.</p></article>
+  <article class="tool-card"><h3>⚖️ Proportion Solver</h3><p>Solve the proportion a : b = c : x. Enter three positive values.</p><label for="novaProportionA">a</label><input id="novaProportionA" type="number" min="0" step="any" placeholder="e.g. 4"><label for="novaProportionB">b</label><input id="novaProportionB" type="number" min="0" step="any" placeholder="e.g. 6"><label for="novaProportionC">c</label><input id="novaProportionC" type="number" min="0" step="any" placeholder="e.g. 10"><button type="button" onclick="solveNovaProportion()">Find x</button><p id="novaProportionOut" class="tool-result" role="status" aria-live="polite">The missing value will appear here.</p></article>
+  <article class="tool-card"><h3>🛒 Unit Price Comparator</h3><p>Compare two package prices using the same quantity unit, such as grams or millilitres.</p><label for="novaUnitQtyA">Package A quantity</label><input id="novaUnitQtyA" type="number" min="0" step="any" placeholder="e.g. 500"><label for="novaUnitPriceA">Package A price (Rs.)</label><input id="novaUnitPriceA" type="number" min="0" step="any" placeholder="e.g. 250"><label for="novaUnitQtyB">Package B quantity</label><input id="novaUnitQtyB" type="number" min="0" step="any" placeholder="e.g. 1000"><label for="novaUnitPriceB">Package B price (Rs.)</label><input id="novaUnitPriceB" type="number" min="0" step="any" placeholder="e.g. 450"><button type="button" onclick="compareNovaUnitPrices()">Compare unit prices</button><p id="novaUnitPriceOut" class="tool-result" role="status" aria-live="polite">The comparison will appear here.</p></article>
+  <article class="tool-card"><h3>🏛️ Roman Numeral Converter</h3><p>Convert whole numbers from 1 to 3999 between Roman numerals and decimal numbers.</p><label for="novaRomanMode">Conversion</label><select id="novaRomanMode"><option value="decimalToRoman">Decimal → Roman</option><option value="romanToDecimal">Roman → Decimal</option></select><label for="novaRomanInput">Number</label><input id="novaRomanInput" type="text" maxlength="20" placeholder="e.g. 2026"><button type="button" onclick="convertNovaRoman()">Convert</button><p id="novaRomanOut" class="tool-result" role="status" aria-live="polite">The converted number will appear here.</p></article>
   <article class="tool-card"><h3>💻 Binary &amp; Decimal Converter</h3><p>Convert a whole number between binary (base 2) and decimal (base 10).</p><label for="novaBaseMode">Conversion</label><select id="novaBaseMode"><option value="binaryToDecimal">Binary → Decimal</option><option value="decimalToBinary">Decimal → Binary</option></select><label for="novaBaseInput">Number</label><input id="novaBaseInput" type="text" maxlength="80" placeholder="e.g. 101101"><button type="button" onclick="convertNovaBase()">Convert</button><p id="novaBaseOut" class="tool-result" role="status" aria-live="polite">The converted value will appear here.</p></article>
  </div>
  <p class="feature-note">These calculators run in your browser. Check units and working in your textbook or class notes.</p>
@@ -2432,34 +2432,42 @@ function calculateNovaPressure(){
  if(!Number.isFinite(force)||!Number.isFinite(area)||force<0||area<=0){out.textContent="Enter a non-negative force and a positive area.";return}
  out.textContent="Pressure = force ÷ area = "+Number((force/area).toFixed(4))+" Pa.";
 }
-function calculateNovaStatistics(){
- const raw=$("novaStatsInput").value.trim(),out=$("novaStatsOut");
+function buildNovaFrequencyTable(){
+ const raw=$("novaFrequencyInput").value.trim(),out=$("novaFrequencyOut");
  const values=raw.split(/[,;\s]+/).filter(Boolean).map(Number);
- if(!raw||!values.length||values.some(v=>!Number.isFinite(v))||values.length>100){out.textContent="Enter between 1 and 100 finite numbers, separated by commas or spaces.";return}
- const sorted=values.slice().sort((a,b)=>a-b),sum=values.reduce((a,b)=>a+b,0),mid=Math.floor(sorted.length/2);
- const median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
+ if(!raw||!values.length||values.length>100||values.some(v=>!Number.isFinite(v))){out.textContent="Enter between 1 and 100 finite numbers, separated by commas or spaces.";return}
  const counts=new Map();values.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
- const maxCount=Math.max(...counts.values()),modes=maxCount===1?[]:[...counts].filter(([,n])=>n===maxCount).map(([v])=>v).sort((a,b)=>a-b);
- out.textContent="Count: "+values.length+" · Mean: "+Number((sum/values.length).toFixed(4))+" · Median: "+median+" · Mode: "+(modes.length?modes.join(", "):"No repeated value")+" · Range: "+(sorted[sorted.length-1]-sorted[0])+".";
+ const rows=[...counts].sort((a,b)=>a[0]-b[0]);
+ out.textContent="Value : Frequency\n"+rows.map(([value,count])=>value+" : "+count).join("\n")+"\nTotal values: "+values.length+".";
 }
-function calculateNovaMotion(){
- const mode=$("novaMotionMode").value,d=Number($("novaMotionDistance").value),t=Number($("novaMotionTime").value),v=Number($("novaMotionSpeed").value),out=$("novaMotionOut");
- const valid=x=>Number.isFinite(x)&&x>0;
- if(mode==="speed"){if(!valid(d)||!valid(t)){out.textContent="Enter positive distance and time values.";return}out.textContent="Speed = distance ÷ time = "+Number((d/t).toFixed(4))+" km/h."}
- else if(mode==="distance"){if(!valid(v)||!valid(t)){out.textContent="Enter positive speed and time values.";return}out.textContent="Distance = speed × time = "+Number((v*t).toFixed(4))+" km."}
- else if(mode==="time"){if(!valid(d)||!valid(v)){out.textContent="Enter positive distance and speed values.";return}out.textContent="Time = distance ÷ speed = "+Number((d/v).toFixed(4))+" hours."}
- else out.textContent="Choose speed, distance or time.";
+function solveNovaProportion(){
+ const a=Number($("novaProportionA").value),b=Number($("novaProportionB").value),c=Number($("novaProportionC").value),out=$("novaProportionOut");
+ if(!Number.isFinite(a)||!Number.isFinite(b)||!Number.isFinite(c)||a<=0||b<=0||c<=0){out.textContent="Enter three positive values for a, b and c.";return}
+ const x=b*c/a;
+ out.textContent=a+" : "+b+" = "+c+" : "+Number(x.toFixed(6))+". Therefore x = (b × c) ÷ a = "+Number(x.toFixed(6))+".";
 }
-function calculateNovaDensity(){
- const mass=Number($("novaDensityMass").value),volume=Number($("novaDensityVolume").value),out=$("novaDensityOut");
- if(!Number.isFinite(mass)||!Number.isFinite(volume)||mass<0||volume<=0){out.textContent="Enter a non-negative mass and a positive volume.";return}
- out.textContent="Density = mass ÷ volume = "+Number((mass/volume).toFixed(4))+" g/cm³.";
+function compareNovaUnitPrices(){
+ const qa=Number($("novaUnitQtyA").value),pa=Number($("novaUnitPriceA").value),qb=Number($("novaUnitQtyB").value),pb=Number($("novaUnitPriceB").value),out=$("novaUnitPriceOut");
+ if(![qa,pa,qb,pb].every(Number.isFinite)||qa<=0||qb<=0||pa<0||pb<0){out.textContent="Enter positive package quantities and non-negative prices. Use the same quantity unit for both packages.";return}
+ const ua=pa/qa,ub=pb/qb;
+ const verdict=Math.abs(ua-ub)<1e-10?"Both packages have the same unit price.":ua<ub?"Package A has the lower price per unit.":"Package B has the lower price per unit.";
+ out.textContent="Package A: Rs. "+ua.toFixed(4)+" per unit. Package B: Rs. "+ub.toFixed(4)+" per unit. "+verdict;
 }
-function calculateNovaMapScale(){
- const distance=Number($("novaMapDistance").value),scale=Number($("novaMapScale").value),out=$("novaMapScaleOut");
- if(!Number.isFinite(distance)||distance<=0||!Number.isSafeInteger(scale)||scale<=0){out.textContent="Enter a positive map distance and a positive whole-number scale denominator.";return}
- const realCm=distance*scale,realKm=realCm/100000;
- out.textContent="Real distance = "+Number(realKm.toFixed(4))+" km ("+Number((realCm/100).toFixed(2))+" m).";
+function convertNovaRoman(){
+ const mode=$("novaRomanMode").value,raw=$("novaRomanInput").value.trim().toUpperCase(),out=$("novaRomanOut");
+ const pairs=[[1000,"M"],[900,"CM"],[500,"D"],[400,"CD"],[100,"C"],[90,"XC"],[50,"L"],[40,"XL"],[10,"X"],[9,"IX"],[5,"V"],[4,"IV"],[1,"I"]];
+ if(!raw){out.textContent="Enter a number to convert.";return}
+ if(mode==="decimalToRoman"){
+  if(!/^\d+$/.test(raw)){out.textContent="Enter a whole decimal number from 1 to 3999.";return}
+  let n=Number(raw);if(!Number.isSafeInteger(n)||n<1||n>3999){out.textContent="Roman numeral conversion supports whole numbers from 1 to 3999.";return}
+  let roman="";for(const [value,symbol] of pairs){while(n>=value){roman+=symbol;n-=value}}
+  out.textContent=raw+" = "+roman+".";
+ }else{
+  if(!/^(?=.)M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/.test(raw)){out.textContent="Enter a valid standard Roman numeral from I to MMMCMXCIX.";return}
+  const values={I:1,V:5,X:10,L:50,C:100,D:500,M:1000};let total=0;
+  for(let i=0;i<raw.length;i++)total+=values[raw[i]]<(values[raw[i+1]]||0)?-values[raw[i]]:values[raw[i]];
+  out.textContent=raw+" = "+total+".";
+ }
 }
 function convertNovaBase(){
  const mode=$("novaBaseMode").value,raw=$("novaBaseInput").value.trim(),out=$("novaBaseOut");
