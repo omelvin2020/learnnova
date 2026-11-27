@@ -449,6 +449,11 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="tool-card"><h3>🔬 Scientific Notation Converter</h3><p>Convert a number into the form a × 10ⁿ, where 1 ≤ |a| &lt; 10.</p><label for="novaSciValue">Number</label><input id="novaSciValue" type="number" step="any" placeholder="e.g. 0.0042"><button type="button" onclick="convertNovaScientific()">Convert number</button><p id="novaSciOut" class="tool-result" role="status" aria-live="polite">The scientific notation will appear here.</p></article>
   <article class="tool-card"><h3>⚙️ Mechanical Advantage Calculator</h3><p>For a simple machine, mechanical advantage = load ÷ effort. Enter both in the same force unit.</p><label for="novaMALoad">Load</label><input id="novaMALoad" type="number" min="0" step="any" placeholder="e.g. 80"><label for="novaMAEffort">Effort</label><input id="novaMAEffort" type="number" min="0" step="any" placeholder="e.g. 20"><button type="button" onclick="calculateNovaMechanicalAdvantage()">Calculate</button><p id="novaMAOut" class="tool-result" role="status" aria-live="polite">The mechanical advantage will appear here.</p></article>
   <article class="tool-card"><h3>🧪 Pressure Calculator</h3><p>Pressure = force ÷ area. Enter force in newtons (N) and area in square metres (m²).</p><label for="novaPressureForce">Force (N)</label><input id="novaPressureForce" type="number" min="0" step="any" placeholder="e.g. 120"><label for="novaPressureArea">Area (m²)</label><input id="novaPressureArea" type="number" min="0" step="any" placeholder="e.g. 3"><button type="button" onclick="calculateNovaPressure()">Calculate pressure</button><p id="novaPressureOut" class="tool-result" role="status" aria-live="polite">Pressure will appear here in pascals (Pa).</p></article>
+  <article class="tool-card"><h3>📊 Mean, Median &amp; Mode Lab</h3><p>Enter a small list of numbers separated by commas or spaces to calculate its centre and range.</p><label for="novaStatsInput">Numbers</label><input id="novaStatsInput" type="text" maxlength="300" placeholder="e.g. 4, 7, 7, 9, 13"><button type="button" onclick="calculateNovaStatistics()">Analyse data</button><p id="novaStatsOut" class="tool-result" role="status" aria-live="polite">Your data summary will appear here.</p></article>
+  <article class="tool-card"><h3>🚲 Speed, Distance &amp; Time Solver</h3><p>Choose the value to calculate. Use kilometres and hours for consistent units.</p><label for="novaMotionMode">Solve for</label><select id="novaMotionMode"><option value="speed">Speed (km/h)</option><option value="distance">Distance (km)</option><option value="time">Time (hours)</option></select><label for="novaMotionDistance">Distance (km)</label><input id="novaMotionDistance" type="number" min="0" step="any" placeholder="e.g. 12"><label for="novaMotionTime">Time (hours)</label><input id="novaMotionTime" type="number" min="0" step="any" placeholder="e.g. 0.5"><label for="novaMotionSpeed">Speed (km/h)</label><input id="novaMotionSpeed" type="number" min="0" step="any" placeholder="e.g. 24"><button type="button" onclick="calculateNovaMotion()">Calculate</button><p id="novaMotionOut" class="tool-result" role="status" aria-live="polite">The missing value will appear here.</p></article>
+  <article class="tool-card"><h3>⚖️ Density Explorer</h3><p>Density = mass ÷ volume. Enter mass in grams and volume in cubic centimetres.</p><label for="novaDensityMass">Mass (g)</label><input id="novaDensityMass" type="number" min="0" step="any" placeholder="e.g. 120"><label for="novaDensityVolume">Volume (cm³)</label><input id="novaDensityVolume" type="number" min="0" step="any" placeholder="e.g. 40"><button type="button" onclick="calculateNovaDensity()">Calculate density</button><p id="novaDensityOut" class="tool-result" role="status" aria-live="polite">Density will appear here in g/cm³.</p></article>
+  <article class="tool-card"><h3>🧭 Map Scale Calculator</h3><p>For a scale of 1 : N, multiply map distance by N to find real distance. Enter map distance in centimetres.</p><label for="novaMapDistance">Map distance (cm)</label><input id="novaMapDistance" type="number" min="0" step="any" placeholder="e.g. 3"><label for="novaMapScale">Scale denominator (N)</label><input id="novaMapScale" type="number" min="1" step="1" placeholder="e.g. 50000"><button type="button" onclick="calculateNovaMapScale()">Calculate real distance</button><p id="novaMapScaleOut" class="tool-result" role="status" aria-live="polite">Real distance will appear here.</p></article>
+  <article class="tool-card"><h3>💻 Binary &amp; Decimal Converter</h3><p>Convert a whole number between binary (base 2) and decimal (base 10).</p><label for="novaBaseMode">Conversion</label><select id="novaBaseMode"><option value="binaryToDecimal">Binary → Decimal</option><option value="decimalToBinary">Decimal → Binary</option></select><label for="novaBaseInput">Number</label><input id="novaBaseInput" type="text" maxlength="80" placeholder="e.g. 101101"><button type="button" onclick="convertNovaBase()">Convert</button><p id="novaBaseOut" class="tool-result" role="status" aria-live="polite">The converted value will appear here.</p></article>
  </div>
  <p class="feature-note">These calculators run in your browser. Check units and working in your textbook or class notes.</p>
 </section>
@@ -479,6 +484,11 @@ footer{margin-top:45px;padding:45px 15px 35px;background:linear-gradient(110deg,
   <article class="entertainment-card"><div class="feature-icon">🔊</div><h3>Sound Wave Detective</h3><p>Investigate vibrations, pitch and sound-wave clues in five rounds.</p><div id="freshGameOutput-sound" class="mini-game-panel" role="status" aria-live="polite">Press Start to investigate sound.</div><button type="button" onclick="startFreshGame('sound')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">🤝</div><h3>Civic Choices Quest</h3><p>Make thoughtful choices about fairness, teamwork and shared places.</p><div id="freshGameOutput-civic" class="mini-game-panel" role="status" aria-live="polite">Press Start to begin the community mission.</div><button type="button" onclick="startFreshGame('civic')">Start / restart</button></article>
   <article class="entertainment-card"><div class="feature-icon">🌦️</div><h3>Weather Forecast Mission</h3><p>Interpret weather reports and choose sensible plans for five situations.</p><div id="freshGameOutput-weather" class="mini-game-panel" role="status" aria-live="polite">Press Start to read the forecast.</div><button type="button" onclick="startFreshGame('weather')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🗺️</div><h3>Map Route Mission</h3><p>Use compass directions, grid positions and map keys to guide a traveller through five rounds.</p><div id="freshGameOutput-map" class="mini-game-panel" role="status" aria-live="polite">Press Start to plan the route.</div><button type="button" onclick="startFreshGame('map')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🐸</div><h3>Habitat Rescue</h3><p>Choose suitable habitats by studying animal features and environmental clues.</p><div id="freshGameOutput-habitat" class="mini-game-panel" role="status" aria-live="polite">Press Start to help the animals.</div><button type="button" onclick="startFreshGame('habitat')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">⏰</div><h3>Timekeeper Challenge</h3><p>Solve timetables, elapsed-time puzzles and everyday clock challenges.</p><div id="freshGameOutput-time" class="mini-game-panel" role="status" aria-live="polite">Press Start to check the clock.</div><button type="button" onclick="startFreshGame('time')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🔎</div><h3>Context Clue Quest</h3><p>Use sentence clues to discover meanings and interpret short passages.</p><div id="freshGameOutput-context" class="mini-game-panel" role="status" aria-live="polite">Press Start to investigate the words.</div><button type="button" onclick="startFreshGame('context')">Start / restart</button></article>
+  <article class="entertainment-card"><div class="feature-icon">🤖</div><h3>Algorithm Trail</h3><p>Follow instructions, recognise loops and debug simple step-by-step programs.</p><div id="freshGameOutput-algorithm" class="mini-game-panel" role="status" aria-live="polite">Press Start to follow the algorithm.</div><button type="button" onclick="startFreshGame('algorithm')">Start / restart</button></article>
 
  </div>
  <button class="secondary" onclick="goHome()">← Back to Home</button>
@@ -2356,6 +2366,43 @@ document.addEventListener("click",e=>{const sticker=e.target.closest(".drawing-s
 function goFeedback(){if(timer){clearInterval(timer);timer=null}showView("feedbackView")}
 function submitFeedback(event){event.preventDefault();const type=$("feedbackType").value;const rating=$("feedbackRating").value;const message=$("feedbackMessage").value.trim();if(!message){alert("Please write your feedback first.");return}const title="[Novalearnix Feedback] "+type;const body="## Novalearnix website feedback\n\n- **Type:** "+type+"\n- **Rating:** "+rating+"\n\n## Message\n"+message+"\n\n---\nSubmitted through the Novalearnix feedback page.";const url="https://github.com/omelvin2020/learnnova/issues/new?title="+encodeURIComponent(title)+"&body="+encodeURIComponent(body);window.open(url,"_blank","noopener");}
 
+Object.assign(freshGameBanks,{
+ map:[
+  {prompt:"On a grid, the school is at (1, 1) and the library is at (1, 3). Which route reaches the library in the fewest moves?",detail:"Move one square at a time. The first coordinate is east-west; the second is north-south.",options:["North, north","East, east","South, south","West, west"],answer:"North, north",explain:"The east-west coordinate stays 1 while the north-south coordinate increases from 1 to 3."},
+  {prompt:"A compass arrow points east. Which direction is directly opposite?",options:["West","North","South","North-east"],answer:"West",explain:"West is opposite east on a compass."},
+  {prompt:"A map key shows a blue wavy line for a river. What should you look for to find the river?",options:["A blue wavy line","A red star","A black square","A green triangle"],answer:"A blue wavy line",explain:"A map key explains the symbols used on the map."},
+  {prompt:"You are facing north. You turn right. Which direction are you facing now?",options:["East","West","South","North"],answer:"East",explain:"A right turn from north points east."},
+  {prompt:"A route goes 2 squares east and then 1 square north. Which description is correct?",options:["East twice, then north once","West twice, then south once","North twice, then east once","South once, then west twice"],answer:"East twice, then north once",explain:"Follow the stated direction and number of grid squares in order."}
+ ],
+ habitat:[
+  {prompt:"A frog is found beside a pond. Which habitat best meets its usual needs?",options:["A wet place near fresh water","A dry sand dune","An icy mountain top","A bare rock far from water"],answer:"A wet place near fresh water",explain:"Many frogs need moist environments and water for parts of their life cycle."},
+  {prompt:"A camel is adapted to travel across which environment?",options:["A hot, dry desert","A deep ocean","A polar ice sheet","A dense underwater cave"],answer:"A hot, dry desert",explain:"Camels have adaptations that help them live in arid environments."},
+  {prompt:"A fish uses gills to obtain oxygen from its surroundings. Where does it normally live?",options:["In water","In a tree nest","In dry soil","On a mountain path"],answer:"In water",explain:"Gills take dissolved oxygen from water."},
+  {prompt:"Which feature helps a duck move through water?",options:["Webbed feet","A thick wool coat","A long underground root","A hard shell"],answer:"Webbed feet",explain:"Webbed feet help push against water while swimming."},
+  {prompt:"A polar animal has thick fur and a layer of fat. What does this mainly help it do?",options:["Keep warm in a cold habitat","Breathe underwater","Climb smooth glass","Make its own food"],answer:"Keep warm in a cold habitat",explain:"Insulating fur and body fat reduce heat loss in cold environments."}
+ ],
+ time:[
+  {prompt:"The library opens at 8:30 a.m. and closes at 10:00 a.m. How long is it open?",options:["1 hour 30 minutes","1 hour","2 hours 30 minutes","30 minutes"],answer:"1 hour 30 minutes",explain:"From 8:30 to 9:30 is one hour, then another 30 minutes."},
+  {prompt:"A bus leaves at 2:20 p.m. and arrives at 3:05 p.m. How long is the journey?",options:["45 minutes","35 minutes","55 minutes","1 hour 15 minutes"],answer:"45 minutes",explain:"From 2:20 to 3:00 is 40 minutes, then 5 more minutes."},
+  {prompt:"What time is 25 minutes after 9:40 a.m.?",options:["10:05 a.m.","9:55 a.m.","10:15 a.m.","9:65 a.m."],answer:"10:05 a.m.",explain:"Twenty minutes after 9:40 is 10:00, then five more minutes."},
+  {prompt:"Ninety minutes is equal to which duration?",options:["1 hour 30 minutes","1 hour 9 minutes","2 hours","30 minutes"],answer:"1 hour 30 minutes",explain:"60 minutes make one hour; 90 − 60 = 30 minutes."},
+  {prompt:"A school activity begins at 10:15 a.m. and lasts 35 minutes. When does it finish?",options:["10:50 a.m.","10:40 a.m.","11:15 a.m.","10:35 a.m."],answer:"10:50 a.m.",explain:"15 + 35 = 50 minutes, so the finish time is 10:50."}
+ ],
+ context:[
+  {prompt:"Read: “The path was slippery after the rain, so Nila walked carefully.” What does “slippery” suggest?",options:["Easy to slide on","Very noisy","Full of flowers","Extremely hot"],answer:"Easy to slide on",explain:"The clue “walked carefully” shows that the path could cause someone to slip."},
+  {prompt:"Read: “A tiny seed fitted into the smallest pot.” What does “tiny” mean?",options:["Very small","Very heavy","Very old","Very bright"],answer:"Very small",explain:"The phrase “smallest pot” gives a clue to the meaning of tiny."},
+  {prompt:"Read: “The room was silent; nobody spoke.” What does “silent” mean?",options:["Quiet","Crowded","Bright","Warm"],answer:"Quiet",explain:"The second part of the sentence explains that nobody spoke."},
+  {prompt:"Read: “Amal felt relieved when the rain stopped before the outdoor lesson.” How did Amal probably feel?",options:["Less worried","More confused","Angrier","Sleepier"],answer:"Less worried",explain:"The rain stopping solved the problem that was worrying Amal."},
+  {prompt:"Read: “The sturdy bridge held the heavy school bags.” What does “sturdy” mean?",options:["Strong and firm","Soft and wet","Thin and broken","Brightly coloured"],answer:"Strong and firm",explain:"The bridge held a load, so sturdy means strong and firm."}
+ ],
+ algorithm:[
+  {prompt:"A learner wants to save a document with a clear name. Which sequence is sensible?",options:["Open Save, choose a folder, type a file name, confirm","Close the program, switch off, then type a name","Delete the document, then search for it","Print the page before creating it"],answer:"Open Save, choose a folder, type a file name, confirm",explain:"A clear sequence completes the save action and gives the file a useful name."},
+  {prompt:"A robot must move forward three squares. Which instruction uses repetition most clearly?",options:["Repeat “move forward one square” three times","Turn left once","Wait forever","Move backward once"],answer:"Repeat “move forward one square” three times",explain:"A loop repeats the same instruction a chosen number of times."},
+  {prompt:"A program says “If the answer is correct, show a star; otherwise, show a hint.” What kind of structure is this?",options:["Selection (if/else)","A drawing tool","A sound file","A storage device"],answer:"Selection (if/else)",explain:"The program chooses between two actions based on a condition."},
+  {prompt:"A sequence prints 2, 4, 6, 8. Which next number follows the same rule?",options:["10","9","12","16"],answer:"10",explain:"The rule adds 2 each time. This is a simple pattern inside an algorithm."},
+  {prompt:"A program repeats the wrong instruction because one step is missing. What should the learner do first?",options:["Check the steps and find the missing instruction","Add random steps","Ignore the result","Rename the computer"],answer:"Check the steps and find the missing instruction",explain:"Debugging means checking a program to find and correct an error."}
+ ]
+});
 function calculateNovaPerimeter(){
  const raw=$("novaPerimeterSides").value.trim(),parts=raw.split(/[,\s;]+/).filter(Boolean),values=parts.map(Number),out=$("novaPerimeterOut");
  if(values.length<3||values.some(v=>!Number.isFinite(v)||v<=0)){out.textContent="Enter at least three positive side lengths, separated by commas or spaces.";return}
@@ -2385,6 +2432,49 @@ function calculateNovaPressure(){
  if(!Number.isFinite(force)||!Number.isFinite(area)||force<0||area<=0){out.textContent="Enter a non-negative force and a positive area.";return}
  out.textContent="Pressure = force ÷ area = "+Number((force/area).toFixed(4))+" Pa.";
 }
+function calculateNovaStatistics(){
+ const raw=$("novaStatsInput").value.trim(),out=$("novaStatsOut");
+ const values=raw.split(/[,;\s]+/).filter(Boolean).map(Number);
+ if(!raw||!values.length||values.some(v=>!Number.isFinite(v))||values.length>100){out.textContent="Enter between 1 and 100 finite numbers, separated by commas or spaces.";return}
+ const sorted=values.slice().sort((a,b)=>a-b),sum=values.reduce((a,b)=>a+b,0),mid=Math.floor(sorted.length/2);
+ const median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
+ const counts=new Map();values.forEach(v=>counts.set(v,(counts.get(v)||0)+1));
+ const maxCount=Math.max(...counts.values()),modes=maxCount===1?[]:[...counts].filter(([,n])=>n===maxCount).map(([v])=>v).sort((a,b)=>a-b);
+ out.textContent="Count: "+values.length+" · Mean: "+Number((sum/values.length).toFixed(4))+" · Median: "+median+" · Mode: "+(modes.length?modes.join(", "):"No repeated value")+" · Range: "+(sorted[sorted.length-1]-sorted[0])+".";
+}
+function calculateNovaMotion(){
+ const mode=$("novaMotionMode").value,d=Number($("novaMotionDistance").value),t=Number($("novaMotionTime").value),v=Number($("novaMotionSpeed").value),out=$("novaMotionOut");
+ const valid=x=>Number.isFinite(x)&&x>0;
+ if(mode==="speed"){if(!valid(d)||!valid(t)){out.textContent="Enter positive distance and time values.";return}out.textContent="Speed = distance ÷ time = "+Number((d/t).toFixed(4))+" km/h."}
+ else if(mode==="distance"){if(!valid(v)||!valid(t)){out.textContent="Enter positive speed and time values.";return}out.textContent="Distance = speed × time = "+Number((v*t).toFixed(4))+" km."}
+ else if(mode==="time"){if(!valid(d)||!valid(v)){out.textContent="Enter positive distance and speed values.";return}out.textContent="Time = distance ÷ speed = "+Number((d/v).toFixed(4))+" hours."}
+ else out.textContent="Choose speed, distance or time.";
+}
+function calculateNovaDensity(){
+ const mass=Number($("novaDensityMass").value),volume=Number($("novaDensityVolume").value),out=$("novaDensityOut");
+ if(!Number.isFinite(mass)||!Number.isFinite(volume)||mass<0||volume<=0){out.textContent="Enter a non-negative mass and a positive volume.";return}
+ out.textContent="Density = mass ÷ volume = "+Number((mass/volume).toFixed(4))+" g/cm³.";
+}
+function calculateNovaMapScale(){
+ const distance=Number($("novaMapDistance").value),scale=Number($("novaMapScale").value),out=$("novaMapScaleOut");
+ if(!Number.isFinite(distance)||distance<=0||!Number.isSafeInteger(scale)||scale<=0){out.textContent="Enter a positive map distance and a positive whole-number scale denominator.";return}
+ const realCm=distance*scale,realKm=realCm/100000;
+ out.textContent="Real distance = "+Number(realKm.toFixed(4))+" km ("+Number((realCm/100).toFixed(2))+" m).";
+}
+function convertNovaBase(){
+ const mode=$("novaBaseMode").value,raw=$("novaBaseInput").value.trim(),out=$("novaBaseOut");
+ if(!raw){out.textContent="Enter a whole number to convert.";return}
+ try{
+  if(mode==="binaryToDecimal"){
+   if(!/^[01]+$/.test(raw)){out.textContent="Binary numbers may contain only 0 and 1.";return}
+   out.textContent=raw+"₂ = "+BigInt("0b"+raw).toString(10)+"₁₀.";
+  }else{
+   if(!/^\d+$/.test(raw)){out.textContent="Enter a non-negative whole decimal number.";return}
+   out.textContent=raw+"₁₀ = "+BigInt(raw).toString(2)+"₂.";
+  }
+ }catch(error){out.textContent="That number is too large to convert in this browser."}
+}
+
 
 </script>
 <script>
