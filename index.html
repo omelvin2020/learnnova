@@ -1294,7 +1294,14 @@ function primaryRows(g,n){
 ["වල් සතෙකු කුමක්ද?","සිංහයා","බළලා","ගවයා","සිංහයා වනයේ ජීවත් වන වල් සතෙකි."]);
   X[n]=X[n]||[];
  }
- return B[n].concat(X[n]||[]).map(R);
+ const gradeOneEnvironmentExtras=g===1&&n==="Environmental Studies"?[
+ ["පන්ති කාමරයේ දොර අසල බිම තෙත් වී තිබේ. ආරක්ෂිතව කළ යුත්තේ කුමක්ද?","ගුරුවරයාට දැනුම් දී එම ස්ථානය මඟහැරීම","තෙත් බිම මත දිවීම","එහි සෙල්ලම් කිරීම","තෙත් බිමක ලිස්සා වැටිය හැකි නිසා ගුරුවරයාට දැනුම් දී එය මඟහැරිය යුතුය."],
+ ["වියළි කොළයක් සහ කුඩා ගලක් වතුර බඳුනකට දැමූ විට බොහෝවිට සිදුවන්නේ කුමක්ද?","කොළය පාවී ගල ගිලීම","දෙකම ගිලීම","දෙකම අතුරුදහන් වීම","වියළි කොළයක් බොහෝවිට ජලය මත පාවෙන අතර කුඩා ගල ගිලෙයි."],
+ ["කපා සූදානම් කළ පලතුරු කෑමට පෙර ආරක්ෂිතව තබන්නේ කෙසේද?","පිරිසිදු ආවරණයකින් වසා තැබීම","මැස්සන් අසල විවෘතව තැබීම","බිම තැබීම","ආහාර ආවරණය කිරීමෙන් දූවිලි හා කෘමීන්ගෙන් ආරක්ෂා කළ හැකිය."],
+ ["උදෑසන සහ පසුව ගසක සෙවණැල්ල සසඳන විට වෙනස් විය හැක්කේ කුමක්ද?","සෙවණැල්ලේ දිග හෝ දිශාව","ගසේ මුල්","ගසේ නම","සූර්යයාගේ පිහිටීම වෙනස් වන විට සෙවණැල්ලේ දිග හෝ දිශාව වෙනස් විය හැකිය."],
+ ["චිත්‍ර ඇඳීමෙන් පසු බුරුසු සෝදන විට ජලය ඉතිරි කරගත හැක්කේ කෙසේද?","කුඩා භාජනයක් භාවිත කර අවශ්‍ය විට පමණක් නළය විවෘත කිරීම","නළය දිගටම විවෘත කර තැබීම","ජලය පිරුණු භාජන නාස්ති කිරීම","කුඩා භාජනයක් භාවිත කිරීමෙන් අනවශ්‍ය ලෙස ජලය ගලා යාම අඩු කළ හැකිය."]
+]:[];
+return B[n].concat(X[n]||[],gradeOneEnvironmentExtras).map(R);
 }
  const E={"English Language":[["Choose an animal.","cat","run","blue","A cat is an animal."],["Choose the plural of book.","books","bookes","bookies","We add s to make the plural."],["What is the opposite of hot?","cold","warm","sunny","Cold is the opposite of hot."],["Choose the correct word: I ___ happy.","am","is","are","Use am with I."],["Which word is a colour?","green","chair","jump","Green is a colour."]],"Tamil (Second Language)":[["What does வணக்கம் mean?","Hello","Good night","Thank you","வணக்கம் is a greeting."],["What does நன்றி mean?","Thank you","Hello","Water","நன்றி means thank you."],["Which Tamil word means water?","தண்ணீர்","மரம்","பூ","தண்ணீர் means water."],["Which Tamil word means mother?","அம்மா","அப்பா","நண்பன்","அம்மா means mother."],["What does பூ mean?","Flower","Book","House","பூ means flower."]]};
  return (E[n]||[]).map(z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]]);
@@ -1356,7 +1363,14 @@ function makePrimarySubjects(g){
  const makeEnglish=name=>{
   if(name==="English Language")return primaryRows(g,name);
   const base=english[name]||english["Environmental Studies"];
-  return base.map(z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]]);
+  const gradeOneEnvironmentExtras=g===1&&name==="Environmental Studies"?[
+   ["A wet patch is on the classroom floor. What is the safest choice?","Tell the teacher and walk around it","Run through it","Play on the wet floor","A wet floor can be slippery, so tell a teacher and keep away from it."],
+   ["A dry leaf and a small stone are placed gently in a bowl of water. What is most likely?","The leaf floats while the stone sinks","Both float","Both disappear","A dry leaf usually floats, while a small stone sinks."],
+   ["How should freshly cut fruit be kept until snack time?","Covered in a clean container","Left open near flies","Placed on the floor","Covering food helps protect it from dust and insects."],
+   ["A learner traces a tree's shadow in the morning and later. What may change?","The shadow's length or direction","The tree's roots","The tree's name","A shadow can change as the Sun appears to move across the sky."],
+   ["After washing paintbrushes, which action helps save water?","Use a small basin and close the tap between rinses","Leave the tap running","Fill many containers and leave them unused","Using a small basin and closing the tap reduces wasted water."]
+  ]:[];
+  return base.concat(gradeOneEnvironmentExtras).map(z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]]);
  };
  return rows.flatMap(x=>{
   const common={icon:x[2],newPaperStart:0},out=[];
@@ -1375,7 +1389,17 @@ const $=id=>document.getElementById(id);
 function getProgress(){try{return JSON.parse(localStorage.getItem("learnnovaProgress")||"{}")}catch(e){return {}}}
 function progressId(subject,paper){return (activeGrade<=5?"Grade "+activeGrade+"-":activeGrade===7?"":"Grade "+activeGrade+"-")+subject+"-"+paper}
 function saveProgress(subject,paper,score){let p=getProgress();p[progressId(subject,paper)]={score:score,date:new Date().toISOString()};localStorage.setItem("learnnovaProgress",JSON.stringify(p));updateStats()}
-function updateStats(){const p=getProgress(),done=Object.keys(p).filter(k=>activeGrade===7?!k.startsWith("Grade 1-")&&!k.startsWith("Grade 2-")&&!k.startsWith("Grade 3-")&&!k.startsWith("Grade 4-")&&!k.startsWith("Grade 5-"):k.startsWith("Grade "+activeGrade+"-")).length;$("completedStat").textContent=done;const st=$("subjectTotal"),pt=$("paperTotal");if(st)st.textContent=subjects.length+" Grade "+activeGrade+" subjects";if(pt)pt.textContent=(subjects.length*PAPER_COUNT)+" practice papers";if($("homeSubjectCount"))$("homeSubjectCount").textContent=subjects.length;if($("homePaperCount"))$("homePaperCount").textContent=subjects.length*PAPER_COUNT}
+function updateStats(){
+ const p=getProgress();
+ const done=Object.keys(p).filter(k=>activeGrade===7?!k.startsWith("Grade 1-")&&!k.startsWith("Grade 2-")&&!k.startsWith("Grade 3-")&&!k.startsWith("Grade 4-")&&!k.startsWith("Grade 5-"):k.startsWith("Grade "+activeGrade+"-")).length;
+ const available=subjects.reduce((sum,subject)=>sum+Math.min(PAPER_COUNT,questionBankForSubject(subject,activeGrade).length),0);
+ $("completedStat").textContent=done;
+ const st=$("subjectTotal"),pt=$("paperTotal");
+ if(st)st.textContent=subjects.length+" Grade "+activeGrade+" subjects";
+ if(pt)pt.textContent=available+" available practice papers";
+ if($("homeSubjectCount"))$("homeSubjectCount").textContent=subjects.length;
+ if($("homePaperCount"))$("homePaperCount").textContent=available;
+}
 function changeGrade(value){const g=Number(value);if(!Number.isInteger(g)||g<1||g>13)return;activeGrade=g;subjects=g<=5?makePrimarySubjects(g):subjectsForGrade(g);if($("welcomeText"))$("welcomeText").textContent="Welcome to Novalearnix Grade "+g+". Choose a subject and enjoy learning.";$("paperInfoText").textContent="Choose an interactive practice paper for Grade "+g+".";renderHome();if(!$("subjectsView").classList.contains("hidden"))renderSubjects()}
 function showView(id){["homeView","subjectsView","papersView","examView","feedbackView","moreView","learningToolsView","aiStudyView","soundSettingsView","numberWritingView","drawingView","entertainmentView","environmentView"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");$("navHome").classList.toggle("active",id==="homeView");$("navSubjects").classList.toggle("active",id==="subjectsView");$("navFeedback").classList.toggle("active",id==="feedbackView");$("navMore").classList.toggle("active",id==="moreView");$("navEntertainment").classList.toggle("active",id==="entertainmentView");$("navEnvironment").classList.toggle("active",id==="environmentView");$("navSound").classList.toggle("active",id==="soundSettingsView");$("navAI").classList.toggle("active",id==="aiStudyView");window.scrollTo({top:0,behavior:"smooth"})}
 let currentNumberWriting=1;
@@ -1457,7 +1481,16 @@ function renderHome(){updateStats();renderDailyChallenge();$("homeSubjects").inn
 function normaliseQuestionRow(row){if(!Array.isArray(row)||row.length<4||row.slice(0,4).some(value=>typeof value!=="string"||!value.trim()))return null;return [row[0],row[1],row[2],row[3],typeof row[4]==="string"?row[4]:"",typeof row[5]==="string"?row[5]:(typeof row[4]==="string"?row[4]:""),typeof row[6]==="string"?row[6]:row[0]]}
 function renderDailyChallenge(){const pool=subjects.filter(s=>Array.isArray(s.data)&&s.data.length).flatMap(s=>s.data.map(row=>{const q=normaliseQuestionRow(row);return q?[{subject:s.name,question:q[0],answer:q[1]}]:[]}));if(!pool.length){$("challengeQuestion").textContent="New daily challenge coming soon!";$("challengeAnswer").textContent="Choose a subject to practise.";return}const day=Math.floor(Date.now()/86400000);const item=pool[day%pool.length];$("challengeQuestion").textContent=item.subject+" challenge: "+item.question;$("challengeAnswer").textContent="Think carefully, then reveal the answer.";$("challengeButton").textContent="Reveal answer ✨";$("challengeButton").dataset.answer=item.answer}
 function revealChallenge(){const answer=$("challengeButton").dataset.answer;if(!answer)return;$("challengeAnswer").textContent="Answer: "+answer;$("challengeButton").textContent="Great thinking! ✓";}
-function subjectCard(s){const p=getProgress(),ready=Array.isArray(s.data)&&s.data.length>0,done=ready?Array.from({length:PAPER_COUNT},(_,i)=>i+1).filter(n=>p[progressId(s.name,n)]).length:0,si=s.medium==="Sinhala";return '<article class="subject"><div class="subjecticon">'+s.icon+'</div><h3>'+(s.displayName||s.name)+'</h3>'+(s.stream?'<p><strong>'+s.stream+'</strong></p>':'')+(ready?'<p>'+PAPER_COUNT+' '+(si?'පුහුණු ප්‍රශ්න පත්‍ර':'practice papers')+' · '+done+'/'+PAPER_COUNT+' '+(si?'සම්පූර්ණයි':'completed')+'</p><div class="progress"><span style="width:'+(done/PAPER_COUNT*100)+'%"></span></div><button onclick="openSubject(\''+s.name.replace(/'/g,"\\'")+'\')">'+(si?'ප්‍රශ්න පත්‍ර බලන්න':'View papers')+' →</button>':'<p class="notice">Subject added · Question bank is being prepared.</p><button class="secondary" disabled>Coming soon</button>')+'</article>'}
+function subjectCard(s){
+ const p=getProgress(),ready=Array.isArray(s.data)&&s.data.length>0;
+ const bankCount=ready?questionBankForSubject(s,activeGrade).length:0;
+ const available=Math.min(PAPER_COUNT,bankCount);
+ const done=available?Array.from({length:available},(_,i)=>i+1).filter(n=>p[progressId(s.name,n)]).length:0;
+ const si=s.medium==="Sinhala";
+ const availability=si?available+" / "+PAPER_COUNT+" පුහුණු පත්‍ර ලබාගත හැක":available+" of "+PAPER_COUNT+" practice papers available";
+ const openButton='<button onclick="openSubject(\''+s.name.replace(/'/g,"\\'")+'\')">'+(si?'ප්‍රශ්න පත්‍ර බලන්න':'View papers')+' →</button>';
+ return '<article class="subject"><div class="subjecticon">'+s.icon+'</div><h3>'+(s.displayName||s.name)+'</h3>'+(s.stream?'<p><strong>'+s.stream+'</strong></p>':'')+(available?'<p>'+availability+' · '+done+'/'+available+' '+(si?'සම්පූර්ණයි':'completed')+'</p><div class="progress"><span style="width:'+(done/available*100)+'%"></span></div>'+openButton:'<p class="notice">'+(ready?(si?'ප්‍රමාණවත් වෙනස් ප්‍රශ්න තවම නොමැත':'Not enough distinct questions yet'):(si?'විෂය එක් කර ඇත · ප්‍රශ්න බැංකුව සකස් කරමින් පවතී':'Subject added · Question bank is being prepared.'))+'</p><button class="secondary" disabled>Coming soon</button>')+'</article>';
+}
 function renderSubjects(){const q=($("subjectSearch").value||"").toLowerCase();const list=subjects.filter(s=>s.name.toLowerCase().includes(q)||(s.displayName||"").toLowerCase().includes(q));$("subjectGrid").innerHTML=list.length?list.map(subjectCard).join(""):'<div class="empty">No subjects found.</div>'}
 function isSinhalaPaper(){return !!activeSubject&&(activeSubject.medium==="Sinhala"||(activeGrade===7&&!!activeSubject.displayName))}
 function paperText(en,si){return isSinhalaPaper()?si:en}
@@ -1491,7 +1524,7 @@ function openSubject(name){
   return '<article class="examcard"><div class="paper-number">📝 '+String(n).padStart(2,"0")+'</div><h3>'+paperText("Exam-Style Practice Paper ","විභාග ආකෘති පුහුණු පත්‍රය ")+String(n).padStart(2,"0")+'</h3><p>'+description+'</p><button class="paper-card-button" '+(disabled?'disabled aria-disabled="true"':'onclick="startExam('+n+')"')+'>'+buttonText+'</button></article>';
  }).join("")+'</div></section>').join("");
  const finalCard='<section class="term-paper-section"><div class="papergrid"><article class="examcard"><div class="paper-number">🎯</div><h3>'+paperText("Randomised Final Test","අහඹු අවසාන පරීක්ෂණය")+'</h3><p>'+paperText("A mixed test selected from this subject’s distinct available question bank.","මෙම විෂයේ ඇති වෙනස් ප්‍රශ්න බැංකුවෙන් තෝරාගත් මිශ්‍ර පරීක්ෂණයකි.")+'</p><button class="paper-card-button" onclick="startExam(\'FINAL_TEST\')">'+paperText("Start Final Test","අවසාන පරීක්ෂණය ආරම්භ කරන්න")+' →</button></article></div></section>';
- $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📚</div><div><strong>'+paperText("NOVALEARNIX ONLINE EXAM CENTRE","NOVALEARNIX මාර්ගගත විභාග මධ්‍යස්ථානය")+'</strong><span>'+paperText("Up to 10 practice papers + final test","පුහුණු පත්‍ර 10ක් දක්වා + අවසාන පරීක්ෂණය")+'</span></div></div>'+sections+finalCard+'<div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>'+paperText("About these papers","මෙම ප්‍රශ්න පත්‍ර පිළිබඳව")+'</strong><span>'+paperText("Questions are generated from the subject question bank currently available on Novalearnix. They are practice papers and are not presented as verbatim official past papers. Exact past-paper conversion can be added when verified source papers are available.","ප්‍රශ්න Novalearnix හි දැනට ඇති විෂය ප්‍රශ්න බැංකුවෙන් සකස් කර ඇත. මේවා පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල එලෙසම පිටපත් කළ ප්‍රශ්න ලෙස ඉදිරිපත් නොකෙරේ. තහවුරු කළ මුල් ප්‍රශ්න පත්‍ර ලැබුණු විට ඒවා පදනම් කරගත් වෙනම පත්‍ර එක් කළ හැකිය.")+'</span></div></div>';
+ $("paperGrid").innerHTML='<div class="daily-banner"><div class="daily-icon">📚</div><div><strong>'+paperText("NOVALEARNIX ONLINE EXAM CENTRE","NOVALEARNIX මාර්ගගත විභාග මධ්‍යස්ථානය")+'</strong><span>'+paperText(Math.min(PAPER_COUNT,bank.length)+" of 10 practice papers available + final test",Math.min(PAPER_COUNT,bank.length)+" / 10 පුහුණු පත්‍ර ලබාගත හැක + අවසාන පරීක්ෂණය")+'</span></div></div>'+sections+finalCard+'<div class="daily-banner"><div class="daily-icon">ℹ️</div><div><strong>'+paperText("About these papers","මෙම ප්‍රශ්න පත්‍ර පිළිබඳව")+'</strong><span>'+paperText("Questions are generated from the subject question bank currently available on Novalearnix. They are practice papers and are not presented as verbatim official past papers. Exact past-paper conversion can be added when verified source papers are available.","ප්‍රශ්න Novalearnix හි දැනට ඇති විෂය ප්‍රශ්න බැංකුවෙන් සකස් කර ඇත. මේවා පුහුණු පත්‍ර වන අතර නිල පැරණි ප්‍රශ්න පත්‍රවල එලෙසම පිටපත් කළ ප්‍රශ්න ලෙස ඉදිරිපත් නොකෙරේ. තහවුරු කළ මුල් ප්‍රශ්න පත්‍ර ලැබුණු විට ඒවා පදනම් කරගත් වෙනම පත්‍ර එක් කළ හැකිය.")+'</span></div></div>';
 }function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
 function permutations(items){if(items.length<=1)return [items];return items.flatMap((item,i)=>permutations(items.filter((_,j)=>j!==i)).map(rest=>[item,...rest]))}
 function grade7PtsPaper(n){if(n===2)return grade7PtsPaper2024();
@@ -1613,7 +1646,7 @@ function buildQuestionFromBankRow(row,si,primary){
  if(!primary&&/හිස්තැන|fill in the blank/.test(tag)&&fillIn)return {type:"Fill in the blank",prompt:fillIn,answer:correct,explain:explanation};
  if(typeof fillIn==="string"&&fillIn!==rawPrompt&&/_{2,}|…|\.{3}/.test(fillIn))return {type:primary?"Short answer":"Fill in the blank",prompt:fillIn,answer:correct,explain:explanation};
  if(options.length<2)return {type:"Short answer",prompt,answer:correct,explain:explanation};
- return {type:"Multiple choice",prompt:rawPrompt,answer:correct,options:shuffle(options),explain:explanation};
+ return {type:"Multiple choice",prompt,answer:correct,options:shuffle(options),explain:explanation};
 }
 function makePrimaryDistinctQuestion(row,index,si){return buildQuestionFromBankRow(row,si,true)}
 function makeDistinctSecondaryQuestion(row,index,si){return buildQuestionFromBankRow(row,si,false)}
