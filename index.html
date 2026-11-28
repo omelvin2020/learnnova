@@ -1267,7 +1267,7 @@ function primaryRows(g,n){
  const R=z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]];
  if(n==="Mathematics"){
   const rows=[],k=g;
-  const add=(prompt,answer,w1,w2,why)=>rows.push([prompt,String(answer),String(w1),String(w2),why,why+" "+prompt,prompt]);
+  const add=(prompt,answer,w1,w2,why)=>rows.push([prompt,String(answer),String(w1),String(w2),why,prompt,prompt]);
   [[k+1,k+2],[k+2,k+3],[k+3,k+4],[k+4,k+5],[k+5,k+3],[k+6,k+2],[k+7,k+1],[k+3,k+7],[k+4,k+8],[k+5,k+9]].forEach(([a,b])=>add(a+" + "+b+" එකතුව කීයද?",a+b,a+b+2,a+b-1,"එකතු කිරීමෙන් සංඛ්‍යා දෙකේ එකතුව සොයයි."));
   [[k+8,2],[k+9,3],[k+10,4],[k+11,5],[k+12,3],[k+13,4],[k+14,5],[k+15,6],[k+16,7],[k+17,8]].forEach(([a,b])=>add(a+" − "+b+" වෙනස කීයද?",a-b,a-b+2,a-b-1,"අඩු කිරීමෙන් ඉතිරි අගය සොයයි."));
   if(g<=2){
