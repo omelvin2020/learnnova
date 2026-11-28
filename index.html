@@ -1431,7 +1431,7 @@ function saveProgress(subject,paper,score){let p=getProgress();p[progressId(subj
 function updateStats(){
  const p=getProgress();
  const done=Object.keys(p).filter(k=>activeGrade===7?!k.startsWith("Grade 1-")&&!k.startsWith("Grade 2-")&&!k.startsWith("Grade 3-")&&!k.startsWith("Grade 4-")&&!k.startsWith("Grade 5-"):k.startsWith("Grade "+activeGrade+"-")).length;
- const available=subjects.reduce((sum,subject)=>sum+Math.min(PAPER_COUNT,questionBankForSubject(subject,activeGrade).length),0);
+ const required=paperQuestionLimit(activeGrade);const available=subjects.reduce((sum,subject)=>sum+(questionBankForSubject(subject,activeGrade).length>=required?PAPER_COUNT:0),0);
  $("completedStat").textContent=done;
  const st=$("subjectTotal"),pt=$("paperTotal");
  if(st)st.textContent=subjects.length+" Grade "+activeGrade+" subjects";
@@ -1523,7 +1523,7 @@ function revealChallenge(){const answer=$("challengeButton").dataset.answer;if(!
 function subjectCard(s){
  const p=getProgress(),ready=Array.isArray(s.data)&&s.data.length>0;
  const bankCount=ready?questionBankForSubject(s,activeGrade).length:0;
- const available=Math.min(PAPER_COUNT,bankCount);
+ const available=bankCount>=paperQuestionLimit(activeGrade)?PAPER_COUNT:0;
  const done=available?Array.from({length:available},(_,i)=>i+1).filter(n=>p[progressId(s.name,n)]).length:0;
  const si=s.medium==="Sinhala";
  const availability=si?available+" / "+PAPER_COUNT+" පුහුණු පත්‍ර ලබාගත හැක":available+" of "+PAPER_COUNT+" practice papers available";
@@ -1554,7 +1554,7 @@ function openSubject(name){
   {title:paperText("TERM 3","තෙවන වාරය"),desc:paperText("Exam-style papers 07–09","විභාග ආකෘති පත්‍ර 07–09"),items:[7,8,9],icon:"🏆"},
   {title:paperText("FULL-YEAR REVISION","වසර අවසාන පුනරීක්ෂණය"),desc:paperText("Full-year exam-style paper 10","වසර අවසාන විභාග ආකෘති පත්‍රය 10"),items:[10],icon:"⭐"}
  ];
- const limit=grade<=5?28:45;
+ const limit=paperQuestionLimit(grade);
  const sections=groups.map(g=>'<section class="term-paper-section"><div class="daily-banner"><div class="daily-icon">'+g.icon+'</div><div><strong>'+g.title+'</strong><span>'+g.desc+'</span></div></div><div class="papergrid">'+g.items.map(n=>{
   const count=paperRowsForNumber(bank,n,limit).length;
   const disabled=count===0;
@@ -1655,14 +1655,13 @@ function questionBankForSubject(subject,grade){
  }
  return distinctQuestionRows(rows);
 }
+function paperQuestionLimit(grade){return Number(grade)<=4?28:35;}
 function paperRowsForNumber(bank,n,limit){
  const number=Number(n);
  if(!Number.isInteger(number)||number<1||number>10)return [];
- const base=Math.floor(bank.length/10),remainder=bank.length%10;
- const size=base+(number<=remainder?1:0);
- const start=(number-1)*base+Math.min(number-1,remainder);
- if(!size)return [];
- return bank.slice(start,start+size).slice(0,limit);
+ const unique=distinctQuestionRows((Array.isArray(bank)?bank:[]).map(normaliseQuestionRow).filter(Boolean));
+ if(unique.length<limit)return [];
+ return shuffle(unique).slice(0,limit);
 }
 function buildQuestionFromBankRow(row,si,primary){
  const [rawPrompt,correct,wrong1,wrong2,explain,statement,fillIn]=row;
@@ -1692,7 +1691,7 @@ function makeDistinctSecondaryQuestion(row,index,si){return buildQuestionFromBan
 function startExamCore(n){
  const finalTest=n==="FINAL_TEST";activePaper=finalTest?"FINAL_TEST":n;submitted=false;answers={};currentQ=0;
  secondsLeft=activeGrade>=10?7200:activeGrade<=5?1800:3600;
- const si=isSinhalaPaper(),bank=questionBankForSubject(activeSubject,activeGrade),limit=activeGrade<=5?28:45;
+ const si=isSinhalaPaper(),bank=questionBankForSubject(activeSubject,activeGrade),limit=paperQuestionLimit(activeGrade);
  if(!bank.length){alert("This subject does not yet have any valid practice questions.");return}
  const selected=finalTest?shuffle(bank).slice(0,limit):paperRowsForNumber(bank,n,limit);
  if(!selected.length){alert("This paper needs more distinct questions in the subject question bank. Choose an available paper or another subject.");return}
