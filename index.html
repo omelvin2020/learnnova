@@ -1655,7 +1655,7 @@ function questionBankForSubject(subject,grade){
  }
  return distinctQuestionRows(rows);
 }
-function paperQuestionLimit(grade){return Number(grade)<=4?28:35;}
+function paperQuestionLimit(grade){return 35;}
 function paperRowsForNumber(bank,n,limit){
  const number=Number(n);
  if(!Number.isInteger(number)||number<1||number>10)return [];
