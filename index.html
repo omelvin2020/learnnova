@@ -1416,7 +1416,8 @@ function makePrimarySubjects(g){
    else if(g<=2&&i<25){const m=r[0].match(/(\d+) සහ (\d+)/);prompt=m?"Which is greater, "+m[1]+" or "+m[2]+"?":r[0];}
    else if(g<=2&&i<30){const nums=r[0].match(/\d+/g)||[];prompt="What number comes next: "+nums.slice(0,4).join(", ")+"?";}
    else if(g<=2){prompt=["Which shape has three sides?","Which shape has four sides?","Which shape is round?","Which tool measures length?","Which tool measures time?"][i-30]||r[0];}
-   else if(i<25){const m=r[0].match(/(\d+)\s*([×÷])\s*(\d+)/);prompt=m?m[1]+" "+m[2]+" "+m[3]+" = ?":r[0];}
+   else if(i<25){const m=r[0].match(/(\d+)\s*×\s*(\d+)/);prompt=m?m[1]+" × "+m[2]+" = ?":r[0];}
+   else if(i<30){const m=r[0].match(/(\d+)\s*÷\s*(\d+)/);prompt=m?m[1]+" ÷ "+m[2]+" = ?":r[0];}
    else{const nums=r[0].match(/\d+/g)||[];prompt="What number comes next: "+nums.slice(0,4).join(", ")+"?";}
    const explain="Use the correct operation or pattern to find the answer.";
    return [prompt,r[1],r[2],r[3],explain,explain,prompt];
