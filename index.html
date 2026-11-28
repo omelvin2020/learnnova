@@ -1266,23 +1266,19 @@ function subjectsForGrade(grade){
 function primaryRows(g,n){
  const R=z=>[z[0],z[1],z[2],z[3],z[4],z[4],z[0]];
  if(n==="Mathematics"){
-  const rows=[];
-  const add=(prompt,answer,w1,w2,why)=>rows.push([prompt,String(answer),String(w1),String(w2),why,why,prompt.replace(/කීයද\?$/,"____")]);
-  const k=g;
-  const addPairs=[[k+2,k+3],[k+4,k+6],[k+7,k+5],[k+9,k+8],[k+11,k+4],[k+13,k+6],[k+15,k+9],[k+18,k+7],[k+21,k+8],[k+24,k+5]];
-  addPairs.forEach(([a,b],i)=>add(a+" + "+b+" එකතුව කීයද?",a+b,a+b+2,a+b-1,"එකතු කිරීමෙන් සංඛ්‍යා දෙකේ එකතුව සොයයි."));
-  const subPairs=[[k+12,k+3],[k+15,k+5],[k+18,k+7],[k+21,k+8],[k+24,k+9],[k+27,k+11],[k+30,k+12],[k+33,k+14],[k+36,k+15],[k+39,k+17]];
-  subPairs.forEach(([a,b])=>add(a+" − "+b+" වෙනස කීයද?",a-b,a-b+2,a-b-1,"අඩු කිරීමෙන් ඉතිරි අගය සොයයි."));
-  const multPairs=[[2,k+2],[3,k+1],[4,k+2],[5,k+1],[2,k+7]];
-  multPairs.forEach(([a,b])=>add(a+" × "+b+" ගුණිතය කීයද?",a*b,a*b+a,a*b-1,"ගුණ කිරීම සමාන කාණ්ඩ එකතු කිරීමකි."));
-  const dividePairs=[[2,2*(k+2)],[3,3*(k+1)],[4,4*(k+2)],[5,5*(k+1)],[2,2*(k+7)]];
-  dividePairs.forEach(([a,b])=>add(b+" ÷ "+a+" හි අගය කීයද?",b/a,b/a+1,b/a-1,"බෙදීමෙන් සමාන කොටස්වල එක් කොටස සොයයි."));
-  const patterns=[
-   [2*k+1,2*k+3,2*k+5,2*k+7,2*k+9],[3*k+2,3*k+5,3*k+8,3*k+11,3*k+14],
-   [4*k+1,4*k+5,4*k+9,4*k+13,4*k+17],[5*k+2,5*k+7,5*k+12,5*k+17,5*k+22],
-   [6*k+1,6*k+3,6*k+5,6*k+7,6*k+9]
-  ];
-  patterns.forEach((p,i)=>add(p.slice(0,4).join(", ")+" යන රටාවේ ඊළඟ සංඛ්‍යාව කුමක්ද?",p[4],p[4]+1,p[4]-1,"රටාවේ සෑම පියවරකම එකම වෙනසක් එකතු කරයි."));
+  const rows=[],k=g;
+  const add=(prompt,answer,w1,w2,why)=>rows.push([prompt,String(answer),String(w1),String(w2),why,why,prompt]);
+  [[k+1,k+2],[k+2,k+3],[k+3,k+4],[k+4,k+5],[k+5,k+3],[k+6,k+2],[k+7,k+1],[k+3,k+7],[k+4,k+8],[k+5,k+9]].forEach(([a,b])=>add(a+" + "+b+" එකතුව කීයද?",a+b,a+b+2,a+b-1,"එකතු කිරීමෙන් සංඛ්‍යා දෙකේ එකතුව සොයයි."));
+  [[k+8,2],[k+9,3],[k+10,4],[k+11,5],[k+12,3],[k+13,4],[k+14,5],[k+15,6],[k+16,7],[k+17,8]].forEach(([a,b])=>add(a+" − "+b+" වෙනස කීයද?",a-b,a-b+2,a-b-1,"අඩු කිරීමෙන් ඉතිරි අගය සොයයි."));
+  if(g<=2){
+   [[k+4,k+7],[k+9,k+5],[k+12,k+14],[k+16,k+13],[k+18,k+17]].forEach(([a,b])=>add(a+" සහ "+b+" අතරින් විශාල සංඛ්‍යාව කුමක්ද?",Math.max(a,b),Math.min(a,b),Math.max(a,b)+1,"සංඛ්‍යා දෙක සසඳා විශාල අගය තෝරයි."));
+   [[1+k,2+k,3+k,4+k,5+k],[2+k,4+k,6+k,8+k,10+k],[5+k,10+k,15+k,20+k,25+k],[10+k,9+k,8+k,7+k,6+k],[3+k,6+k,9+k,12+k,15+k]].forEach(p=>add(p.slice(0,4).join(", ")+" යන රටාවේ ඊළඟ සංඛ්‍යාව කුමක්ද?",p[4],p[4]+1,p[4]-1,"සංඛ්‍යා රටාවේ වෙනස හඳුනාගෙන ඊළඟ අගය සොයයි."));
+   [["පැති 3ක් ඇති හැඩය කුමක්ද?","ත්‍රිකෝණය","වෘත්තය","චතුරස්‍රය"],["පැති 4ක් ඇති හැඩයක් කුමක්ද?","චතුරස්‍රය","වෘත්තය","ත්‍රිකෝණය"],["වටකුරු හැඩය කුමක්ද?","වෘත්තය","ත්‍රිකෝණය","චතුරස්‍රය"],["දිග මැනීමට භාවිත කරන උපකරණය කුමක්ද?","මීටර් රූල","කෝප්පය","ඔරලෝසුව"],["කාලය මැනීමට භාවිත කරන්නේ කුමක්ද?","ඔරලෝසුව","තරාදිය","මීටර් රූල"]].forEach(q=>add(q[0],q[1],q[2],q[3],"හැඩතල සහ මිනුම් පිළිබඳ මූලික දැනුම භාවිත කරයි."));
+  }else{
+   [[2,k+2],[3,k+1],[4,k+2],[5,k+1],[2,k+7]].forEach(([a,b])=>add(a+" × "+b+" ගුණිතය කීයද?",a*b,a*b+a,a*b-1,"ගුණ කිරීම සමාන කාණ්ඩ එකතු කිරීමකි."));
+   [[2,2*(k+2)],[3,3*(k+1)],[4,4*(k+2)],[5,5*(k+1)],[2,2*(k+7)]].forEach(([a,b])=>add(b+" ÷ "+a+" හි අගය කීයද?",b/a,b/a+1,b/a-1,"බෙදීමෙන් සමාන කොටස්වල එක් කොටස සොයයි."));
+   [[2*k+1,2*k+3,2*k+5,2*k+7,2*k+9],[3*k+2,3*k+5,3*k+8,3*k+11,3*k+14],[4*k+1,4*k+5,4*k+9,4*k+13,4*k+17],[5*k+2,5*k+7,5*k+12,5*k+17,5*k+22],[6*k+1,6*k+3,6*k+5,6*k+7,6*k+9]].forEach(p=>add(p.slice(0,4).join(", ")+" යන රටාවේ ඊළඟ සංඛ්‍යාව කුමක්ද?",p[4],p[4]+1,p[4]-1,"රටාවේ සෑම පියවරකම එකම වෙනසක් එකතු කරයි."));
+  }
   return rows.slice(0,35);
  }
  const B={
@@ -1414,6 +1410,17 @@ function makePrimarySubjects(g){
  "Co-Curricular Activities":[["What helps a team work well?","Cooperation","Fighting","Ignoring others","Cooperation helps a team."],["What should we do during a group task?","Share the work","Do nothing","Hide materials","Sharing tasks helps everyone contribute."],["How can we keep our classroom clean?","Use the rubbish bin","Drop litter","Draw on desks","Use bins and keep the room tidy."],["What should we do with library books?","Handle them carefully","Tear pages","Write on them","Careful handling protects books."],["How can we help a friend?","Offer support","Laugh at them","Ignore them","Supporting friends builds kindness."]]
  };
  const makeEnglish=name=>{
+  if(name==="Mathematics")return primaryRows(g,name).map((r,i)=>{
+   let prompt="";
+   if(i<20){const m=r[0].match(/(\\d+)\\s*([+−])\\s*(\\d+)/);prompt=m?m[1]+" "+m[2]+" "+m[3]+" = ?":r[0];}
+   else if(g<=2&&i<25){const m=r[0].match(/(\\d+) සහ (\\d+)/);prompt=m?"Which is greater, "+m[1]+" or "+m[2]+"?":r[0];}
+   else if(g<=2&&i<30){const nums=r[0].match(/\\d+/g)||[];prompt="What number comes next: "+nums.slice(0,4).join(", ")+"?";}
+   else if(g<=2){prompt=["Which shape has three sides?","Which shape has four sides?","Which shape is round?","Which tool measures length?","Which tool measures time?"][i-30]||r[0];}
+   else if(i<25){const m=r[0].match(/(\\d+)\\s*([×÷])\\s*(\\d+)/);prompt=m?m[1]+" "+m[2]+" "+m[3]+" = ?":r[0];}
+   else{const nums=r[0].match(/\\d+/g)||[];prompt="What number comes next: "+nums.slice(0,4).join(", ")+"?";}
+   const explain="Use the correct operation or pattern to find the answer.";
+   return [prompt,r[1],r[2],r[3],explain,explain,prompt];
+  });
   if(name==="English Language")return primaryRows(g,name);
   const base=english[name]||english["Environmental Studies"];
   const gradeOneEnvironmentExtras=g===1&&name==="Environmental Studies"?[
